@@ -19,7 +19,7 @@
 	},
 	"globals": {
 		"_": true,
-		"ScreenOptionsSettings": true,
+		"ScreenOptionsSettings": true
 	},
 	"rules": {
 		"eslint-comments/no-unlimited-disable": "error",

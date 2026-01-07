@@ -27,9 +27,9 @@ class Assets implements Registrable {
 	/**
 	 * Asset handles
 	 */
-	public const ADMIN_STYLES_HANDLE          = self::PREFIX . 'admin';
-	public const EDITOR_STYLES_HANDLE         = self::PREFIX . 'editor';
-	public const SETTINGS_SCRIPT_HANDLE       = self::PREFIX . 'settings';
+	public const ADMIN_STYLES_HANDLE    = self::PREFIX . 'admin';
+	public const EDITOR_STYLES_HANDLE   = self::PREFIX . 'editor';
+	public const SETTINGS_SCRIPT_HANDLE = self::PREFIX . 'settings';
 	/**
 	 * Localized data for scripts.
 	 *
@@ -58,7 +58,7 @@ class Assets implements Registrable {
 	 */
 	public static function get_localized_data(): array {
 		if ( empty( self::$localized_data ) ) {
-			self::$localized_data = array();
+			self::$localized_data = [];
 		}
 
 		return self::$localized_data;

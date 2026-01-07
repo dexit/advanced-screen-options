@@ -94,13 +94,15 @@ class Admin implements Registrable {
 	 */
 	public function enqueue_scripts( string $hook ): void {
 
-		if ( strpos( $hook, self::SCREEN_ID ) !== false ) {
-			wp_localize_script(
-				Assets::SETTINGS_SCRIPT_HANDLE,
-				'ScreenOptionsSettings',
-				Assets::get_localized_data()
-			);
-			wp_enqueue_script( Assets::SETTINGS_SCRIPT_HANDLE );
+		if ( strpos( $hook, self::SCREEN_ID ) === false ) {
+			return;
 		}
+
+		wp_localize_script(
+			Assets::SETTINGS_SCRIPT_HANDLE,
+			'ScreenOptionsSettings',
+			Assets::get_localized_data()
+		);
+		wp_enqueue_script( Assets::SETTINGS_SCRIPT_HANDLE );
 	}
 }

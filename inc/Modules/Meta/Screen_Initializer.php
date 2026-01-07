@@ -51,9 +51,11 @@ class Screen_Initializer implements Registrable {
 		// Add built-in post types.
 		$builtin_post_types = [ 'post', 'page' ];
 		foreach ( $builtin_post_types as $builtin_type ) {
-			if ( post_type_exists( $builtin_type ) ) {
-				$post_types[ $builtin_type ] = \get_post_type_object( $builtin_type );
+			if ( ! post_type_exists( $builtin_type ) ) {
+				continue;
 			}
+
+			$post_types[ $builtin_type ] = \get_post_type_object( $builtin_type );
 		}
 
 		// Initialize each screen and capture columns.
@@ -119,7 +121,7 @@ class Screen_Initializer implements Registrable {
 				$list_table->get_columns();
 			}
 			ob_end_clean();
-		} catch ( \Exception $e ) {
+		} catch ( \Throwable $e ) {
 			// Silently fail if there's an issue.
 			if ( ob_get_level() > 0 ) {
 				ob_end_clean();
@@ -173,9 +175,11 @@ class Screen_Initializer implements Registrable {
 		}
 
 		// Update if needed.
-		if ( $needs_update ) {
-			$saved_columns[ $screen->id ] = $column_data;
-			update_option( 'screen_options_available_columns', $saved_columns, true );
+		if ( ! $needs_update ) {
+			return;
 		}
+
+		$saved_columns[ $screen->id ] = $column_data;
+		update_option( 'screen_options_available_columns', $saved_columns, true );
 	}
 }
