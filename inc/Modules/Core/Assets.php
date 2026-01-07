@@ -8,7 +8,6 @@
 namespace ScreenOptions\Modules\Core;
 
 use ScreenOptions\Contracts\Interfaces\Registrable;
-use ScreenOptions\Modules\Settings\Settings;
 
 /**
  * Class Assets
@@ -31,10 +30,6 @@ class Assets implements Registrable {
 	public const ADMIN_STYLES_HANDLE          = self::PREFIX . 'admin';
 	public const EDITOR_STYLES_HANDLE         = self::PREFIX . 'editor';
 	public const SETTINGS_SCRIPT_HANDLE       = self::PREFIX . 'settings';
-	public const ONBOARDING_SCRIPT_HANDLE     = self::PREFIX . 'onboarding';
-	public const PLUGIN_MANAGER_SCRIPT_HANDLE = self::PREFIX . 'plugin-manager';
-	public const PULL_REQUESTS_SCRIPT_HANDLE  = self::PREFIX . 'pull-requests';
-
 	/**
 	 * Localized data for scripts.
 	 *
@@ -63,8 +58,7 @@ class Assets implements Registrable {
 	 */
 	public static function get_localized_data(): array {
 		if ( empty( self::$localized_data ) ) {
-			self::$localized_data = [
-			];
+			self::$localized_data = array();
 		}
 
 		return self::$localized_data;

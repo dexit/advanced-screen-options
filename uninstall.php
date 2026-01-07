@@ -18,5 +18,4 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
  * The (site-specific) uninstall function.
  */
 function uninstall(): void {
-
 }
