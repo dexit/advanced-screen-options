@@ -63,7 +63,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	public function render_meta_box(): void {
 		global $post;
 
-		// Drop down listing all available post types except the screen options post type.
+		// Get all available post types except the screen options post type.
 		$post_types = \get_post_types(
 			[
 				'public'   => true,
@@ -84,14 +84,14 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			}
 		}
 
-		// remove screen options post type from the list.
+		// Remove screen options post type from the list.
 		unset( $post_types[ Default_Screen_Options::get_slug() ] );
 
 		foreach ( $post_types as $post_type ) {
 			// Get all screen options columns for a post type and add checkboxes to enable/disable them also add a checkbox to lock/unlock them.
 			if ( isset( $columns[ 'edit-' . $post_type->name ] ) && is_array( $columns[ 'edit-' . $post_type->name ] ) ) {
 
-				echo '<h3>' . esc_html__( 'Screen Options : ', 'screen-options' ) . esc_html( \ucfirst( $post_type->name ) ) . '</h3>';
+				echo '<h3>' . esc_html__( 'Screen Options: ', 'screen-options' ) . esc_html( \ucfirst( $post_type->name ) ) . '</h3>';
 				echo '<table class="form-table"><tbody><tr>';
 				foreach ( $columns[ 'edit-' . $post_type->name ] as $column_id => $column_name ) {
 					if ( 'cb' === $column_id ) {
@@ -191,8 +191,10 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			return;
 		}
 
+		$nonce = \sanitize_text_field( \wp_unslash( $_POST['screen_options_meta_nonce'] ) );
+
 		// Verify nonce.
-		if ( ! isset( $_POST['screen_options_meta_nonce'] ) || ! \wp_verify_nonce( $_POST['screen_options_meta_nonce'], 'screen_options_save_meta' ) ) {
+		if ( ! isset( $_POST['screen_options_meta_nonce'] ) || ! \wp_verify_nonce( $nonce, 'screen_options_save_meta' ) ) {
 			return;
 		}
 
@@ -235,7 +237,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			// Set admin notice.
 			\set_transient(
 				'screen_options_role_error_' . $post_id,
-				__( 'Screen option can not be saved! At least one role must be selected before saving it. settings saved as draft.', 'screen-options' ),
+				__( 'Screen option cannot be saved! At least one role must be selected before saving it. Settings saved as draft.', 'screen-options' ),
 				45
 			);
 			return;
@@ -252,8 +254,11 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		}
 
 		// Save lock settings.
-		if ( isset( $_POST['screen_options_lock_settings'] ) && '1' === $_POST['screen_options_lock_settings'] ) {
-			$lock_settings = true;
+		if ( isset( $_POST['screen_options_lock_settings'] ) ) {
+			$lock_settings_value = sanitize_text_field( wp_unslash( $_POST['screen_options_lock_settings'] ) );
+			if ( '1' === $lock_settings_value ) {
+				$lock_settings = true;
+			}
 		}
 
 		// Save data for each selected role.

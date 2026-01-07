@@ -32,7 +32,7 @@ class Default_Screen_Options extends Abstract_Post_Type {
 				'has_archive'   => false,
 				'show_in_rest'  => false,
 				'menu_position' => 6,
-				'supports'      => [ 'title'],
+				'supports'      => [ 'title' ],
 				'menu_icon'     => 'dashicons-networking',
 				'show_in_menu'  => 'options-general.php',
 				'labels'        => [

@@ -175,7 +175,7 @@ class Screen_Initializer implements Registrable {
 		// Update if needed.
 		if ( $needs_update ) {
 			$saved_columns[ $screen->id ] = $column_data;
-			update_option( 'screen_options_available_columns', $saved_columns, 'yes' );
+			update_option( 'screen_options_available_columns', $saved_columns, true );
 		}
 	}
 }
