@@ -191,6 +191,10 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			return;
 		}
 
+		if ( ! isset( $_POST['screen_options_meta_nonce'] ) ) {
+			return;
+		}
+
 		$nonce = \sanitize_text_field( \wp_unslash( $_POST['screen_options_meta_nonce'] ) );
 
 		// Verify nonce.

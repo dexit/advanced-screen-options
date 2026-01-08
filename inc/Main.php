@@ -35,6 +35,9 @@ final class Main {
 		// Meta Boxes.
 		Modules\Meta\Screen_Initializer::class,
 		Modules\Meta\Screen_Options_Meta::class,
+
+		// Column Assignment.
+		Modules\Column_Assignment\Role_Based_Screen_Options::class,
 	];
 
 	/**
