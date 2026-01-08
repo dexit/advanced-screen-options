@@ -342,6 +342,9 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		}
 
 		foreach ( $posts->posts as $post_id ) {
+			if ( ! is_int( $post_id ) ) {
+				continue;
+			}
 			$post_roles = \get_post_meta( $post_id, 'screen_options_roles', true );
 			if ( empty( $post_roles ) || ! is_array( $post_roles ) ) {
 				continue;

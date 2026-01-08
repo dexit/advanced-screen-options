@@ -27,7 +27,6 @@ abstract class Abstract_Meta_Box implements Registrable {
 	public function register_hooks(): void {
 		add_action( 'add_meta_boxes', [ $this, 'register_meta_box' ] );
 		add_action( 'save_post', [ $this, 'save_meta_box_data' ] );
-		add_action( 'content_save_pre', [ $this, 'check_metadata_before_save' ] );
 	}
 
 	/**
@@ -45,15 +44,5 @@ abstract class Abstract_Meta_Box implements Registrable {
 		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
 		}
-	}
-
-	/**
-	 * Check and validate metadata before saving post content.
-	 *
-	 * @param string $content The post content.
-	 * @return string The post content.
-	 */
-	public function check_metadata_before_save( string $content ): string {
-		return $content;
 	}
 }

@@ -124,8 +124,8 @@ class Role_Based_Screen_Options implements Registrable {
 			return 0;
 		}
 
-		if ( isset( $screen_options_posts->posts[0] ) ) {
-			$this->screen_options_posts_id = (int) $screen_options_posts->posts[0];
+		if ( isset( $screen_options_posts->posts[0] ) && is_int( $screen_options_posts->posts[0] ) ) {
+			$this->screen_options_posts_id = $screen_options_posts->posts[0];
 		}
 
 		return $this->screen_options_posts_id;
