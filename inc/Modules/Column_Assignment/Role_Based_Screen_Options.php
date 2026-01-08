@@ -17,9 +17,9 @@ use WP_Query;
 class Role_Based_Screen_Options implements Registrable {
 
 	/**
-	 * Screen Options Posts ID constant.
+	 * Screen Options Posts ID.
 	 *
-	 * @var \ScreenOptions\Modules\Column_Assignment\const
+	 * @var int
 	 */
 	private int $screen_options_posts_id = 0;
 
@@ -37,9 +37,9 @@ class Role_Based_Screen_Options implements Registrable {
 	/**
 	 * Filter hidden columns based on user role.
 	 *
-	 * @param array                                              $hidden_columns Array of hidden column IDs.
-	 * @param \ScreenOptions\Modules\Column_Assignment\WP_Screen $screen         Current screen object.
-	 * @param bool                                               $use_defaults   Whether to use default hidden columns.
+	 * @param array       $hidden_columns Array of hidden column IDs.
+	 * @param \WP_Screen  $screen         Current screen object.
+	 * @param bool        $use_defaults   Whether to use default hidden columns.
 	 *
 	 * @return array Modified array of hidden column IDs.
 	 */
@@ -125,7 +125,7 @@ class Role_Based_Screen_Options implements Registrable {
 		}
 
 		if ( isset( $screen_options_posts->posts[0] ) ) {
-			$this->screen_options_posts_id = $screen_options_posts->posts[0];
+			$this->screen_options_posts_id = (int) $screen_options_posts->posts[0];
 		}
 
 		return $this->screen_options_posts_id;
@@ -157,8 +157,9 @@ class Role_Based_Screen_Options implements Registrable {
 	 * Enqueue admin scripts.
 	 *
 	 * @param string $hook Current admin page hook.
+	 * @return void
 	 */
-	public function enqueue_scripts( string $hook ): void {
+	public function enqueue_scripts( string $hook ) {
 
 		// Add only on post listing pages.
 		if ( strpos( $hook, 'edit.php' ) === false ) {

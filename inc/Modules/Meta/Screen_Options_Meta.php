@@ -230,6 +230,8 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		}
 
 		// Check post type.
+		// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
+		/** @var int $post_id */
 		if ( get_post_type( $post_id ) !== Default_Screen_Options::get_slug() ) {
 			return;
 		}
@@ -290,11 +292,6 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			if ( '1' === $lock_settings_value ) {
 				$lock_settings = true;
 			}
-		}
-
-		// Save data for each selected role.
-		if ( empty( $roles ) ) {
-			return;
 		}
 
 		// Save as post meta for this specific post.
