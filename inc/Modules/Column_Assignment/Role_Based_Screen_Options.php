@@ -37,9 +37,9 @@ class Role_Based_Screen_Options implements Registrable {
 	/**
 	 * Filter hidden columns based on user role.
 	 *
-	 * @param array       $hidden_columns Array of hidden column IDs.
-	 * @param \WP_Screen  $screen         Current screen object.
-	 * @param bool        $use_defaults   Whether to use default hidden columns.
+	 * @param array      $hidden_columns Array of hidden column IDs.
+	 * @param \WP_Screen $screen         Current screen object.
+	 * @param bool       $use_defaults   Whether to use default hidden columns.
 	 *
 	 * @return array Modified array of hidden column IDs.
 	 */

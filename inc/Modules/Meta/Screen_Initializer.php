@@ -60,9 +60,11 @@ class Screen_Initializer implements Registrable {
 
 		// Initialize each screen and capture columns.
 		foreach ( $post_types as $post_type ) {
-			if ( null !== $post_type ) {
-				$this->initialize_edit_screen( $post_type->name );
+			if ( null === $post_type ) {
+				continue;
 			}
+
+			$this->initialize_edit_screen( $post_type->name );
 		}
 
 		// Restore original values.
