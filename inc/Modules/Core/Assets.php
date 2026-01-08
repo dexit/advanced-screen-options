@@ -65,6 +65,15 @@ class Assets implements Registrable {
 	}
 
 	/**
+	 * Set Localized data.
+	 *
+	 * @param array<string,mixed> $data Data to merge into localized data.
+	 */
+	public static function set_localized_data( array $data ): void {
+		self::$localized_data = array_merge( self::get_localized_data(), $data );
+	}
+
+	/**
 	 * Constructor.
 	 */
 	public function __construct() {
@@ -89,8 +98,9 @@ class Assets implements Registrable {
 	 */
 	public function register_assets(): void {
 
-		$this->register_script( self::SETTINGS_SCRIPT_HANDLE, 'settings' );
-		$this->register_style( self::SETTINGS_SCRIPT_HANDLE, 'settings' );
+		$this->register_style( self::ADMIN_STYLES_HANDLE, 'admin' );
+		$this->register_script( self::ADMIN_STYLES_HANDLE, 'admin' );
+
 		wp_enqueue_style( self::ADMIN_STYLES_HANDLE );
 	}
 

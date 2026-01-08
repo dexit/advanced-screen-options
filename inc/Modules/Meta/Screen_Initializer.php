@@ -64,8 +64,8 @@ class Screen_Initializer implements Registrable {
 		}
 
 		// Restore original values.
-		$typenow        = $original_typenow;
-		$current_screen = $original_screen;
+		$typenow        = $original_typenow; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$current_screen = $original_screen; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
 	}
 
 	/**
@@ -78,7 +78,7 @@ class Screen_Initializer implements Registrable {
 		global $typenow;
 
 		// Set the global post type.
-		$typenow = $post_type;
+		$typenow = $post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		// Create a screen object for this post type's edit screen.
 		$screen = \WP_Screen::get( 'edit-' . $post_type );
