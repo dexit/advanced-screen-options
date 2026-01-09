@@ -9,6 +9,7 @@ namespace ScreenOptions\Modules\Meta;
 
 use ScreenOptions\Contracts\Interfaces\Registrable;
 
+
 /**
  * Class Screen_Initializer
  *
@@ -21,7 +22,41 @@ class Screen_Initializer implements Registrable {
 	 * {@inheritDoc}
 	 */
 	public function register_hooks(): void {
-		add_action( 'admin_init', [ $this, 'initialize_screens_for_columns' ], 5 );
+		// Use transient-based caching to limit frequency of initialization.
+		add_action( 'admin_init', [ $this, 'maybe_initialize_screens' ], 5 );
+	}
+
+	/**
+	 * Maybe initialize screens based on transient cache.
+	 *
+	 * This method uses a transient to limit how often the full initialization runs.
+	 * It only runs once per day unless forced.
+	 *
+	 * @return void
+	 */
+	public function maybe_initialize_screens(): void {
+
+		// Allow forcing a refresh via query parameter (admin only).
+		$force_refresh = isset( $_GET['screen_options_refresh'] ) && current_user_can( 'manage_options' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+
+		// Check if we've run this recently (within 24 hours) or if forced.
+		$last_run = get_transient( 'screen_options_last_column_scan' );
+
+		// skip if ran recently and not forced.
+		if ( ! $force_refresh && false !== $last_run ) {
+			return;
+		}
+
+		if ( $force_refresh ) {
+			// Clear existing stored columns to ensure fresh capture.
+			delete_option( 'screen_options_available_columns' );
+		}
+
+		// Set transient for 24 hours to prevent running too frequently.
+		set_transient( 'screen_options_last_column_scan', time(), DAY_IN_SECONDS );
+
+		// Run the full initialization.
+		$this->initialize_screens_for_columns();
 	}
 
 	/**

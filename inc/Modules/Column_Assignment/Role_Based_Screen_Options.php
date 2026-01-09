@@ -72,6 +72,8 @@ class Role_Based_Screen_Options implements Registrable {
 			return $hidden_columns;
 		}
 
+		$columns_for_screen[] = 'title';
+
 		// Get current columns for the screen.
 		$current_columns = array_keys( get_column_headers( $screen_id_key ) );
 		$cb_column_key   = array_search( 'cb', $current_columns, true );

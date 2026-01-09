@@ -57,6 +57,24 @@ if ( ! \ScreenOptions\Autoloader::autoload() ) {
 }
 
 /**
+ * Plugin activation hook.
+ *
+ * @return void
+ */
+function activate_plugin(): void {
+	// Initialize screens to capture columns on activation.
+	if ( class_exists( 'ScreenOptions\Modules\Meta\Screen_Initializer' ) ) {
+		$initializer = new \ScreenOptions\Modules\Meta\Screen_Initializer();
+		$initializer->initialize_screens_for_columns();
+	}
+
+	// Clear the transient to force a fresh scan.
+	delete_transient( 'screen_options_last_column_scan' );
+}
+
+register_activation_hook( __FILE__, '\ScreenOptions\activate_plugin' );
+
+/**
  * Load plugin.
  */
 if ( class_exists( 'ScreenOptions\Main' ) ) {

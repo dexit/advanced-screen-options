@@ -414,6 +414,12 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	 * @returns string|null
 	 */
 	public function custom_post_column_content_screen_options( string $column, int $post_id ): void {
+
+		// Check post type.
+		if ( \get_post_type( $post_id ) !== Default_Screen_Options::get_slug() ) {
+			return;
+		}
+
 		switch ( $column ) {
 			case 'screen_options_roles':
 				$roles = get_post_meta( $post_id, 'screen_options_roles', true );
