@@ -28,8 +28,7 @@ class Assets implements Registrable {
 	 * Asset handles
 	 */
 	public const ADMIN_STYLES_HANDLE    = self::PREFIX . 'admin';
-	public const EDITOR_STYLES_HANDLE   = self::PREFIX . 'editor';
-	public const SETTINGS_SCRIPT_HANDLE = self::PREFIX . 'settings';
+
 	/**
 	 * Localized data for scripts.
 	 *
@@ -113,7 +112,7 @@ class Assets implements Registrable {
 	 */
 	public function defer_scripts( string $tag, string $handle ): string {
 		$defer_handles = [
-			self::SETTINGS_SCRIPT_HANDLE,
+			self::ADMIN_STYLES_HANDLE,
 		];
 
 		// Bail if we don't need to defer.

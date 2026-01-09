@@ -35,7 +35,6 @@ class Admin implements Registrable {
 	public function register_hooks(): void {
 		add_filter( 'plugin_action_links_' . SCREENOPTIONS_PLUGIN_BASENAME, [ $this, 'add_action_links' ], 2 );
 		add_filter( 'admin_body_class', [ $this, 'add_body_classes' ] );
-		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_scripts' ], 25 );
 	}
 
 	/**
@@ -87,22 +86,4 @@ class Admin implements Registrable {
 		return $classes;
 	}
 
-	/**
-	 * Enqueue admin scripts.
-	 *
-	 * @param string $hook Current admin page hook.
-	 */
-	public function enqueue_scripts( string $hook ): void {
-
-		if ( strpos( $hook, self::SCREEN_ID ) === false ) {
-			return;
-		}
-
-		wp_localize_script(
-			Assets::SETTINGS_SCRIPT_HANDLE,
-			'ScreenOptionsSettings',
-			Assets::get_localized_data()
-		);
-		wp_enqueue_script( Assets::SETTINGS_SCRIPT_HANDLE );
-	}
 }
