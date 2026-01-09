@@ -191,7 +191,7 @@ class Role_Based_Screen_Options implements Registrable {
 			return;
 		}
 
-		wp_enqueue_script( Assets::ADMIN_STYLES_HANDLE );
+		wp_enqueue_script( Assets::ADMIN_SCRIPTS_HANDLE );
 
 		// Add lock settings to localized script data.
 		Assets::set_localized_data(
@@ -210,7 +210,7 @@ class Role_Based_Screen_Options implements Registrable {
 		);
 
 		wp_localize_script(
-			Assets::ADMIN_STYLES_HANDLE,
+			Assets::ADMIN_SCRIPTS_HANDLE,
 			'ScreenOptionsSettings',
 			Assets::get_localized_data()
 		);

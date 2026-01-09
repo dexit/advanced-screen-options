@@ -30,6 +30,11 @@ class Assets implements Registrable {
 	public const ADMIN_STYLES_HANDLE    = self::PREFIX . 'admin';
 
 	/**
+	 * Admin script handle.
+	 */
+	public const ADMIN_SCRIPTS_HANDLE   = self::PREFIX . 'admin';
+
+	/**
 	 * Localized data for scripts.
 	 *
 	 * @var array<string,mixed>
@@ -98,7 +103,7 @@ class Assets implements Registrable {
 	public function register_assets(): void {
 
 		$this->register_style( self::ADMIN_STYLES_HANDLE, 'admin' );
-		$this->register_script( self::ADMIN_STYLES_HANDLE, 'admin' );
+		$this->register_script( self::ADMIN_SCRIPTS_HANDLE, 'admin' );
 
 		wp_enqueue_style( self::ADMIN_STYLES_HANDLE );
 	}
@@ -112,7 +117,7 @@ class Assets implements Registrable {
 	 */
 	public function defer_scripts( string $tag, string $handle ): string {
 		$defer_handles = [
-			self::ADMIN_STYLES_HANDLE,
+			self::ADMIN_SCRIPTS_HANDLE,
 		];
 
 		// Bail if we don't need to defer.
