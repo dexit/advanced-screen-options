@@ -46,6 +46,11 @@ class Role_Based_Screen_Options implements Registrable {
 	 */
 	public function filter_hidden_columns( $hidden_columns, $screen, $use_defaults ): array {
 
+		// If use_defaults is false, return original hidden columns.
+		if ( ! $use_defaults ) {
+			return $hidden_columns;
+		}
+
 		$this->screen_options_posts_id = $this->get_screen_options_post_id();
 
 		if ( 0 === $this->screen_options_posts_id ) {
@@ -176,6 +181,20 @@ class Role_Based_Screen_Options implements Registrable {
 	 * @return bool
 	 */
 	public function get_lock_settings_for_current_role(): bool {
+
+		$screen = get_current_screen();
+
+		if ( empty( $screen ) || empty( $screen->id ) ) {
+			return false;
+		}
+
+		$hidden = get_user_option( 'manage' . $screen->id . 'columnshidden' );
+
+		$use_defaults = ! is_array( $hidden );
+
+		if ( ! $use_defaults ) {
+			return false;
+		}
 
 		$screen_options_post_id = $this->get_screen_options_post_id();
 

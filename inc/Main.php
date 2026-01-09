@@ -57,8 +57,6 @@ final class Main {
 	private function setup(): void {
 		// Load the plugin classes.
 		$this->load();
-
-		// Do other stuff here like dep-checking, telemetry, etc.
 	}
 
 	/**
