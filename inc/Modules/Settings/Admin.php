@@ -22,12 +22,12 @@ class Admin implements Registrable {
 	 *
 	 * @var string
 	 */
-	public const MENU_SLUG = 'screen-options';
+	public const MENU_SLUG = 'default-screens';
 
 	/**
 	 * The screen ID for the settings page.
 	 */
-	public const SCREEN_ID = self::MENU_SLUG . '-settings';
+	public const SCREEN_ID = 'edit-' . self::MENU_SLUG;
 
 	/**
 	 * {@inheritDoc}
@@ -55,7 +55,7 @@ class Admin implements Registrable {
 
 		$links[] = sprintf(
 			'<a href="%s">%s</a>',
-			esc_url( admin_url( sprintf( 'admin.php?page=%s', self::SCREEN_ID ) ) ),
+			admin_url( 'edit.php?post_type=' . self::MENU_SLUG ),
 			__( 'Settings', 'screen-options' )
 		);
 
@@ -81,7 +81,7 @@ class Admin implements Registrable {
 		}
 
 		if ( strpos( $current_screen->id, self::SCREEN_ID ) !== false ) {
-			$classes .= ' screen-options-admin-page';
+			$classes .= ' screen-options-posts-page';
 		}
 
 		return $classes;
