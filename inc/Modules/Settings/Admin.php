@@ -9,7 +9,6 @@
 namespace ScreenOptions\Modules\Settings;
 
 use ScreenOptions\Contracts\Interfaces\Registrable;
-use ScreenOptions\Modules\Core\Assets;
 
 /**
  * Class Settings
@@ -85,5 +84,4 @@ class Admin implements Registrable {
 
 		return $classes;
 	}
-
 }

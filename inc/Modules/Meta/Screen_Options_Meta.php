@@ -161,7 +161,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			}
 		}
 
-		// get all roles except current saved role.
+		// Get all roles except current saved role.
 		$all_saved_roles = array_diff( $all_saved_roles, $saved_roles );
 
 		// Add all users options.

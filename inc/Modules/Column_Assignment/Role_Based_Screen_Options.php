@@ -9,8 +9,8 @@ namespace ScreenOptions\Modules\Column_Assignment;
 
 use ScreenOptions\Contracts\Interfaces\Registrable;
 use ScreenOptions\Modules\Core\Assets;
-use WP_Query;
 use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
+use WP_Query;
 
 /**
  * Class for Role based Screen option assignment.
