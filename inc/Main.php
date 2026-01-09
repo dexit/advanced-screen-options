@@ -27,7 +27,6 @@ final class Main {
 		Modules\Core\Assets::class,
 
 		Modules\Settings\Admin::class,
-		Modules\Settings\Settings::class,
 
 		// Post Types.
 		Modules\Post_Types\Default_Screen_Options::class,
