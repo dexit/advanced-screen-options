@@ -27,7 +27,7 @@ class Role_Based_Screen_Options implements Registrable {
 	 * {@inheritDoc}
 	 */
 	public function register_hooks(): void {
-		// we can use default_hidden_meta_boxes filter to set default hidden meta boxes based on role.
+		// Use the 'hidden_columns' filter to set default hidden columns based on user role.
 		add_filter( 'hidden_columns', [ $this, 'filter_hidden_columns' ], 10, 3 );
 
 		// Enqueue admin scripts.
@@ -62,6 +62,8 @@ class Role_Based_Screen_Options implements Registrable {
 			return $hidden_columns;
 		}
 
+		$columns_for_screen = [];
+
 		// Determine screen ID key for selected columns.
 		$screen_id_key = $screen->id;
 		if ( isset( $selected_columns[ $screen_id_key ] ) ) {
@@ -93,7 +95,7 @@ class Role_Based_Screen_Options implements Registrable {
 	}
 
 	/**
-	 * Function to retrive current screen options id based on user role.
+	 * Function to retrieve current screen options id based on user role.
 	 *
 	 * @return int Screen Options Post ID.
 	 */
