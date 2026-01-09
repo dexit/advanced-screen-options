@@ -1,3 +1,5 @@
+@use 'sass:color';
+
 /* =========================================
    1. COLOR THEME (User Preferred)
    ========================================= */
@@ -73,9 +75,7 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 			background-color: $bg-hover;
 			border-color: #b0b0b0; /* Slightly darker grey on hover for visibility */
 		}
-
 	}
-
 }
 
 /* Helper Class for Status Text (e.g. "Already Configured") */
@@ -112,7 +112,6 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 /* Component B: Screen Options Card (Grid Layout) */
 .screen-options-card {
 	font-family: $font-stack;
-
 
 	.card-body {
 		padding: 20px 16px;
@@ -155,5 +154,157 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 				}
 			}
 		}
+	}
+}
+
+/* Component: Screen Options Lock Column Styling */
+.screen_options_lock{
+
+	.column-icon-container{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: color.adjust($text-grey, $lightness: 15%); /* Adjusted slightly lighter than text-grey to match source */
+		transition: color 0.2s ease;
+		width: 35px;
+		height: 35px;
+
+		/* SVG styling */
+		.lock-icon {
+			width: 22px;
+			height: 22px;
+			stroke-width: 2px;
+			padding: 5px;
+			border-radius: 5px;
+		}
+
+		.icon-locked{
+			color: color.adjust($primary-color, $lightness: -15%); /* Mapped from #1e40af */
+			background-color: $bg-checked;
+		}
+
+		.icon-unlocked{
+			color: $text-grey;
+		}
+	}
+}
+
+/* Component C: Config Checkbox (Lock Logic) */
+.config-checkbox {
+	display: block;
+	width: 100%;
+	max-width: 420px;
+	cursor: pointer;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	font-family: $font-stack;
+
+	/* Hide the native checkbox input visually but keep it accessible */
+	input {
+		position: absolute;
+		opacity: 0;
+		cursor: pointer;
+		height: 0;
+		width: 0;
+	}
+
+	/* The visible card styling */
+	.card-content {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		background-color: #fff;
+		border: 1px solid $border-color; /* Mapped from #e5e7eb */
+		border-radius: 8px; /* Rounded corners */
+		padding: 20px 24px;
+		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+		/* Icon Animation Defaults (Unchecked) */
+		.icon-locked { display: none; }
+
+		.icon-unlocked { display: block; }
+	}
+
+	/* Text styling */
+	.text-group {
+		display: flex;
+		flex-direction: column;
+		gap: 4px;
+
+		.title {
+			font-size: 16px;
+			font-weight: 600;
+			color: $text-dark; /* Mapped from #111827 */
+			letter-spacing: -0.01em;
+		}
+
+		.subtitle {
+			font-size: 14px;
+			color: $text-grey; /* Mapped from #6b7280 */
+			font-weight: 400;
+			padding: 0;
+		}
+	}
+
+	/* Icon Container styling */
+	.icon-container {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: color.adjust($text-grey, $lightness: 15%); /* Adjusted slightly lighter than text-grey to match source */
+		transition: color 0.2s ease;
+		width: 24px;
+		height: 24px;
+
+		/* SVG styling */
+		.lock-icon {
+			width: 22px;
+			height: 22px;
+			stroke-width: 2px;
+		}
+	}
+
+	/* --- INTERACTION STATES --- */
+
+	/* Hover state */
+	&:hover .card-content {
+		border-color: color.adjust($border-color, $lightness: -10%); /* Mapped from #d1d5db */
+		background-color: $bg-hover; /* Mapped from #f9fafb */
+	}
+
+	/* CHECKED STATE */
+	input:checked + .card-content {
+		border-color: $primary-color; /* Mapped from #2563eb */
+		background-color: $bg-checked; /* Mapped from #eff6ff */
+		box-shadow: 0 0 0 1px $primary-color; /* Mapped from #2563eb */
+
+		/* Change title color when checked */
+		.title {
+			color: color.adjust($primary-color, $lightness: -15%); /* Mapped from #1e40af */
+		}
+
+		/* Change icon color when checked */
+		.icon-container {
+			color: $primary-color; /* Mapped from #2563eb */
+		}
+
+		/* Swap icons on check */
+		.icon-unlocked { display: none; }
+
+		.icon-locked { display: block; }
+	}
+}
+
+.screen_options_roles {
+
+	.role-badge{
+		background-color: $border-color;
+		padding: 5px;
+		border-radius: 4px;
+		font-size: 12px;
+		font-weight: 500;
+		color: $text-dark;
+		margin-right: 5px;
 	}
 }

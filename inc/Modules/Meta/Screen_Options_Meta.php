@@ -111,7 +111,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 							<div class="checkbox-list">
 					<?php
 					foreach ( $columns[ 'edit-' . $post_type->name ] as $column_id => $column_name ) {
-						if ( 'cb' === $column_id ) {
+						if ( 'cb' === $column_id || 'title' === $column_id ) {
 							continue;
 						}
 
@@ -164,6 +164,23 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		// get all roles except current saved role.
 		$all_saved_roles = array_diff( $all_saved_roles, $saved_roles );
 
+		// Add all users options.
+		?>
+		<div class="role-selector">
+			<div class="selection-item">
+				<input type="checkbox" name="screen_options_assigned_roles[]" value="all_users" id="role-all-users"
+				<?php \checked( in_array( 'all_users', $all_saved_roles, true ) ? false : in_array( 'all_users', $saved_roles, true ), true, true ); ?>
+				<?php echo in_array( 'all_users', $all_saved_roles, true ) ? 'disabled="disabled"' : ''; ?>>
+				<label for="role-all-users">
+					<span class="role-name"><?php echo esc_html__( 'All Users', 'screen-options' ); ?></span>
+					<?php if ( in_array( 'all_users', $all_saved_roles, true ) ) : ?>
+						<span class="status-text error"><?php echo esc_html__( 'Already configured', 'screen-options' ); ?></span>
+					<?php endif; ?>
+				</label>
+			</div>
+		</div>
+		<?php
+
 		$roles = \wp_roles()->roles;
 		foreach ( $roles as $role_key => $role ) {
 			$is_checked      = in_array( $role_key, $saved_roles, true );
@@ -198,11 +215,31 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			$is_locked = (bool) \get_post_meta( $post->ID, 'screen_options_lock', true );
 		}
 
-		printf(
-			'<label><input type="checkbox" name="screen_options_lock_settings" value="1" %s> %s</label><br>',
-			$is_locked ? 'checked' : '',
-			esc_html__( 'Lock Screen Options settings for assigned roles', 'screen-options' )
-		);
+		?>
+		<label class="config-checkbox">
+			<input type="checkbox" name="screen_options_lock_settings" <?php checked( $is_locked, true ); ?> value="1">
+			<div class="card-content">
+				<div class="text-group">
+					<span class="title"><?php esc_html_e( 'Lock Configuration', 'screen-options' ); ?></span>
+					<span class="subtitle"><?php esc_html_e( 'Prevent users from modifying screen options', 'screen-options' ); ?></span>
+				</div>
+
+				<div class="icon-container">
+					<!-- Icon: Unlocked (Shown when unchecked) -->
+					<svg class="lock-icon icon-unlocked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+						<path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+					</svg>
+
+					<!-- Icon: Locked (Shown when checked) -->
+					<svg class="lock-icon icon-locked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+						<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+					</svg>
+				</div>
+			</div>
+		</label>
+		<?php
 	}
 
 	/**
@@ -225,13 +262,11 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		$nonce = \sanitize_text_field( \wp_unslash( $_POST['screen_options_meta_nonce'] ) );
 
 		// Verify nonce.
-		if ( ! isset( $_POST['screen_options_meta_nonce'] ) || ! \wp_verify_nonce( $nonce, 'screen_options_save_meta' ) ) {
+		if ( ! \wp_verify_nonce( $nonce, 'screen_options_save_meta' ) ) {
 			return;
 		}
 
 		// Check post type.
-		// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
-		/** @var int $post_id */
 		if ( get_post_type( $post_id ) !== Default_Screen_Options::get_slug() ) {
 			return;
 		}
@@ -334,6 +369,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				'post_type'      => Default_Screen_Options::get_slug(),
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
+				'post_status'    => 'publish',
 			]
 		);
 
@@ -353,5 +389,91 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			$all_roles = array_merge( $all_roles, $post_roles );
 		}
 		return array_unique( $all_roles );
+	}
+
+	/**
+	 * Add custom columns to post list table.
+	 *
+	 * @param array<string, string> $columns Existing columns.
+	 *
+	 * @return array<string, string> Modified columns.
+	 */
+	public function add_custom_post_columns_screen_options( array $columns ): array {
+		$columns['screen_options_roles']   = __( 'Roles', 'screen-options' );
+		$columns['screen_options_lock']    = __( 'Lock', 'screen-options' );
+		$columns['screen_options_columns'] = __( 'Columns Shown', 'screen-options' );
+		return $columns;
+	}
+
+	/**
+	 * Output content for custom columns.
+	 *
+	 * @param string $column  Column name.
+	 * @param int    $post_id Post ID.
+	 *
+	 * @returns string|null
+	 */
+	public function custom_post_column_content_screen_options( string $column, int $post_id ): void {
+		switch ( $column ) {
+			case 'screen_options_roles':
+				$roles = get_post_meta( $post_id, 'screen_options_roles', true );
+				if ( empty( $roles ) || ! is_array( $roles ) ) {
+					echo esc_html__( 'No roles assigned', 'screen-options' );
+					return;
+				}
+
+				// Format role names for display.
+				$formatted_roles = array_map(
+					static function ( $role ) {
+						return ucfirst( str_replace( '_', ' ', $role ) );
+					},
+					$roles
+				);
+
+				// print each role in span.
+				foreach ( $formatted_roles as $role ) {
+					echo '<span class="role-badge">' . esc_html( $role ) . '</span> ';
+				}
+
+				break;
+
+			case 'screen_options_lock':
+				$is_locked = get_post_meta( $post_id, 'screen_options_lock', true );
+				echo '<div class="column-icon-container">';
+				if ( $is_locked ) {
+					?>
+					<svg class="lock-icon icon-locked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+						<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+					</svg>
+					<?php
+				} else {
+					?>
+					<!-- Icon: Unlocked (Shown when unchecked) -->
+					<svg class="lock-icon icon-unlocked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+						<path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+					</svg>
+					<?php
+				}
+				echo '</div>';
+				break;
+
+			case 'screen_options_columns':
+				$columns = get_post_meta( $post_id, 'screen_options_columns', true );
+				if ( empty( $columns ) || ! is_array( $columns ) ) {
+					echo esc_html__( 'No columns configured', 'screen-options' );
+					return;
+				}
+				$column_list = [];
+				foreach ( $columns as $post_type => $cols ) {
+					// Remove edit- prefix from post type.
+					$post_type = str_replace( 'edit-', '', $post_type );
+					// Add each post type and columnto new line.
+					$column_list[] = esc_html( \ucfirst( $post_type ) . ': ' . implode( ', ', array_map( 'ucfirst', $cols ) ) );
+				}
+				echo wp_kses_post( implode( '<br/> ', $column_list ) );
+				break;
+		}
 	}
 }

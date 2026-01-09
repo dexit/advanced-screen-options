@@ -117,9 +117,30 @@ class Role_Based_Screen_Options implements Registrable {
 					],
 				],
 				'fields'         => 'ids',
+				'post_status'    => 'publish',
 			]
 		);
 
+		if ( empty( $screen_options_posts->posts ) || ! is_array( $screen_options_posts->posts ) ) {
+			// If no posts found for the role, check for 'all_users'.
+			$screen_options_posts = new WP_Query(
+				[
+					'post_type'      => 'default-screens',
+					'posts_per_page' => -1,
+					'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+						[
+							'key'     => 'screen_options_roles',
+							'value'   => 'all_users',
+							'compare' => 'LIKE',
+						],
+					],
+					'fields'         => 'ids',
+					'post_status'    => 'publish',
+				]
+			);
+		}
+
+		// If still no posts found, return 0.
 		if ( empty( $screen_options_posts->posts ) || ! is_array( $screen_options_posts->posts ) ) {
 			return 0;
 		}
@@ -173,10 +194,13 @@ class Role_Based_Screen_Options implements Registrable {
 			[
 				'is_locked'   => $this->get_lock_settings_for_current_role(),
 				'lockMessage' => \sprintf(
-					'<strong>%1s</strong> %2s',
+					'<strong>%1s</strong> %2s %3s',
 					/* translators: 1: Screen Options */
 					__( 'Locked:', 'screen-options' ),
-					__( 'Screen Options are locked by the administrator. To modify your screen options, please contact your site administrator.', 'screen-options' )
+					__( 'columns are locked by the administrator. To modify your screen options, ', 'screen-options' ),
+					\current_user_can( 'manage_options' ) ?
+						__( 'go to settings -> default screen options.', 'screen-options' ) :
+						__( 'please contact your site administrator.', 'screen-options' )
 				),
 			]
 		);

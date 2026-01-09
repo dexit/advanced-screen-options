@@ -27,6 +27,8 @@ abstract class Abstract_Meta_Box implements Registrable {
 	public function register_hooks(): void {
 		add_action( 'add_meta_boxes', [ $this, 'register_meta_box' ] );
 		add_action( 'save_post', [ $this, 'save_meta_box_data' ] );
+		add_filter( 'manage_edit-default-screens_columns', [ $this, 'add_custom_post_columns_screen_options' ] );
+		add_action( 'manage_default-screens_posts_custom_column', [ $this, 'custom_post_column_content_screen_options' ], 10, 2 );
 	}
 
 	/**
@@ -45,4 +47,25 @@ abstract class Abstract_Meta_Box implements Registrable {
 			return;
 		}
 	}
+
+	/**
+	 * Add custom columns to post list table.
+	 *
+	 * @param array<string, string> $columns Existing columns.
+	 *
+	 * @return array<string, string> Modified columns. Must always return an array.
+	 */
+	public function add_custom_post_columns_screen_options( array $columns ): array {
+		return $columns;
+	}
+
+	/**
+	 * Output content for custom columns.
+	 *
+	 * @param string $column  Column name.
+	 * @param int    $post_id Post ID.
+	 *
+	 * @returns string|null
+	 */
+	abstract public function custom_post_column_content_screen_options( string $column, int $post_id ): void;
 }
