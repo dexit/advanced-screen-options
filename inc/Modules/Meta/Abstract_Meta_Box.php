@@ -65,7 +65,7 @@ abstract class Abstract_Meta_Box implements Registrable {
 	 * @param string $column  Column name.
 	 * @param int    $post_id Post ID.
 	 *
-	 * @returns string|null
+	 * @return void
 	 */
 	abstract public function custom_post_column_content_screen_options( string $column, int $post_id ): void;
 }
