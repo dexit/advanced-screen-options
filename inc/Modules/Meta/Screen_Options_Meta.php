@@ -315,7 +315,10 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		if ( isset( $_POST['screen_options_columns'] ) && is_array( $_POST['screen_options_columns'] ) ) {
 			$columns = array_map(
 				static function ( $column_array ) {
-					return array_map( 'sanitize_text_field', $column_array );
+					if ( is_array( $column_array ) ) {
+						return array_map( 'sanitize_text_field', $column_array );
+					}
+					return sanitize_text_field( $column_array );
 				},
 				wp_unslash( $_POST['screen_options_columns'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			);
