@@ -10,6 +10,7 @@ namespace ScreenOptions\Modules\Column_Assignment;
 use ScreenOptions\Contracts\Interfaces\Registrable;
 use ScreenOptions\Modules\Core\Assets;
 use WP_Query;
+use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
 
 /**
  * Class for Role based Screen option assignment.
@@ -108,18 +109,31 @@ class Role_Based_Screen_Options implements Registrable {
 		$current_user = wp_get_current_user();
 		$user_roles   = (array) $current_user->roles;
 
+		if ( empty( $user_roles ) ) {
+			return 0;
+		}
+
+		// Build meta query to fetch screen options posts based on all user roles.
+		$meta_query = []; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+
+		foreach ( $user_roles as $role ) {
+			$meta_query[] = [
+				'key'     => 'screen_options_roles',
+				'value'   => $role,
+				'compare' => 'LIKE',
+			];
+		}
+
+		if ( count( $meta_query ) > 1 ) {
+			$meta_query['relation'] = 'OR';
+		}
+
 		// Fetch screen options posts based on user role.
 		$screen_options_posts = new WP_Query(
 			[
-				'post_type'      => 'default-screens',
+				'post_type'      => Default_Screen_Options::get_slug(),
 				'posts_per_page' => -1,
-				'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
-					[
-						'key'     => 'screen_options_roles',
-						'value'   => $user_roles[0],
-						'compare' => 'LIKE',
-					],
-				],
+				'meta_query'     => $meta_query, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				'fields'         => 'ids',
 				'post_status'    => 'publish',
 			]
@@ -129,7 +143,7 @@ class Role_Based_Screen_Options implements Registrable {
 			// If no posts found for the role, check for 'all_users'.
 			$screen_options_posts = new WP_Query(
 				[
-					'post_type'      => 'default-screens',
+					'post_type'      => Default_Screen_Options::get_slug(),
 					'posts_per_page' => -1,
 					'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						[
