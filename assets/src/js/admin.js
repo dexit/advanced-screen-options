@@ -15,16 +15,14 @@
 	 * Display a notice banner about locked screen options
 	 */
 	const displayLockedNotice = () => {
-		const noticeHTML = `
-			<div class="notice notice-warning inline screen-options-locked-notice" style="margin: 10px 0;">
-				<p>` + ScreenOptionsSettings.lockMessage + `</p>
-			</div>
-		`;
+		const $notice = $( '<div class="notice notice-warning inline screen-options-locked-notice" style="margin: 10px 0;"><p></p></div>' );
+		// Set the lock message as text to avoid injecting HTML.
+		$notice.find( 'p' ).text( ScreenOptionsSettings.lockMessage );
 
 		// Insert the notice at the top of the metabox-prefs fieldset
 		const $metaboxPrefs = $( 'fieldset.metabox-prefs:not(.view-mode)' );
 		if ( $metaboxPrefs.length ) {
-			$metaboxPrefs.prepend( noticeHTML );
+			$metaboxPrefs.prepend( $notice );
 		}
 	};
 
