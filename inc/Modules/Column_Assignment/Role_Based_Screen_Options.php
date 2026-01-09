@@ -196,7 +196,7 @@ class Role_Based_Screen_Options implements Registrable {
 			[
 				'is_locked'   => $this->get_lock_settings_for_current_role(),
 				'lockMessage' => \sprintf(
-					'<strong>%1s</strong> %2s %3s',
+					'<strong>%1$s</strong> %2$s %3$s',
 					/* translators: 1: Screen Options */
 					__( 'Locked:', 'screen-options' ),
 					__( 'columns are locked by the administrator. To modify your screen options, ', 'screen-options' ),
