@@ -308,3 +308,9 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 		margin-right: 5px;
 	}
 }
+
+
+.form-wrap p, p.description.screen-options-role-warning {
+	color: $error-color;
+	margin-top: 10px;
+}

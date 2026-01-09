@@ -200,7 +200,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			<?php
 		}
 
-		echo '<p class="description" style="color: #d63638; margin-top: 10px;">' . esc_html__( '* At least one role must be selected to publish', 'screen-options' ) . '</p>';
+		echo '<p class="description screen-options-role-warning">' . esc_html__( '* At least one role must be selected to publish', 'screen-options' ) . '</p>';
 	}
 
 	/**
