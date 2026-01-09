@@ -478,7 +478,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				foreach ( $columns as $post_type => $cols ) {
 					// Remove edit- prefix from post type.
 					$post_type = str_replace( 'edit-', '', $post_type );
-					// Add each post type and columnto new line.
+					// Add each post type and column to new line.
 					$column_list[] = esc_html( \ucfirst( $post_type ) . ': ' . implode( ', ', array_map( 'ucfirst', $cols ) ) );
 				}
 				echo wp_kses_post( implode( '<br/> ', $column_list ) );
