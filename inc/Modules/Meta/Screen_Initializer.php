@@ -24,6 +24,28 @@ class Screen_Initializer implements Registrable {
 	public function register_hooks(): void {
 		// Use transient-based caching to limit frequency of initialization.
 		add_action( 'admin_init', [ $this, 'maybe_initialize_screens' ], 5 );
+
+		// On plugin activation and deactivation of any plugin, clear the transient to force re-initialization.
+		add_action( 'activated_plugin', [ $this, 'clear_transient_initialize_screens' ] );
+		add_action( 'deactivated_plugin', [ $this, 'clear_transient_initialize_screens' ] );
+
+		// On plugin or theme update, clear the transient to force re-initialization.
+		add_action( 'upgrader_process_complete', [ $this, 'clear_transient_initialize_screens' ] );
+
+		// On theme switch, clear the transient to force re-initialization.
+		add_action( 'after_switch_theme', [ $this, 'clear_transient_initialize_screens' ] );
+	}
+
+	/**
+	 * Clear the transient to force re-initialization of screens.
+	 *
+	 * @return void
+	 *
+	 * @see maybe_initialize_screens()
+	 */
+	public function clear_transient_initialize_screens(): void {
+		// Clear the transient to force re-initialization on next admin_init.
+		\delete_transient( 'screen_options_last_column_scan' );
 	}
 
 	/**
@@ -53,7 +75,7 @@ class Screen_Initializer implements Registrable {
 		}
 
 		// Set transient for 24 hours to prevent running too frequently.
-		set_transient( 'screen_options_last_column_scan', time(), DAY_IN_SECONDS );
+		set_transient( 'screen_options_last_column_scan', time() );
 
 		// Run the full initialization.
 		$this->initialize_screens_for_columns();
