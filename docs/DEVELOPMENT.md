@@ -33,7 +33,6 @@ Code contributions, bug reports, and feature requests are welcome! The following
 │
 ├── LICENSE
 │
-│   # Non-php plugin assets.
 ├── assets
 │   └── src
 │       ├── admin
@@ -47,7 +46,7 @@ Code contributions, bug reports, and feature requests are welcome! The following
 │       └── js
 │           ├── admin.js
 │           ├── editor.js
-│           └── main.js│
+│           └── main.js
 │   # Project documentation.
 ├── docs/
 │   ├── CODE_OF_CONDUCT.md
@@ -64,15 +63,22 @@ Code contributions, bug reports, and feature requests are welcome! The following
 │   │   │   └── Registrable.php
 │   │   └── Traits
 │   │       └── Singleton.php
-│   ├── Encryptor.php
 │   ├── Main.php
 │   └── Modules
+│       ├── Column_Assignment
+│       │   └── Role_Based_Screen_Options.php
 │       ├── Core
 │       │   ├── Assets.php
 │       │   └── Rest.php
+│       ├── Meta
+│       │   ├── Abstract_Meta_Box.php
+│       │   ├── Screen_Initializer.php
+│       │   └── Screen_Options_Meta.php
+│       ├── Post_Types
+│       │   ├── Abstract_Post_Type.php
+│       │   └── Default_Screen_Options.php
 │       └── Settings
-│           ├── Admin.php
-│           └── Settings.php
+│           └── Admin.php
 │
 │   # Tests
 ├── tests/
@@ -201,11 +207,11 @@ You should see the html coverage report in the `tests/_output/html` directory an
 
 ### Building the plugin for distribution
 
-To build the plugin for distribution, you can use the following commands`:
+To build the plugin for distribution, you can use the following commands:
 
 ```bash
 # IMPORTANT!: Make sure you've cleaned up any dev-dependencies from Composer first:
-composer install --no-dev
+composer install --no-dev --optimize-autoloader
 
 # Clean install of node modules.
 npm ci
@@ -213,7 +219,7 @@ npm ci
 # Create a production-ready build:
 npm run build:prod
 
-## Create the zip file for distribution:
+# Create the zip file for distribution:
 npm run plugin-zip
 ```
 
