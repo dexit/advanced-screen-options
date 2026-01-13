@@ -226,6 +226,7 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 	user-select: none;
 	-webkit-tap-highlight-color: transparent;
 	font-family: $font-stack;
+	padding: 5px 0;
 
 	/* Hide the native checkbox input visually but keep it accessible */
 	input {
