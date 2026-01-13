@@ -3,13 +3,27 @@
 /* =========================================
    1. COLOR THEME (User Preferred)
    ========================================= */
-$primary-color: #3b82f6;     /* Blue */
-$error-color:   #dc2626;     /* Red */
-$text-dark:     #1f2937;     /* Dark Text */
-$text-grey:     #6b7280;     /* Grey Text */
-$border-color:  #e5e7eb;     /* Light Grey Border */
-$bg-hover:      #f9fafb;     /* Very Light Grey */
-$bg-checked:    #e6f2fd;     /* Light Blue Background */
+$primary-color: #3b82f6;
+
+/* Blue */
+$error-color: #dc2626;
+
+/* Red */
+$text-dark: #1f2937;
+
+/* Dark Text */
+$text-grey: #6b7280;
+
+/* Grey Text */
+$border-color: #e5e7eb;
+
+/* Light Grey Border */
+$bg-hover: #f9fafb;
+
+/* Very Light Grey */
+$bg-checked: #e6f2fd;
+
+/* Light Blue Background */
 
 /* Standard Font Stack */
 $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, arial, sans-serif;
@@ -52,7 +66,7 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 		cursor: pointer;
 
 		/* CHECKED State */
-		&:checked + label {
+		&:checked+label {
 			background-color: $bg-checked;
 			border-color: $primary-color;
 			color: $text-dark;
@@ -62,7 +76,7 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 		}
 
 		/* DISABLED State */
-		&:disabled + label {
+		&:disabled+label {
 			background-color: $bg-hover;
 			border-color: $border-color;
 			color: $text-grey;
@@ -71,9 +85,11 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 		}
 
 		/* HOVER: Applied to label when not checked & not disabled */
-		&:not(:disabled):not(:checked) + label:hover {
+		&:not(:disabled):not(:checked)+label:hover {
 			background-color: $bg-hover;
-			border-color: #b0b0b0; /* Slightly darker grey on hover for visibility */
+			border-color: #b0b0b0;
+
+			/* Slightly darker grey on hover for visibility */
 		}
 	}
 }
@@ -109,23 +125,31 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 	}
 }
 
+.screen-options-role-selector {
+	padding: 10px 5px;
+}
+
 /* Component B: Screen Options Card (Grid Layout) */
 .screen-options-card {
 	font-family: $font-stack;
 
 	.card-body {
-		padding: 20px 16px;
+		padding: 10px 5px;
 
 		.option-group {
 			margin-bottom: 24px;
 
 			&:not(:first-child) {
-				border-top: 2px solid $border-color;
 				padding-top: 10px;
 			}
 
 			&:last-child {
 				margin-bottom: 0;
+				padding:10px;
+				border-left: 1px solid $border-color;
+				border-right: 1px solid $border-color;
+				border-bottom: 1px solid $border-color;
+				border-radius: 0 0 8px 8px;
 			}
 
 			h3 {
@@ -158,13 +182,15 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 }
 
 /* Component: Screen Options Lock Column Styling */
-.screen_options_lock{
+.screen_options_lock {
 
-	.column-icon-container{
+	.column-icon-container {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: color.adjust($text-grey, $lightness: 15%); /* Adjusted slightly lighter than text-grey to match source */
+		color: color.adjust($text-grey, $lightness: 15%);
+
+		/* Adjusted slightly lighter than text-grey to match source */
 		transition: color 0.2s ease;
 		width: 35px;
 		height: 35px;
@@ -178,12 +204,14 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 			border-radius: 5px;
 		}
 
-		.icon-locked{
-			color: color.adjust($primary-color, $lightness: -15%); /* Mapped from #1e40af */
+		.icon-locked {
+			color: color.adjust($primary-color, $lightness: -15%);
+
+			/* Mapped from #1e40af */
 			background-color: $bg-checked;
 		}
 
-		.icon-unlocked{
+		.icon-unlocked {
 			color: $text-grey;
 		}
 	}
@@ -214,16 +242,24 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 		justify-content: space-between;
 		align-items: center;
 		background-color: #fff;
-		border: 1px solid $border-color; /* Mapped from #e5e7eb */
-		border-radius: 8px; /* Rounded corners */
+		border: 1px solid $border-color;
+
+		/* Mapped from #e5e7eb */
+		border-radius: 8px;
+
+		/* Rounded corners */
 		padding: 20px 24px;
 		box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 		transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
 		/* Icon Animation Defaults (Unchecked) */
-		.icon-locked { display: none; }
+		.icon-locked {
+			display: none;
+		}
 
-		.icon-unlocked { display: block; }
+		.icon-unlocked {
+			display: block;
+		}
 	}
 
 	/* Text styling */
@@ -235,13 +271,17 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 		.title {
 			font-size: 16px;
 			font-weight: 600;
-			color: $text-dark; /* Mapped from #111827 */
+			color: $text-dark;
+
+			/* Mapped from #111827 */
 			letter-spacing: -0.01em;
 		}
 
 		.subtitle {
 			font-size: 14px;
-			color: $text-grey; /* Mapped from #6b7280 */
+			color: $text-grey;
+
+			/* Mapped from #6b7280 */
 			font-weight: 400;
 			padding: 0;
 		}
@@ -252,7 +292,9 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		color: color.adjust($text-grey, $lightness: 15%); /* Adjusted slightly lighter than text-grey to match source */
+		color: color.adjust($text-grey, $lightness: 15%);
+
+		/* Adjusted slightly lighter than text-grey to match source */
 		transition: color 0.2s ease;
 		width: 24px;
 		height: 24px;
@@ -269,36 +311,54 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 
 	/* Hover state */
 	&:hover .card-content {
-		border-color: color.adjust($border-color, $lightness: -10%); /* Mapped from #d1d5db */
-		background-color: $bg-hover; /* Mapped from #f9fafb */
+		border-color: color.adjust($border-color, $lightness: -10%);
+
+		/* Mapped from #d1d5db */
+		background-color: $bg-hover;
+
+		/* Mapped from #f9fafb */
 	}
 
 	/* CHECKED STATE */
-	input:checked + .card-content {
-		border-color: $primary-color; /* Mapped from #2563eb */
-		background-color: $bg-checked; /* Mapped from #eff6ff */
-		box-shadow: 0 0 0 1px $primary-color; /* Mapped from #2563eb */
+	input:checked+.card-content {
+		border-color: $primary-color;
+
+		/* Mapped from #2563eb */
+		background-color: $bg-checked;
+
+		/* Mapped from #eff6ff */
+		box-shadow: 0 0 0 1px $primary-color;
+
+		/* Mapped from #2563eb */
 
 		/* Change title color when checked */
 		.title {
-			color: color.adjust($primary-color, $lightness: -15%); /* Mapped from #1e40af */
+			color: color.adjust($primary-color, $lightness: -15%);
+
+			/* Mapped from #1e40af */
 		}
 
 		/* Change icon color when checked */
 		.icon-container {
-			color: $primary-color; /* Mapped from #2563eb */
+			color: $primary-color;
+
+			/* Mapped from #2563eb */
 		}
 
 		/* Swap icons on check */
-		.icon-unlocked { display: none; }
+		.icon-unlocked {
+			display: none;
+		}
 
-		.icon-locked { display: block; }
+		.icon-locked {
+			display: block;
+		}
 	}
 }
 
 .screen_options_roles {
 
-	.role-badge{
+	.role-badge {
 		background-color: $border-color;
 		padding: 5px;
 		border-radius: 4px;
@@ -310,7 +370,57 @@ $font-stack: -apple-system, blinkmacsystemfont, "Segoe UI", roboto, helvetica, a
 }
 
 
-.form-wrap p, p.description.screen-options-role-warning {
+.form-wrap p,
+p.description.screen-options-role-warning {
 	color: $error-color;
 	margin-top: 10px;
+}
+
+/* =========================================
+           2. ACCORDION (DETAILS/SUMMARY)
+========================================= */
+
+details {
+	margin-bottom: 8px;
+}
+
+summary {
+	list-style: none;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	cursor: pointer;
+	padding: 16px 24px;
+	font-size: 1.1rem;
+	font-weight: 700;
+	color: $text-dark;
+	user-select: none;
+	transition: border-color 0.2s ease;
+	border: 1px solid $border-color;
+	border-radius: 8px;
+	background-color: $bg-hover;
+}
+
+details[open] summary {
+	border-color: $border-color;
+	border-bottom:none;
+	border-radius: 8px 8px 0 0;
+}
+
+summary::-webkit-details-marker {
+	display: none;
+}
+
+summary::after {
+	content: "";
+	width: 8px;
+	height: 8px;
+	border-right: 2.5px solid $text-grey;
+	border-bottom: 2.5px solid $text-grey;
+	transform: rotate(45deg);
+	transition: transform 0.2s ease;
+}
+
+details[open] summary::after {
+	transform: rotate(-135deg);
 }

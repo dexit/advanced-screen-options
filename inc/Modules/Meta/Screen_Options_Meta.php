@@ -27,7 +27,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	public function register_meta_box(): void {
 		add_meta_box(
 			self::get_id(),
-			__( 'Screen Options Settings', 'screen-options' ),
+			__( 'Post Assignment', 'screen-options' ),
 			[ $this, 'render_meta_box' ],
 			Default_Screen_Options::get_slug(),
 			'normal',
@@ -41,7 +41,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			[ $this, 'render_role_meta_box' ],
 			Default_Screen_Options::get_slug(),
 			'normal',
-			'default'
+			'high'
 		);
 
 		// Add Lock Settings meta box.
@@ -98,16 +98,9 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				continue;
 			}
 			?>
+				<details>
+					<summary><?php echo esc_html( \ucfirst( $post_type->name ) ); ?></summary>
 					<div class="option-group">
-							<h3>
-							<?php
-								printf(
-									/* translators: %s Post Type Name */
-									esc_html__( 'Screen Options: %s', 'screen-options' ),
-									esc_html( \ucfirst( $post_type->name ) )
-								);
-							?>
-								</h3>
 							<div class="checkbox-list">
 					<?php
 					foreach ( $columns[ 'edit-' . $post_type->name ] as $column_id => $column_name ) {
@@ -133,6 +126,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 					?>
 							</div>
 					</div>
+				</details>
 					<?php
 		}
 		?>
@@ -166,19 +160,20 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 
 		// Add all users options.
 		?>
-		<div class="role-selector">
-			<div class="selection-item">
-				<input type="checkbox" name="screen_options_assigned_roles[]" value="all_users" id="role-all-users"
-				<?php \checked( in_array( 'all_users', $all_saved_roles, true ) ? false : in_array( 'all_users', $saved_roles, true ), true, true ); ?>
-				<?php echo in_array( 'all_users', $all_saved_roles, true ) ? 'disabled="disabled"' : ''; ?>>
-				<label for="role-all-users">
-					<span class="role-name"><?php echo esc_html__( 'All Users', 'screen-options' ); ?></span>
-					<?php if ( in_array( 'all_users', $all_saved_roles, true ) ) : ?>
-						<span class="status-text error"><?php echo esc_html__( 'Already configured', 'screen-options' ); ?></span>
-					<?php endif; ?>
-				</label>
+		<div class="screen-options-role-selector">
+			<div class="role-selector">
+				<div class="selection-item">
+					<input type="checkbox" name="screen_options_assigned_roles[]" value="all_users" id="role-all-users"
+					<?php \checked( in_array( 'all_users', $all_saved_roles, true ) ? false : in_array( 'all_users', $saved_roles, true ), true, true ); ?>
+					<?php echo in_array( 'all_users', $all_saved_roles, true ) ? 'disabled="disabled"' : ''; ?>>
+					<label for="role-all-users">
+						<span class="role-name"><?php echo esc_html__( 'All Users', 'screen-options' ); ?></span>
+						<?php if ( in_array( 'all_users', $all_saved_roles, true ) ) : ?>
+							<span class="status-text error"><?php echo esc_html__( 'Already configured', 'screen-options' ); ?></span>
+						<?php endif; ?>
+					</label>
+				</div>
 			</div>
-		</div>
 		<?php
 
 		$roles = \wp_roles()->roles;
@@ -199,8 +194,10 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			</div>
 			<?php
 		}
-
-		echo '<p class="description screen-options-role-warning">' . esc_html__( '* At least one role must be selected to publish', 'screen-options' ) . '</p>';
+		?>
+			<p class="description screen-options-role-warning"><?php echo esc_html__( '* At least one role must be selected to publish', 'screen-options' ); ?></p>
+		</div>
+		<?php
 	}
 
 	/**
