@@ -130,6 +130,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 					<?php
 		}
 		?>
+			<p class="description screen-options-role-warning no-roles-error"><?php esc_html_e( '* At least one role must be selected to publish', 'screen-options' ); ?></p>
 				</div>
 		</div>
 		<?php
@@ -142,6 +143,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		global $post;
 
 		\wp_nonce_field( 'screen_options_save_meta', 'screen_options_meta_nonce' );
+		\wp_nonce_field( 'screen_options_role_check', 'screen_options_role_check_nonce' );
 
 		// Get all saved roles from post meta.
 		$all_saved_roles = self::get_all_saved_roles();
@@ -392,6 +394,90 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	}
 
 	/**
+	 * AJAX handler to get accessible post types for selected roles.
+	 */
+	public function ajax_get_accessible_post_types(): void {
+		// Check nonce for security.
+		check_ajax_referer( 'screen_options_role_check', 'nonce' );
+
+		// Get roles from request.
+		$roles = isset( $_POST['roles'] ) && is_array( $_POST['roles'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['roles'] ) ) : [];
+
+		if ( empty( $roles ) ) {
+			wp_send_json_success(
+				[
+					'accessible_post_types' => [],
+					'message'               => __( 'No roles selected', 'screen-options' ),
+				]
+			);
+		}
+
+		// Get all public post types.
+		$all_post_types = \get_post_types(
+			[
+				'public'   => true,
+				'_builtin' => false,
+			],
+			'objects',
+			'or'
+		);
+
+		// Remove screen options post type from the list.
+		unset( $all_post_types[ Default_Screen_Options::get_slug() ] );
+
+		$accessible_post_types = [];
+
+		// Check if 'all_users' is selected.
+		if ( in_array( 'all_users', $roles, true ) ) {
+			// If 'all_users' is selected, return all post types.
+			foreach ( $all_post_types as $post_type ) {
+				$accessible_post_types[] = $post_type->name;
+			}
+		} else {
+			// Check each post type for each role.
+			foreach ( $all_post_types as $post_type ) {
+				$has_access = false;
+
+				// Check if any of the selected roles has access to this post type.
+				foreach ( $roles as $role_key ) {
+					$role = get_role( $role_key );
+
+					if ( ! $role ) {
+						continue;
+					}
+
+					if ( $this->check_role_access_to_post_type( $role_key, $post_type->name ) ) {
+						$has_access = true;
+						break;
+					}
+				}
+
+				if ( ! $has_access ) {
+					continue;
+				}
+
+				$accessible_post_types[] = $post_type->name;
+			}
+		}
+
+		if ( empty( $accessible_post_types ) ) {
+			wp_send_json_success(
+				[
+					'accessible_post_types' => [],
+					'message'               => __( 'No accessible post types for selected roles', 'screen-options' ),
+				]
+			);
+		}
+
+		wp_send_json_success(
+			[
+				'accessible_post_types' => $accessible_post_types,
+				'message'               => __( 'Post types retrieved successfully', 'screen-options' ),
+			]
+		);
+	}
+
+	/**
 	 * Add custom columns to post list table.
 	 *
 	 * @param array<string, string> $columns Existing columns.
@@ -481,5 +567,32 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				echo wp_kses_post( implode( '<br/> ', $column_list ) );
 				break;
 		}
+	}
+
+	/**
+	 * Check if a specific role can edit a specific post type.
+	 *
+	 * @param string $role_slug The slug of the role (e.g., 'editor', 'author').
+	 * @param string $post_type The slug of the post type (e.g., 'post', 'product').
+	 * @return bool
+	 */
+	public function check_role_access_to_post_type( $role_slug, $post_type ) {
+		// Get the Role Object.
+		$role = get_role( $role_slug );
+
+		// Get the Post Type Object.
+		$post_type_object = get_post_type_object( $post_type );
+
+		// Safety checks to ensure role and post type exist.
+		if ( ! $role || ! $post_type_object ) {
+			return false;
+		}
+
+		// Get the specific capability required to edit this post type.
+		// This handles both standard posts ('edit_posts') and CPTs ('edit_products').
+		$required_cap = $post_type_object->cap->edit_posts;
+
+		// Check if the role has this capability.
+		return $role->has_cap( $required_cap );
 	}
 }

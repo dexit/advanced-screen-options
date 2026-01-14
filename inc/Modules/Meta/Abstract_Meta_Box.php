@@ -29,6 +29,8 @@ abstract class Abstract_Meta_Box implements Registrable {
 		add_action( 'save_post', [ $this, 'save_meta_box_data' ] );
 		add_filter( 'manage_edit-default-screens_columns', [ $this, 'add_custom_post_columns_screen_options' ] );
 		add_action( 'manage_default-screens_posts_custom_column', [ $this, 'custom_post_column_content_screen_options' ], 10, 2 );
+		// Register AJAX handlers.
+		add_action( 'wp_ajax_screen_options_get_accessible_post_types', [ $this, 'ajax_get_accessible_post_types' ] );
 	}
 
 	/**
@@ -68,4 +70,11 @@ abstract class Abstract_Meta_Box implements Registrable {
 	 * @return void
 	 */
 	abstract public function custom_post_column_content_screen_options( string $column, int $post_id ): void;
+
+	/**
+	 * AJAX handler to get accessible post types.
+	 *
+	 * @return void
+	 */
+	abstract public function ajax_get_accessible_post_types(): void;
 }
