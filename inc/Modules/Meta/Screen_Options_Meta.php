@@ -27,7 +27,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	public function register_meta_box(): void {
 		add_meta_box(
 			self::get_id(),
-			__( 'Post Assignment', 'screen-options' ),
+			__( 'Post Assignment <em>(Expand posts to select post columns)</em>', 'screen-options' ),
 			[ $this, 'render_meta_box' ],
 			Default_Screen_Options::get_slug(),
 			'normal',
