@@ -53,133 +53,91 @@
 		}
 	};
 
-	/**
-	 * Handle role selection changes and filter post types in Post Assignment metabox
-	 */
-	const handleRoleSelectionChange = () => {
-		// Check if we're on the screen options post type edit screen.
-		if ( typeof ScreenOptionsSettings === 'undefined' || ! ScreenOptionsSettings.ajax_url || ! ScreenOptionsSettings.post_type ) {
-			return;
-		}
-
-		const $roleCheckboxes = $( 'input[name="screen_options_assigned_roles[]"]' );
-		const $postAssignmentMetabox = $( '#screen_options_meta_box' );
-
-		if ( $roleCheckboxes.length === 0 || $postAssignmentMetabox.length === 0 ) {
-			return;
-		}
-
-		/**
-		 * Get selected roles
-		 */
-		const getSelectedRoles = () => {
-			const selectedRoles = [];
-			$roleCheckboxes.each( function() {
-				if ( $( this ).is( ':checked' ) && ! $( this ).is( ':disabled' ) ) {
-					selectedRoles.push( $( this ).val() );
-				}
-			} );
-			return selectedRoles;
-		};
-
-		/**
-		 * Update post type visibility based on accessible post types
-		 *
-		 * @param {Array}  accessiblePostTypes List of accessible post types
-		 * @param {string} message             Optional message to display
-		 *
-		 * @return {void}
-		 */
-		const updatePostTypeVisibility = ( accessiblePostTypes, message = '' ) => {
-			const $details = $postAssignmentMetabox.find( 'details' );
-
-			if ( accessiblePostTypes.length === 0 ) {
-				// Show message if provided.
-				if ( message ) {
-					$postAssignmentMetabox.find( '.no-roles-error' ).text( message );
-				}
-
-				// Hide all post types if no roles selected or no accessible post types.
-				$details.hide();
-				return;
-			}
-
-			// Clear any previous messages.
-			$postAssignmentMetabox.find( '.no-roles-error' ).text( '' );
-
-			// Show/hide each post type based on accessibility.
-			$details.each( function() {
-				const $detail = $( this );
-				const $summary = $detail.find( 'summary' );
-				const postTypeName = $summary.text().trim().toLowerCase();
-
-				// Check if this post type is in the accessible list.
-				const isAccessible = accessiblePostTypes.some( function( accessibleType ) {
-					return accessibleType.toLowerCase() === postTypeName;
-				} );
-
-				if ( isAccessible ) {
-					$detail.show();
-				} else {
-					$detail.hide();
-					// Uncheck all checkboxes in hidden post types.
-					$detail.find( 'input[type="checkbox"]' ).prop( 'checked', false );
-				}
-			} );
-		};
-
-		/**
-		 * Fetch accessible post types via AJAX
-		 */
-		const fetchAccessiblePostTypes = () => {
-			const selectedRoles = getSelectedRoles();
-
-			if ( selectedRoles.length === 0 ) {
-				// No roles selected, hide all post types.
-				updatePostTypeVisibility( [] );
-				return;
-			}
-
-			// Show loading indicator (optional).
-			$postAssignmentMetabox.css( 'opacity', '0.5' );
-
-			$.ajax( {
-				url: ScreenOptionsSettings.ajax_url,
-				type: 'POST',
-				data: {
-					action: 'screen_options_get_accessible_post_types',
-					roles: selectedRoles,
-					nonce: ScreenOptionsSettings.role_nonce,
-				},
-				success( response ) {
-					if ( response.success && response.data.accessible_post_types ) {
-						updatePostTypeVisibility( response.data.accessible_post_types, response.data.message || '' );
-					} else {
-						updatePostTypeVisibility( [], response.data.message || '' );
-					}
-				},
-				error() {
-					// On error, show all post types (fail-safe).
-					updatePostTypeVisibility( [], '' );
-				},
-				complete() {
-					// Remove loading indicator.
-					$postAssignmentMetabox.css( 'opacity', '1' );
-				},
-			} );
-		};
-
-		// Bind change event to role checkboxes.
-		$roleCheckboxes.on( 'change', function() {
-			fetchAccessiblePostTypes();
-		} );
-
-		// Initialize on page load with currently selected roles.
-		fetchAccessiblePostTypes();
+	// Simulating lock state per post type (In real app, fetch from DB)
+	const lockStates = {
+		post: false,
+		page: false,
+		product: false,
 	};
+
+	// --- 1. Global Lock Logic ---
+	$( '#global-lock-check' ).change( function() {
+		const isLocked = $( this ).is( ':checked' );
+		const currentType = $( '#post-type-select' ).val();
+
+		// Update simulated state
+		lockStates[ currentType ] = isLocked;
+
+		updateVisualLockState( currentType, isLocked );
+	} );
+
+	function updateVisualLockState( type, locked ) {
+		const panel = $( '#postbox-' + type );
+
+		if ( locked ) {
+			panel.addClass( 'global-locked' );
+			panel.find( '.locked-badge' ).fadeIn();
+		} else {
+			panel.removeClass( 'global-locked' );
+			panel.find( '.locked-badge' ).fadeOut();
+		}
+	}
+
+	// --- 2. Post Type Switcher ---
+	$( '#post-type-select' ).change( function() {
+		const selectedType = $( this ).val();
+
+		// Switch Panels
+		$( '.settings-panel' ).removeClass( 'active-panel' );
+		$( '#panel-' + selectedType ).addClass( 'active-panel' );
+
+		// Sync Lock Switch with simulated state
+		const isLocked = lockStates[ selectedType ];
+		$( '#global-lock-check' ).prop( 'checked', isLocked );
+
+		// Ensure visual state matches
+		// Reset all first
+		$( '.postbox' ).removeClass( 'global-locked' );
+		$( '.locked-badge' ).hide();
+		// Apply to current
+		updateVisualLockState( selectedType, isLocked );
+	} );
+
+	// --- 3. Role Selection Logic ---
+	function validate() {
+		if ( $( '.role-check:checked' ).length > 0 ) {
+			$( '#settings-area' ).removeClass( 'disabled' );
+			$( '#role-error' ).hide();
+			$( '#save-btn' ).prop( 'disabled', false );
+		} else {
+			$( '#settings-area' ).addClass( 'disabled' );
+			$( '#role-error' ).fadeIn();
+			$( '#save-btn' ).prop( 'disabled', true );
+		}
+	}
+
+	$( '.role-row label' ).click( function( e ) {
+		if ( e.target.type !== 'checkbox' ) {
+			const chk = $( this ).find( 'input[type="checkbox"]' );
+			// Don't toggle if checkbox is disabled
+			if ( ! chk.prop( 'disabled' ) ) {
+				chk.prop( 'checked', ! chk.prop( 'checked' ) ).change();
+			}
+		}
+	} );
+
+	$( '.role-check' ).change( function() {
+		const row = $( this ).closest( '.role-row' );
+		if ( $( this ).is( ':checked' ) ) {
+			row.addClass( 'selected' );
+		} else {
+			row.removeClass( 'selected' );
+		}
+		validate();
+	} );
 
 	$( document ).ready( () => {
 		checkScreenOptionsLock();
-		handleRoleSelectionChange();
+		validate();
 	} );
 }( jQuery ) );

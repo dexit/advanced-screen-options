@@ -70,8 +70,12 @@ class Role_Based_Screen_Options implements Registrable {
 
 		$columns_for_screen = [];
 
+		// Get current columns for the screen.
+		$current_columns = array_keys( get_column_headers( $screen->id ) );
+
 		// Determine screen ID key for selected columns.
-		$screen_id_key = $screen->id;
+		$screen_id_key = \str_replace( 'edit-', '', $screen->id );
+
 		if ( isset( $selected_columns[ $screen_id_key ] ) ) {
 			$columns_for_screen = $selected_columns[ $screen_id_key ];
 		}
@@ -81,10 +85,8 @@ class Role_Based_Screen_Options implements Registrable {
 		}
 
 		$columns_for_screen[] = 'title';
+		$cb_column_key        = array_search( 'cb', $current_columns, true );
 
-		// Get current columns for the screen.
-		$current_columns = array_keys( get_column_headers( $screen_id_key ) );
-		$cb_column_key   = array_search( 'cb', $current_columns, true );
 		if ( false !== $cb_column_key ) {
 			unset( $current_columns[ $cb_column_key ] ); // Remove checkbox column if present.
 		}
@@ -130,7 +132,18 @@ class Role_Based_Screen_Options implements Registrable {
 		}
 
 		if ( count( $meta_query ) > 1 ) {
-			$meta_query['relation'] = 'OR';
+			$meta_query[]['relation'] = 'OR';
+		}
+
+		// Get current post type.
+		$screen = get_current_screen();
+		if ( ! empty( $screen ) && ! empty( $screen->post_type ) ) {
+			$meta_query['relation'] = 'AND';
+			$meta_query[]           = [
+				'key'     => 'screen_options_post_type',
+				'value'   => $screen->post_type,
+				'compare' => '=',
+			];
 		}
 
 		// Fetch screen options posts based on user role.

@@ -27,30 +27,10 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	public function register_meta_box(): void {
 		add_meta_box(
 			self::get_id(),
-			__( 'Post Assignment <em>(Expand posts to select post columns)</em>', 'screen-options' ),
+			__( 'Column Visibility Settings', 'screen-options' ),
 			[ $this, 'render_meta_box' ],
 			Default_Screen_Options::get_slug(),
 			'normal',
-			'default'
-		);
-
-		// Add meta box for role selection.
-		add_meta_box(
-			'screen_options_role_meta_box',
-			__( 'Assign Roles', 'screen-options' ),
-			[ $this, 'render_role_meta_box' ],
-			Default_Screen_Options::get_slug(),
-			'normal',
-			'high'
-		);
-
-		// Add Lock Settings meta box.
-		add_meta_box(
-			'screen_options_lock_meta_box',
-			__( 'Lock Screen Options', 'screen-options' ),
-			[ $this, 'render_lock_meta_box' ],
-			Default_Screen_Options::get_slug(),
-			'side',
 			'default'
 		);
 
@@ -60,90 +40,13 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 
 	/**
 	 * Render meta box content.
+	 *
+	 * @return void
 	 */
 	public function render_meta_box(): void {
 		global $post;
 
-		// Get all available post types except the screen options post type.
-		$post_types = \get_post_types(
-			[
-				'public'   => true,
-				'_builtin' => false,
-			],
-			'objects',
-			'or'
-		);
-
-		$columns = \get_option( 'screen_options_available_columns', [] );
-
-		// Get saved columns for this post.
-		$saved_columns = [];
-		if ( $post && $post->ID ) {
-			$post_meta = \get_post_meta( $post->ID, 'screen_options_columns', true );
-			if ( ! empty( $post_meta ) && is_array( $post_meta ) ) {
-				$saved_columns = $post_meta;
-			}
-		}
-
-		// Remove screen options post type from the list.
-		unset( $post_types[ Default_Screen_Options::get_slug() ] );
-
-		?>
-		<div class="screen-options-card">
-				<div class="card-body">
-		<?php
-		foreach ( $post_types as $post_type ) {
-			// Get all screen options columns for a post type and add checkboxes to enable/disable them also add a checkbox to lock/unlock them.
-			if ( ! isset( $columns[ 'edit-' . $post_type->name ] ) || ! is_array( $columns[ 'edit-' . $post_type->name ] ) ) {
-				continue;
-			}
-			?>
-				<details>
-					<summary><?php echo esc_html( \ucfirst( $post_type->name ) ); ?></summary>
-					<div class="option-group">
-							<div class="checkbox-list">
-					<?php
-					foreach ( $columns[ 'edit-' . $post_type->name ] as $column_id => $column_name ) {
-						if ( 'cb' === $column_id || 'title' === $column_id ) {
-							continue;
-						}
-
-							// Check if this column is saved for this post type.
-							$is_checked = isset( $saved_columns[ 'edit-' . $post_type->name ] ) && in_array( $column_id, $saved_columns[ 'edit-' . $post_type->name ], true );
-							// Default to checked if no saved data.
-						if ( empty( $saved_columns ) ) {
-							$is_checked = true;
-						}
-						?>
-							<div class="checkbox-card">
-								<input type="checkbox" id="post-<?php echo esc_attr( $post_type->name . '-' . $column_id ); ?>" value="<?php echo esc_attr( $column_id ); ?>" name="screen_options_columns[<?php echo esc_attr( 'edit-' . $post_type->name ); ?>][]" <?php \checked( $is_checked, true, true ); ?>>
-								<label for="post-<?php echo esc_attr( $post_type->name . '-' . $column_id ); ?>">
-									<span class="card-label"><?php echo esc_html( \wp_strip_all_tags( $column_name ) ); ?></span>
-								</label>
-							</div>
-							<?php
-					}
-					?>
-							</div>
-					</div>
-				</details>
-					<?php
-		}
-		?>
-			<p class="description screen-options-role-warning no-roles-error"><?php esc_html_e( '* At least one role must be selected to publish', 'screen-options' ); ?></p>
-				</div>
-		</div>
-		<?php
-	}
-
-	/**
-	 * Render role meta box content.
-	 */
-	public function render_role_meta_box(): void {
-		global $post;
-
 		\wp_nonce_field( 'screen_options_save_meta', 'screen_options_meta_nonce' );
-		\wp_nonce_field( 'screen_options_role_check', 'screen_options_role_check_nonce' );
 
 		// Get all saved roles from post meta.
 		$all_saved_roles = self::get_all_saved_roles();
@@ -157,87 +60,187 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			}
 		}
 
+		$selected_post_type = '';
+		if ( $post && $post->ID ) {
+			$post_meta = \get_post_meta( $post->ID, 'screen_options_post_type', true );
+			if ( ! empty( $post_meta ) && is_string( $post_meta ) ) {
+				$selected_post_type = $post_meta;
+			}
+		}
+
 		// Get all roles except current saved role.
 		$all_saved_roles = array_diff( $all_saved_roles, $saved_roles );
 
-		// Add all users options.
-		?>
-		<div class="screen-options-role-selector">
-			<div class="role-selector">
-				<div class="selection-item">
-					<input type="checkbox" name="screen_options_assigned_roles[]" value="all_users" id="role-all-users"
-					<?php \checked( in_array( 'all_users', $all_saved_roles, true ) ? false : in_array( 'all_users', $saved_roles, true ), true, true ); ?>
-					<?php echo in_array( 'all_users', $all_saved_roles, true ) ? 'disabled="disabled"' : ''; ?>>
-					<label for="role-all-users">
-						<span class="role-name"><?php echo esc_html__( 'All Users', 'screen-options' ); ?></span>
-						<?php if ( in_array( 'all_users', $all_saved_roles, true ) ) : ?>
-							<span class="status-text error"><?php echo esc_html__( 'Already configured', 'screen-options' ); ?></span>
-						<?php endif; ?>
-					</label>
-				</div>
-			</div>
-		<?php
-
+		// Get all available roles.
 		$roles = \wp_roles()->roles;
-		foreach ( $roles as $role_key => $role ) {
-			$is_checked      = in_array( $role_key, $saved_roles, true );
-			$role_to_disable = in_array( $role_key, $all_saved_roles, true );
-			?>
-			<div class="role-selector">
-				<div class="selection-item">
-					<input type="checkbox" name="screen_options_assigned_roles[]" value="<?php echo esc_attr( $role_key ); ?>" id="role-<?php echo esc_attr( $role_key ); ?>" <?php \checked( $is_checked, true, true ); ?> <?php echo $role_to_disable ? 'disabled="disabled"' : ''; ?>>
-					<label for="role-<?php echo esc_attr( $role_key ); ?>">
-						<span class="role-name"><?php echo esc_html( $role['name'] ); ?></span>
-						<?php if ( in_array( $role_key, $all_saved_roles, true ) ) : ?>
-							<span class="status-text error"><?php echo esc_html__( 'Already configured', 'screen-options' ); ?></span>
-						<?php endif; ?>
-					</label>
+		?>
+		<div class="admin-grid">
+
+			<!-- LEFT COLUMN: Roles -->
+			<div class="left-col">
+				<div class="postbox">
+					<div class="postbox-header">
+						<h2><?php esc_html_e( 'Select Roles', 'screen-options' ); ?></h2>
+						<span id="role-error" class="error-msg"><?php esc_html_e( 'Selection Required', 'screen-options' ); ?></span>
+					</div>
+					<div class="inside inside-flush">
+						<div class="role-list">
+							<div class="role-row">
+								<input type="checkbox" id="role-all" class="role-check" data-target="all" <?php \checked( in_array( 'all_users', $all_saved_roles, true ) ? false : in_array( 'all_users', $saved_roles, true ), true ); ?> <?php \disabled( in_array( 'all_users', $all_saved_roles, true ), true ); ?>>
+								<label for="role-all"><?php esc_html_e( 'All Users', 'screen-options' ); ?></label>
+								<div class="role-separator"></div>
+							</div>
+							<?php foreach ( $roles as $role_key => $role ) : ?>
+								<?php
+								$is_checked      = in_array( $role_key, $saved_roles, true );
+								$role_to_disable = in_array( $role_key, $all_saved_roles, true );
+								?>
+								<div class="role-row <?php echo $role_to_disable ? 'disabled' : ''; ?>">
+									<input type="checkbox" name="screen_options_assigned_roles[]" id="role-<?php echo esc_attr( $role_key ); ?>" class="role-check" <?php \disabled( $role_to_disable, true ); ?>" value="<?php echo esc_attr( $role_key ); ?>" <?php \checked( $is_checked, true, true ); ?> <?php echo $role_to_disable ? 'disabled="disabled"' : ''; ?>>
+									<label for="role-<?php echo esc_attr( $role_key ); ?>"><?php echo esc_html( $role['name'] ); ?></label>
+									<?php if ( $role_to_disable ) : ?>
+										<span class="status-text error"><?php echo esc_html__( 'Already configured', 'screen-options' ); ?></span>
+									<?php endif; ?>
+								</div>
+							<?php endforeach; ?>
+						</div>
+					</div>
 				</div>
 			</div>
+
 			<?php
-		}
-		?>
-			<p class="description screen-options-role-warning"><?php echo esc_html__( '* At least one role must be selected to publish', 'screen-options' ); ?></p>
-		</div>
-		<?php
-	}
+				// Get all available post types except the screen options post type.
+				$post_types = \get_post_types(
+					[
+						'public'   => true,
+						'_builtin' => false,
+					],
+					'objects',
+					'or'
+				);
 
-	/**
-	 * Render lock meta box content.
-	 */
-	public function render_lock_meta_box(): void {
-		global $post;
+				$columns = \get_option( 'screen_options_available_columns', [] );
 
-		// Get saved lock setting for this post.
-		$is_locked = false;
-		if ( $post && $post->ID ) {
-			$is_locked = (bool) \get_post_meta( $post->ID, 'screen_options_lock', true );
-		}
+				// Get saved columns for this post.
+				$saved_columns = [];
+			if ( $post && $post->ID ) {
+				$post_meta = \get_post_meta( $post->ID, 'screen_options_columns', true );
+				if ( ! empty( $post_meta ) && is_array( $post_meta ) ) {
+					$saved_columns = $post_meta;
+				}
+			}
 
-		?>
-		<label class="config-checkbox">
-			<input type="checkbox" name="screen_options_lock_settings" <?php checked( $is_locked, true ); ?> value="1">
-			<div class="card-content">
-				<div class="text-group">
-					<span class="title"><?php esc_html_e( 'Lock Configuration', 'screen-options' ); ?></span>
-					<span class="subtitle"><?php esc_html_e( 'Prevent users from modifying screen options', 'screen-options' ); ?></span>
+				// Remove screen options post type from the list.
+				unset( $post_types[ Default_Screen_Options::get_slug() ] );
+			?>
+			<!-- RIGHT COLUMN: Settings -->
+			<div id="settings-area" class="disabled">
+
+				<!-- Toolbar with Post Type AND Global Lock -->
+				<div class="selector-toolbar">
+					<!-- Post Type Selector -->
+					<div class="toolbar-group">
+						<label for="post-type-select" class="label-strong"><?php esc_html_e( 'Post Type:', 'screen-options' ); ?></label>
+						<select id="post-type-select" class="wp-select" name="screen_options_post_type">
+							<option value=""><?php esc_html_e( 'Select Post Type', 'screen-options' ); ?></option>
+							<?php
+							foreach ( $columns as $post_type_key => $column ) {
+								$post_type_key = str_replace( 'edit-', '', $post_type_key );
+								if ( ! $post_type_key ) {
+									continue;
+								}
+								?>
+								<option value="<?php echo esc_attr( $post_type_key ); ?>" <?php \selected( $post_type_key, $selected_post_type ); ?>><?php echo esc_html( ucfirst( $post_type_key ) ); ?></option>
+								<?php
+							}
+							?>
+						</select>
+					</div>
+
+					<div class="toolbar-divider"></div>
+
+				<?php
+				// Get saved lock setting for this post.
+				$is_locked = false;
+				if ( $post && $post->ID ) {
+					$is_locked = (bool) \get_post_meta( $post->ID, 'screen_options_lock', true );
+				}
+				?>
+					<!-- Global Lock Toggle -->
+					<div class="toolbar-group">
+						<label for="global-lock-check" class="label-strong-flex">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+							<?php esc_html_e( 'Lock Screen Options', 'screen-options' ); ?>
+							<span class="help-tip" data-tooltip="<?php esc_attr_e( 'If enabled, users cannot change any column visibility settings in their Screen Options tab.', 'screen-options' ); ?>">?</span>
+						</label>
+						<label class="wp-switch lock-switch">
+							<input type="checkbox" id="global-lock-check" <?php checked( $is_locked, true, true ); ?> name="screen_options_lock_settings" value="1">
+							<span class="slider"></span>
+						</label>
+					</div>
 				</div>
 
-				<div class="icon-container">
-					<!-- Icon: Unlocked (Shown when unchecked) -->
-					<svg class="lock-icon icon-unlocked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-						<path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
-					</svg>
+				<?php
+				// Settings Panels for each Post Type.
+				foreach ( $columns as $post_type_key => $columns ) :
+					$post_type_key = str_replace( 'edit-', '', $post_type_key );
+					if ( ! $post_type_key ) {
+						continue;
+					}
+					?>
+				<!-- 1. Post Settings Panel -->
+				<div id="panel-<?php echo esc_attr( $post_type_key ); ?>" class="settings-panel <?php echo esc_attr( $post_type_key === $selected_post_type ? 'active-panel' : '' ); ?>">
+					<div class="postbox <?php echo esc_attr( true === $is_locked ? 'global-locked' : '' ); ?>" id="postbox-<?php echo esc_attr( $post_type_key ); ?>">
+						<div class="postbox-header">
+							<h2>
+								<?php
+								// translators: %s: Post Type Singular Name.
+								\printf( esc_html__( '%s Columns', 'screen-options' ), esc_html( ucfirst( $post_type_key ) ) );
+								?>
+								<span class="locked-badge" <?php echo esc_attr( true === $is_locked ? ' style=display:inline;' : '' ); ?>><?php esc_html_e( 'Configuration Locked', 'screen-options' ); ?></span>
+							</h2>
+						</div>
 
-					<!-- Icon: Locked (Shown when checked) -->
-					<svg class="lock-icon icon-locked" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-						<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-						<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-					</svg>
+						<div class="inside">
+							<div class="settings-grid">
+								<?php
+
+								foreach ( $columns as $column_id => $column_name ) :
+
+									// Get all screen options columns for a post type and add checkboxes to enable/disable them also add a checkbox to lock/unlock them.
+									if ( ! isset( $columns ) || ! is_array( $columns ) ) {
+											continue;
+									}
+
+									// Skip checkbox and title columns.
+									if ( 'cb' === $column_id || 'title' === $column_id ) {
+										continue;
+									}
+
+									// Check if this column is saved for this post type.
+									$is_checked = isset( $saved_columns[ $post_type_key ] ) && in_array( $column_id, $saved_columns[ $post_type_key ], true );
+									// Default to checked if no saved data.
+									if ( empty( $saved_columns ) ) {
+										$is_checked = true;
+									}
+									?>
+										<div class="field-group">
+											<div class="tooltip-container">
+												<span class="field-label"><?php echo esc_html( wp_strip_all_tags( $column_name ) ); ?></span>
+											</div>
+											<label class="wp-switch">
+												<input type="checkbox" name="screen_options_columns[<?php echo esc_attr( $post_type_key ); ?>][<?php echo esc_attr( $column_id ); ?>]" value="<?php echo esc_attr( $column_id ); ?>" <?php \checked( $is_checked, true, true ); ?>>
+												<span class="slider"></span>
+											</label>
+										</div>
+								<?php endforeach; ?>
+							</div>
+						</div>
+					</div>
 				</div>
+			<?php endforeach; ?>
 			</div>
-		</label>
+		</div>
 		<?php
 	}
 
@@ -331,10 +334,17 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			}
 		}
 
+		if ( isset( $_POST['screen_options_post_type'] ) ) {
+			$selected_post_type = sanitize_text_field( wp_unslash( $_POST['screen_options_post_type'] ) );
+		} else {
+			$selected_post_type = '';
+		}
+
 		// Save as post meta for this specific post.
 		\update_post_meta( $post_id, 'screen_options_roles', $roles );
 		\update_post_meta( $post_id, 'screen_options_columns', $columns );
 		\update_post_meta( $post_id, 'screen_options_lock', $lock_settings );
+		\update_post_meta( $post_id, 'screen_options_post_type', $selected_post_type );
 	}
 
 	/**
@@ -391,90 +401,6 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			$all_roles = array_merge( $all_roles, $post_roles );
 		}
 		return array_unique( $all_roles );
-	}
-
-	/**
-	 * AJAX handler to get accessible post types for selected roles.
-	 */
-	public function ajax_get_accessible_post_types(): void {
-		// Check nonce for security.
-		check_ajax_referer( 'screen_options_role_check', 'nonce' );
-
-		// Get roles from request.
-		$roles = isset( $_POST['roles'] ) && is_array( $_POST['roles'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['roles'] ) ) : [];
-
-		if ( empty( $roles ) ) {
-			wp_send_json_success(
-				[
-					'accessible_post_types' => [],
-					'message'               => __( 'No roles selected', 'screen-options' ),
-				]
-			);
-		}
-
-		// Get all public post types.
-		$all_post_types = \get_post_types(
-			[
-				'public'   => true,
-				'_builtin' => false,
-			],
-			'objects',
-			'or'
-		);
-
-		// Remove screen options post type from the list.
-		unset( $all_post_types[ Default_Screen_Options::get_slug() ] );
-
-		$accessible_post_types = [];
-
-		// Check if 'all_users' is selected.
-		if ( in_array( 'all_users', $roles, true ) ) {
-			// If 'all_users' is selected, return all post types.
-			foreach ( $all_post_types as $post_type ) {
-				$accessible_post_types[] = $post_type->name;
-			}
-		} else {
-			// Check each post type for each role.
-			foreach ( $all_post_types as $post_type ) {
-				$has_access = false;
-
-				// Check if any of the selected roles has access to this post type.
-				foreach ( $roles as $role_key ) {
-					$role = get_role( $role_key );
-
-					if ( ! $role ) {
-						continue;
-					}
-
-					if ( $this->check_role_access_to_post_type( $role_key, $post_type->name ) ) {
-						$has_access = true;
-						break;
-					}
-				}
-
-				if ( ! $has_access ) {
-					continue;
-				}
-
-				$accessible_post_types[] = $post_type->name;
-			}
-		}
-
-		if ( empty( $accessible_post_types ) ) {
-			wp_send_json_success(
-				[
-					'accessible_post_types' => [],
-					'message'               => __( 'No accessible post types for selected roles', 'screen-options' ),
-				]
-			);
-		}
-
-		wp_send_json_success(
-			[
-				'accessible_post_types' => $accessible_post_types,
-				'message'               => __( 'Post types retrieved successfully', 'screen-options' ),
-			]
-		);
 	}
 
 	/**
