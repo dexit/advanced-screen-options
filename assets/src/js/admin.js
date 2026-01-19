@@ -116,6 +116,61 @@
 		}
 	}
 
+	/**
+	 * Update post type dropdown based on selected roles
+	 */
+	function updatePostTypeDropdown() {
+		// Get all selected role values
+		const selectedRoles = [];
+		$( '.role-check:checked' ).each( function() {
+			const roleValue = $( this ).val();
+			if ( roleValue ) {
+				selectedRoles.push( roleValue );
+			}
+		} );
+
+		// Check if "All Users" is selected
+		const allUsersSelected = $( '#role-all' ).is( ':checked' );
+		if ( allUsersSelected ) {
+			selectedRoles.push( 'all_users' );
+		}
+
+		// Get the currently selected post type to restore if possible
+		const currentSelection = $( '#post-type-select' ).val();
+
+		// Update each post type option
+		$( '#post-type-select option' ).each( function() {
+			const $option = $( this );
+			const optionValue = $option.val();
+
+			// Skip the placeholder option
+			if ( ! optionValue ) {
+				return;
+			}
+
+			// Get configured roles for this post type
+			const configuredRoles = $option.data( 'configured-roles' );
+			const configuredRolesArray = configuredRoles ? configuredRoles.toString().split( ',' ) : [];
+
+			// Check if any selected role has already configured this post type
+			let shouldDisable = false;
+			for ( let i = 0; i < selectedRoles.length; i++ ) {
+				if ( configuredRolesArray.includes( selectedRoles[ i ] ) ) {
+					shouldDisable = true;
+					break;
+				}
+			}
+
+			// Enable/disable the option
+			$option.prop( 'disabled', shouldDisable );
+
+			// If currently selected option gets disabled, clear the selection
+			if ( shouldDisable && currentSelection === optionValue ) {
+				$( '#post-type-select' ).val( '' ).trigger( 'change' );
+			}
+		} );
+	}
+
 	$( '.role-row label' ).click( function( e ) {
 		if ( e.target.type !== 'checkbox' ) {
 			const chk = $( this ).find( 'input[type="checkbox"]' );
@@ -134,10 +189,12 @@
 			row.removeClass( 'selected' );
 		}
 		validate();
+		updatePostTypeDropdown();
 	} );
 
 	$( document ).ready( () => {
 		checkScreenOptionsLock();
 		validate();
+		updatePostTypeDropdown();
 	} );
 }( jQuery ) );

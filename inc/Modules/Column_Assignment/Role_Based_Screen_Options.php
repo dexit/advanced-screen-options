@@ -135,17 +135,6 @@ class Role_Based_Screen_Options implements Registrable {
 			$meta_query[]['relation'] = 'OR';
 		}
 
-		// Get current post type.
-		$screen = get_current_screen();
-		if ( ! empty( $screen ) && ! empty( $screen->post_type ) ) {
-			$meta_query['relation'] = 'AND';
-			$meta_query[]           = [
-				'key'     => 'screen_options_post_type',
-				'value'   => $screen->post_type,
-				'compare' => '=',
-			];
-		}
-
 		// Fetch screen options posts based on user role.
 		$screen_options_posts = new WP_Query(
 			[
@@ -157,6 +146,7 @@ class Role_Based_Screen_Options implements Registrable {
 			]
 		);
 
+		// If no posts found for the roles, check for 'all_users'.
 		if ( empty( $screen_options_posts->posts ) || ! is_array( $screen_options_posts->posts ) ) {
 			// If no posts found for the role, check for 'all_users'.
 			$screen_options_posts = new WP_Query(
@@ -174,6 +164,24 @@ class Role_Based_Screen_Options implements Registrable {
 					'post_status'    => 'publish',
 				]
 			);
+		}
+
+		// Get current post type.
+		$screen = get_current_screen();
+		if ( ! empty( $screen ) && ! empty( $screen->post_type ) ) {
+			foreach ( $screen_options_posts->posts as $post_id ) {
+
+				// Ensure post ID is an integer.
+				if ( ! is_int( $post_id ) && ! empty( $post_id ) ) {
+					continue;
+				}
+
+				$assigned_post_types = get_post_meta( $post_id, 'screen_options_post_type', true );
+				if ( is_array( $assigned_post_types ) && in_array( $screen->post_type, $assigned_post_types, true ) ) {
+					$this->screen_options_posts_id = $post_id;
+					return $this->screen_options_posts_id;
+				}
+			}
 		}
 
 		// If still no posts found, return 0.

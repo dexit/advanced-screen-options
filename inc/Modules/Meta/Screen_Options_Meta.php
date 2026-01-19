@@ -51,6 +51,9 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		// Get all saved roles from post meta.
 		$all_saved_roles = self::get_all_saved_roles();
 
+		// Get role-post type configurations.
+		$role_post_type_configs = self::get_role_post_type_configurations();
+
 		// Get saved roles for this post.
 		$saved_roles = [];
 		if ( $post && $post->ID ) {
@@ -86,21 +89,17 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 					<div class="inside inside-flush">
 						<div class="role-list">
 							<div class="role-row">
-								<input type="checkbox" id="role-all" class="role-check" data-target="all" <?php \checked( in_array( 'all_users', $all_saved_roles, true ) ? false : in_array( 'all_users', $saved_roles, true ), true ); ?> <?php \disabled( in_array( 'all_users', $all_saved_roles, true ), true ); ?>>
+								<input type="checkbox" value="all_users" name="screen_options_assigned_roles[]" id="role-all" class="role-check" data-target="all" <?php \checked( in_array( 'all_users', $saved_roles, true ), true ); ?>>
 								<label for="role-all"><?php esc_html_e( 'All Users', 'screen-options' ); ?></label>
 								<div class="role-separator"></div>
 							</div>
 							<?php foreach ( $roles as $role_key => $role ) : ?>
 								<?php
-								$is_checked      = in_array( $role_key, $saved_roles, true );
-								$role_to_disable = in_array( $role_key, $all_saved_roles, true );
+								$is_checked = in_array( $role_key, $saved_roles, true );
 								?>
-								<div class="role-row <?php echo $role_to_disable ? 'disabled' : ''; ?>">
-									<input type="checkbox" name="screen_options_assigned_roles[]" id="role-<?php echo esc_attr( $role_key ); ?>" class="role-check" <?php \disabled( $role_to_disable, true ); ?>" value="<?php echo esc_attr( $role_key ); ?>" <?php \checked( $is_checked, true, true ); ?> <?php echo $role_to_disable ? 'disabled="disabled"' : ''; ?>>
+								<div class="role-row">
+									<input type="checkbox" name="screen_options_assigned_roles[]" id="role-<?php echo esc_attr( $role_key ); ?>" class="role-check" value="<?php echo esc_attr( $role_key ); ?>" <?php \checked( $is_checked, true, true ); ?>>
 									<label for="role-<?php echo esc_attr( $role_key ); ?>"><?php echo esc_html( $role['name'] ); ?></label>
-									<?php if ( $role_to_disable ) : ?>
-										<span class="status-text error"><?php echo esc_html__( 'Already configured', 'screen-options' ); ?></span>
-									<?php endif; ?>
 								</div>
 							<?php endforeach; ?>
 						</div>
@@ -149,12 +148,31 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 								if ( ! $post_type_key ) {
 									continue;
 								}
+
+								// Build a list of roles that have already configured this post type.
+								$configured_for_roles = [];
+								foreach ( $role_post_type_configs as $role => $post_types ) {
+									if ( ! in_array( $post_type_key, $post_types, true ) ) {
+										continue;
+									}
+
+									$configured_for_roles[] = $role;
+								}
+
+								// Remove currently saved roles from configured roles to allow editing.
+								$configured_for_roles = \array_diff( $configured_for_roles, $saved_roles );
+
+								// Create data attribute with configured roles (comma-separated).
+								$data_configured_roles = ! empty( $configured_for_roles ) ? implode( ',', $configured_for_roles ) : '';
 								?>
-								<option value="<?php echo esc_attr( $post_type_key ); ?>" <?php \selected( $post_type_key, $selected_post_type ); ?>><?php echo esc_html( ucfirst( $post_type_key ) ); ?></option>
+								<option value="<?php echo esc_attr( $post_type_key ); ?>"
+									<?php \selected( $post_type_key, $selected_post_type ); ?>
+									data-configured-roles="<?php echo esc_attr( $data_configured_roles ); ?>"><?php echo esc_html( ucfirst( $post_type_key ) ); ?></option>
 								<?php
 							}
 							?>
 						</select>
+						<span class="help-tip" data-tooltip="<?php esc_attr_e( 'Some post types may be disabled based on already existing configurations for selected roles.', 'screen-options' ); ?>">?</span>
 					</div>
 
 					<div class="toolbar-divider"></div>
@@ -313,16 +331,19 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			return;
 		}
 
-		// Save default columns (only selected ones).
-		if ( isset( $_POST['screen_options_columns'] ) && is_array( $_POST['screen_options_columns'] ) ) {
-			$columns = array_map(
-				static function ( $column_array ) {
-					if ( is_array( $column_array ) ) {
-						return array_map( 'sanitize_text_field', $column_array );
-					}
-					return sanitize_text_field( $column_array );
+		if ( isset( $_POST['screen_options_post_type'] ) ) {
+			$selected_post_type = sanitize_text_field( wp_unslash( $_POST['screen_options_post_type'] ) );
+		} else {
+			$selected_post_type = '';
+		}
+
+		// Save columns for selected post type (only selected ones).
+		if ( isset( $_POST['screen_options_columns'][ $selected_post_type ] ) && is_array( $_POST['screen_options_columns'][ $selected_post_type ] ) ) {
+			$columns[ $selected_post_type ] = array_map(
+				static function ( $column ) {
+					return sanitize_text_field( $column );
 				},
-				wp_unslash( $_POST['screen_options_columns'] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+				wp_unslash( $_POST['screen_options_columns'][ $selected_post_type ] ) // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 			);
 		}
 
@@ -332,12 +353,6 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			if ( '1' === $lock_settings_value ) {
 				$lock_settings = true;
 			}
-		}
-
-		if ( isset( $_POST['screen_options_post_type'] ) ) {
-			$selected_post_type = sanitize_text_field( wp_unslash( $_POST['screen_options_post_type'] ) );
-		} else {
-			$selected_post_type = '';
 		}
 
 		// Save as post meta for this specific post.
@@ -443,16 +458,14 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				// Format role names for display.
 				$formatted_roles = array_map(
 					static function ( $role ) {
-						return ucfirst( str_replace( '_', ' ', $role ) );
+						return \ucfirst( str_replace( '_', ' ', $role ) );
 					},
 					$roles
 				);
 
-				// print each role in span.
-				foreach ( $formatted_roles as $role ) {
-					echo '<span class="role-badge">' . esc_html( $role ) . '</span> ';
-				}
-
+				// Convert to comma-separated string.
+				$roles_string = implode( ', ', $formatted_roles );
+				echo '<span class="role-badge">' . esc_html( $roles_string ) . '</span> ';
 				break;
 
 			case 'screen_options_lock':
@@ -520,5 +533,48 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 
 		// Check if the role has this capability.
 		return $role->has_cap( $required_cap );
+	}
+
+	/**
+	 * Get all configured role-post type combinations.
+	 *
+	 * @return array<string, array<string>> Array with role slugs as keys and arrays of configured post types as values.
+	 */
+	public static function get_role_post_type_configurations(): array {
+		$configurations = [];
+		$posts          = new \WP_Query(
+			[
+				'post_type'      => Default_Screen_Options::get_slug(),
+				'posts_per_page' => -1,
+				'fields'         => 'ids',
+				'post_status'    => 'publish',
+			]
+		);
+
+		if ( empty( $posts->posts ) || ! is_array( $posts->posts ) ) {
+			return [];
+		}
+
+		foreach ( $posts->posts as $post_id ) {
+			if ( ! is_int( $post_id ) ) {
+				continue;
+			}
+
+			$post_roles = \get_post_meta( $post_id, 'screen_options_roles', true );
+			$post_type  = \get_post_meta( $post_id, 'screen_options_post_type', true );
+
+			if ( empty( $post_roles ) || ! is_array( $post_roles ) || empty( $post_type ) ) {
+				continue;
+			}
+
+			foreach ( $post_roles as $role ) {
+				if ( ! isset( $configurations[ $role ] ) ) {
+					$configurations[ $role ] = [];
+				}
+				$configurations[ $role ][] = $post_type;
+			}
+		}
+
+		return $configurations;
 	}
 }
