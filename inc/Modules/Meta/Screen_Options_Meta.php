@@ -426,9 +426,10 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	 * @return array<string, string> Modified columns.
 	 */
 	public function add_custom_post_columns_screen_options( array $columns ): array {
-		$columns['screen_options_roles']   = __( 'Roles', 'screen-options' );
-		$columns['screen_options_lock']    = __( 'Lock', 'screen-options' );
-		$columns['screen_options_columns'] = __( 'Columns Shown', 'screen-options' );
+		$columns['screen_options_roles']     = __( 'Roles', 'screen-options' );
+		$columns['screen_options_post_type'] = __( 'Post Type', 'screen-options' );
+		$columns['screen_options_columns']   = __( 'Columns Shown', 'screen-options' );
+		$columns['screen_options_lock']      = __( 'Lock', 'screen-options' );
 		return $columns;
 	}
 
@@ -468,6 +469,33 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				echo '<span class="role-badge">' . esc_html( $roles_string ) . '</span> ';
 				break;
 
+			case 'screen_options_post_type':
+				$post_type = get_post_meta( $post_id, 'screen_options_post_type', true );
+				if ( empty( $post_type ) ) {
+					echo esc_html__( 'No post type selected', 'screen-options' );
+					return;
+				}
+				echo esc_html( \ucfirst( $post_type ) );
+				break;
+
+			case 'screen_options_columns':
+				$columns = get_post_meta( $post_id, 'screen_options_columns', true );
+				if ( empty( $columns ) || ! is_array( $columns ) ) {
+					echo esc_html__( 'No columns configured', 'screen-options' );
+					return;
+				}
+				$column_list = [];
+				foreach ( $columns as $cols ) {
+					if ( ! is_array( $cols ) ) {
+						continue;
+					}
+					foreach ( $cols as $col ) {
+						$column_list[] = $col;
+					}
+				}
+				echo esc_html( implode( ', ', $column_list ) );
+				break;
+
 			case 'screen_options_lock':
 				$is_locked = get_post_meta( $post_id, 'screen_options_lock', true );
 				echo '<div class="column-icon-container">';
@@ -488,22 +516,6 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 					<?php
 				}
 				echo '</div>';
-				break;
-
-			case 'screen_options_columns':
-				$columns = get_post_meta( $post_id, 'screen_options_columns', true );
-				if ( empty( $columns ) || ! is_array( $columns ) ) {
-					echo esc_html__( 'No columns configured', 'screen-options' );
-					return;
-				}
-				$column_list = [];
-				foreach ( $columns as $post_type => $cols ) {
-					// Remove edit- prefix from post type.
-					$post_type = str_replace( 'edit-', '', $post_type );
-					// Add each post type and column to new line.
-					$column_list[] = esc_html( \ucfirst( $post_type ) . ': ' . implode( ', ', array_map( 'ucfirst', $cols ) ) );
-				}
-				echo wp_kses_post( implode( '<br/> ', $column_list ) );
 				break;
 		}
 	}
