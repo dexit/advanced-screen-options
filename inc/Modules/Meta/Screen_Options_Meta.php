@@ -189,12 +189,12 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 						<label for="global-lock-check" class="label-strong-flex">
 							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
 							<?php esc_html_e( 'Lock Screen Options', 'screen-options' ); ?>
-							<span class="help-tip" data-tooltip="<?php esc_attr_e( 'If enabled, users cannot change any column visibility settings in their Screen Options tab.', 'screen-options' ); ?>">?</span>
 						</label>
 						<label class="wp-switch lock-switch">
 							<input type="checkbox" id="global-lock-check" <?php checked( $is_locked, true, true ); ?> name="screen_options_lock_settings" value="1">
 							<span class="slider"></span>
 						</label>
+						<span class="help-tip" data-tooltip="<?php esc_attr_e( 'If enabled, users cannot change any column visibility settings in their Screen Options tab.', 'screen-options' ); ?>">?</span>
 					</div>
 				</div>
 
@@ -493,7 +493,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 						$column_list[] = $col;
 					}
 				}
-				echo esc_html( implode( ', ', $column_list ) );
+				echo esc_html( implode( ', ', array_map( 'ucfirst', $column_list ) ) );
 				break;
 
 			case 'screen_options_lock':
