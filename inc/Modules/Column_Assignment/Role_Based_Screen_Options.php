@@ -176,8 +176,13 @@ class Role_Based_Screen_Options implements Registrable {
 					continue;
 				}
 
-				$assigned_post_types = get_post_meta( $post_id, 'screen_options_post_type', true );
-				if ( is_array( $assigned_post_types ) && in_array( $screen->post_type, $assigned_post_types, true ) ) {
+				// Get the post type assigned to this screen options post.
+				if ( ! isset( $screen->post_type ) ) {
+					continue;
+				}
+
+				$assigned_post_type = get_post_meta( $post_id, 'screen_options_post_type', true );
+				if ( ! empty( $assigned_post_type ) && $screen->post_type === $assigned_post_type ) {
 					$this->screen_options_posts_id = $post_id;
 					return $this->screen_options_posts_id;
 				}
