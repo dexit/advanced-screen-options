@@ -23,7 +23,12 @@ class Screen_Initializer implements Registrable {
 	 */
 	public function register_hooks(): void {
 		// Use transient-based caching to limit frequency of initialization.
-		add_action( 'admin_init', [ $this, 'maybe_initialize_screens' ], 5 );
+		// Priority 999 ensures other plugins have registered their column hooks first
+		// (e.g., Yoast SEO registers at priority 10 via setup_hooks).
+		add_action( 'admin_init', [ $this, 'maybe_initialize_screens' ], 9999 );
+
+		// Allow forcing a refresh via query parameter (admin only).
+		\add_action( 'admin_init', [ $this, 'force_clear_transient' ], 1 );
 
 		// On plugin activation and deactivation of any plugin, clear the transient to force re-initialization.
 		add_action( 'activated_plugin', [ $this, 'clear_transient_initialize_screens' ] );
@@ -34,6 +39,19 @@ class Screen_Initializer implements Registrable {
 
 		// On theme switch, clear the transient to force re-initialization.
 		add_action( 'after_switch_theme', [ $this, 'clear_transient_initialize_screens' ] );
+	}
+
+	/**
+	 * Force clear transient if requested via query parameter.
+	 *
+	 * @return void
+	 */
+	public function force_clear_transient(): void {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( ! isset( $_GET['screen_options_refresh'] ) || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		$this->clear_transient_initialize_screens();
 	}
 
 	/**
@@ -58,24 +76,16 @@ class Screen_Initializer implements Registrable {
 	 */
 	public function maybe_initialize_screens(): void {
 
-		// Allow forcing a refresh via query parameter (admin only).
-		$force_refresh = isset( $_GET['screen_options_refresh'] ) && current_user_can( 'manage_options' ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-
 		// Check if we've run this recently (within 24 hours) or if forced.
 		$last_run = get_transient( 'screen_options_last_column_scan' );
 
 		// skip if ran recently and not forced.
-		if ( ! $force_refresh && false !== $last_run ) {
+		if ( false !== $last_run ) {
 			return;
 		}
 
-		if ( $force_refresh ) {
-			// Clear existing stored columns to ensure fresh capture.
-			delete_option( 'screen_options_available_columns' );
-		}
-
 		// Set transient for 24 hours to prevent running too frequently.
-		set_transient( 'screen_options_last_column_scan', time() );
+		set_transient( 'screen_options_last_column_scan', time(), \DAY_IN_SECONDS );
 
 		// Run the full initialization.
 		$this->initialize_screens_for_columns();
@@ -197,8 +207,14 @@ class Screen_Initializer implements Registrable {
 	 * @return void
 	 */
 	private function capture_columns( \WP_Screen $screen ): void {
+
+		\remove_all_filters( 'default_hidden_columns', 9999 );
+
 		// Get columns using WordPress core function.
 		$columns = \get_column_headers( $screen );
+
+		$custom_columns = \_get_list_table( 'WP_Posts_List_Table', [ 'screen' => $screen->id ] )->get_columns();
+		$columns        = array_merge( $columns, $custom_columns );
 
 		if ( empty( $columns ) ) {
 			return;

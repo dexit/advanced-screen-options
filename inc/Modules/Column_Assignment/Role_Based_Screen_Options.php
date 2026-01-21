@@ -177,7 +177,7 @@ class Role_Based_Screen_Options implements Registrable {
 				}
 
 				// Get the post type assigned to this screen options post.
-				if ( ! isset( $screen->post_type ) ) {
+				if ( empty( $screen->post_type ) ) {
 					continue;
 				}
 
