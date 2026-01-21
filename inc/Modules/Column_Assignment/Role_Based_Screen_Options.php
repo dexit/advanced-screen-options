@@ -222,9 +222,19 @@ class Role_Based_Screen_Options implements Registrable {
 			return false;
 		}
 
+		// Get the screen options post ID for the current role.
 		$screen_options_post_id = $this->get_screen_options_post_id();
 
+		// If no screen options post found, return false.
 		if ( 0 === $screen_options_post_id ) {
+			return false;
+		}
+
+		// Get the post type assigned to this screen options post.
+		$screen_post_type = get_post_meta( $screen_options_post_id, 'screen_options_post_type', true );
+
+		// If screen post type is set and does not match current screen's post type, return false.
+		if ( ! empty( $screen_post_type ) && $screen_post_type !== $screen->post_type ) {
 			return false;
 		}
 
