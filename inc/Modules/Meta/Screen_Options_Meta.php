@@ -439,7 +439,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	 * @param string $column  Column name.
 	 * @param int    $post_id Post ID.
 	 *
-	 * @returns string|null
+	 * @returns void
 	 */
 	public function custom_post_column_content_screen_options( string $column, int $post_id ): void {
 
