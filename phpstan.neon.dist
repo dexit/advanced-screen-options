@@ -24,7 +24,7 @@ parameters:
 				- uninstall.php
 				- inc/
 		scanDirectories:
-				- vendor/aws
+				- vendor/phpstan
 		excludePaths:
 			analyse:
 				- tests/
