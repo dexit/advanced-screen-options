@@ -8,7 +8,7 @@
 namespace ScreenOptions\Modules\Meta;
 
 use ScreenOptions\Contracts\Interfaces\Registrable;
-use Yoast\WP\SEO\Surfaces\Values\Meta;
+use WP_Screen;
 
 /**
  * Class Screen_Initializer
@@ -28,7 +28,7 @@ class Screen_Initializer implements Registrable {
 		add_action( 'admin_init', [ $this, 'maybe_initialize_screens' ], 9999 );
 
 		// Allow forcing a refresh via query parameter (admin only).
-		\add_action( 'admin_init', [ $this, 'force_clear_transient' ], 1 );
+		add_action( 'admin_init', [ $this, 'force_clear_transient' ], 1 );
 
 		// On plugin activation and deactivation of any plugin, clear the transient to force re-initialization.
 		add_action( 'activated_plugin', [ $this, 'clear_transient_initialize_screens' ] );
@@ -63,7 +63,7 @@ class Screen_Initializer implements Registrable {
 	 */
 	public function clear_transient_initialize_screens(): void {
 		// Clear the transient to force re-initialization on next admin_init.
-		\delete_transient( 'screen_options_last_column_scan' );
+		delete_transient( 'screen_options_last_column_scan' );
 	}
 
 	/**
@@ -85,7 +85,7 @@ class Screen_Initializer implements Registrable {
 		}
 
 		// Set transient for 24 hours to prevent running too frequently.
-		set_transient( 'screen_options_last_column_scan', time(), \DAY_IN_SECONDS );
+		set_transient( 'screen_options_last_column_scan', time(), DAY_IN_SECONDS );
 
 		// Run the full initialization.
 		$this->initialize_screens_for_columns();
@@ -107,7 +107,7 @@ class Screen_Initializer implements Registrable {
 		$original_screen  = $current_screen;
 
 		// Get all public post types.
-		$post_types = \get_post_types(
+		$post_types = get_post_types(
 			[
 				'public'   => true,
 				'_builtin' => false,
@@ -122,7 +122,7 @@ class Screen_Initializer implements Registrable {
 				continue;
 			}
 
-			$post_types[ $builtin_type ] = \get_post_type_object( $builtin_type );
+			$post_types[ $builtin_type ] = get_post_type_object( $builtin_type );
 		}
 
 		// Initialize each screen and capture columns.
@@ -152,7 +152,7 @@ class Screen_Initializer implements Registrable {
 		$typenow = $post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
 		// Create a screen object for this post type's edit screen.
-		$screen = \WP_Screen::get( 'edit-' . $post_type );
+		$screen = WP_Screen::get( 'edit-' . $post_type );
 
 		if ( ! $screen ) {
 			return;
@@ -185,7 +185,7 @@ class Screen_Initializer implements Registrable {
 			// Create list table instance to trigger column registration.
 			// We use output buffering to suppress any output.
 			ob_start();
-			$list_table = \_get_list_table( 'WP_Posts_List_Table', [ 'screen' => 'edit-' . $post_type ] );
+			$list_table = _get_list_table( 'WP_Posts_List_Table', [ 'screen' => 'edit-' . $post_type ] );
 
 			if ( $list_table ) {
 				// Trigger column registration.
@@ -203,17 +203,17 @@ class Screen_Initializer implements Registrable {
 	/**
 	 * Capture and store columns for a screen.
 	 *
-	 * @param \WP_Screen $screen The screen object.
+	 * @param WP_Screen $screen The screen object.
 	 * @return void
 	 */
-	private function capture_columns( \WP_Screen $screen ): void {
+	private function capture_columns( WP_Screen $screen ): void {
 
-		\remove_all_filters( 'default_hidden_columns', 9999 );
+		remove_all_filters( 'default_hidden_columns', 9999 );
 
 		// Get columns using WordPress core function.
-		$columns = \get_column_headers( $screen );
+		$columns = get_column_headers( $screen );
 
-		$custom_columns = \_get_list_table( 'WP_Posts_List_Table', [ 'screen' => $screen->id ] )->get_columns();
+		$custom_columns = _get_list_table( 'WP_Posts_List_Table', [ 'screen' => $screen->id ] )->get_columns();
 		$columns        = array_merge( $columns, $custom_columns );
 
 		if ( empty( $columns ) ) {

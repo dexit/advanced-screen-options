@@ -41,7 +41,7 @@ class Default_Screen_Options extends Abstract_Post_Type {
 			'not_found_in_trash' => __( 'No Default Screen Options found in trash.', 'screen-options' ),
 		];
 
-		$args = \wp_parse_args(
+		$args = wp_parse_args(
 			[
 				'public'       => false,
 				'show_ui'      => true,
