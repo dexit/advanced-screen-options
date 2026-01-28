@@ -24,19 +24,23 @@ final class Main {
 	 * @var class-string<\ScreenOptions\Contracts\Interfaces\Registrable>[]
 	 */
 	private const REGISTRABLE_CLASSES = [
+
+		// Column Assignment.
+		Modules\Column_Assignment\Role_Based_Screen_Options::class,
+
+		// Core.
 		Modules\Core\Assets::class,
-
-		Modules\Settings\Admin::class,
-
-		// Post Types.
-		Modules\Post_Types\Default_Screen_Options::class,
 
 		// Meta Boxes.
 		Modules\Meta\Screen_Initializer::class,
 		Modules\Meta\Screen_Options_Meta::class,
 
-		// Column Assignment.
-		Modules\Column_Assignment\Role_Based_Screen_Options::class,
+		// Post Types.
+		Modules\Post_Types\Default_Screen_Options::class,
+
+		// Settings.
+		Modules\Settings\Admin::class,
+
 	];
 
 	/**
