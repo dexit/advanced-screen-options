@@ -27,8 +27,8 @@ abstract class Abstract_Meta_Box implements Registrable {
 	public function register_hooks(): void {
 		add_action( 'add_meta_boxes', [ $this, 'register_meta_box' ] );
 		add_action( 'save_post', [ $this, 'save_meta_box_data' ] );
-		add_filter( 'manage_edit-default-screens_columns', [ $this, 'add_custom_post_columns_screen_options' ] );
-		add_action( 'manage_default-screens_posts_custom_column', [ $this, 'custom_post_column_content_screen_options' ], 10, 2 );
+		add_filter( 'manage_edit-default-screens_columns', [ $this, 'add_custom_post_columns' ] );
+		add_action( 'manage_default-screens_posts_custom_column', [ $this, 'custom_post_column_content' ], 10, 2 );
 	}
 
 	/**
@@ -55,7 +55,7 @@ abstract class Abstract_Meta_Box implements Registrable {
 	 *
 	 * @return array<string, string> Modified columns. Must always return an array.
 	 */
-	public function add_custom_post_columns_screen_options( array $columns ): array {
+	public function add_custom_post_columns( array $columns ): array {
 		return $columns;
 	}
 
@@ -67,5 +67,5 @@ abstract class Abstract_Meta_Box implements Registrable {
 	 *
 	 * @return void
 	 */
-	abstract public function custom_post_column_content_screen_options( string $column, int $post_id ): void;
+	abstract public function custom_post_column_content( string $column, int $post_id ): void;
 }

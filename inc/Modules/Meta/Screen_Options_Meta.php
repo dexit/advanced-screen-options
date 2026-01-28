@@ -429,7 +429,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	 *
 	 * @return array<string, string> Modified columns.
 	 */
-	public function add_custom_post_columns_screen_options( array $columns ): array {
+	public function add_custom_post_columns( array $columns ): array {
 		$columns['screen_options_roles']     = __( 'Roles', 'screen-options' );
 		$columns['screen_options_post_type'] = __( 'Post Type', 'screen-options' );
 		$columns['screen_options_columns']   = __( 'Columns Shown', 'screen-options' );
@@ -445,7 +445,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	 *
 	 * @returns void
 	 */
-	public function custom_post_column_content_screen_options( string $column, int $post_id ): void {
+	public function custom_post_column_content( string $column, int $post_id ): void {
 
 		// Check post type.
 		if ( get_post_type( $post_id ) !== Default_Screen_Options::get_slug() ) {
