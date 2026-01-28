@@ -15,7 +15,7 @@
 	 * Display a notice banner about locked screen options
 	 */
 	const displayLockedNotice = () => {
-		const $notice = $( '<div class="notice notice-warning inline screen-options-locked-notice" style="margin: 10px 0;"><p></p></div>' );
+		const $notice = $( '<div class="notice notice-warning inline screen-options-locked-notice"><p></p></div>' );
 		// Set the lock message as text to avoid injecting HTML.
 		$notice.find( 'p' ).html( ScreenOptionsSettings.lockMessage );
 
