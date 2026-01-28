@@ -11,7 +11,6 @@ use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
 use ScreenOptions\Modules\Meta\Meta_Fields;
 use WP_Query;
 
-
 /**
  * Class Screen_Options_Meta
  */
@@ -314,7 +313,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			remove_action( 'save_post', [ $this, 'save_meta_box_data' ] );
 
 			// Prevent publishing by transitioning post to draft.
-			wp_update_post(
+			$result = wp_update_post(
 				[
 					'ID'          => $post_id,
 					'post_status' => 'draft',
@@ -322,8 +321,12 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				true
 			);
 
-			// Re-add the hook.
-			add_action( 'save_post', [ $this, 'save_meta_box_data' ] );
+			// Check for errors.
+			if ( is_wp_error( $result ) ) {
+				// Re-add the hook before returning.
+				add_action( 'save_post', [ $this, 'save_meta_box_data' ] );
+				return;
+			}
 
 			// Set admin notice.
 			set_transient(
@@ -358,11 +361,15 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			}
 		}
 
-		// Save as post meta for this specific post.
-		Meta_Fields::update_roles( $post_id, $roles );
-		Meta_Fields::update_columns( $post_id, $columns );
-		Meta_Fields::update_lock_settings( $post_id, $lock_settings );
-		Meta_Fields::update_post_type( $post_id, $selected_post_type );
+		Meta_Fields::bulk_update_post_meta(
+			$post_id,
+			[
+				'roles'         => $roles,
+				'columns'       => $columns,
+				'lock_settings' => $lock_settings,
+				'post_type'     => $selected_post_type,
+			]
+		);
 
 	}
 

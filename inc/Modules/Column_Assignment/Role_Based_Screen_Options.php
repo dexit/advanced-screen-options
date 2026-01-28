@@ -12,7 +12,6 @@ use ScreenOptions\Modules\Core\Assets;
 use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
 use ScreenOptions\Modules\Meta\Meta_Fields;
 use WP_Query;
-use Yoast\WP\SEO\Surfaces\Values\Meta;
 
 /**
  * Class for Role based Screen option assignment.
