@@ -8,6 +8,7 @@
 namespace ScreenOptions\Modules\Meta;
 
 use ScreenOptions\Contracts\Interfaces\Registrable;
+use ScreenOptions\Modules\Core\Cache;
 use WP_Screen;
 
 /**
@@ -63,7 +64,7 @@ class Screen_Initializer implements Registrable {
 	 */
 	public function clear_transient_initialize_screens(): void {
 		// Clear the transient to force re-initialization on next admin_init.
-		delete_transient( 'screen_options_last_column_scan' );
+		Cache::delete_transient( 'screen_options_last_column_scan' );
 	}
 
 	/**
@@ -77,7 +78,7 @@ class Screen_Initializer implements Registrable {
 	public function maybe_initialize_screens(): void {
 
 		// Check if we've run this recently (within 24 hours) or if forced.
-		$last_run = get_transient( 'screen_options_last_column_scan' );
+		$last_run = Cache::get_transient( 'screen_options_last_column_scan' );
 
 		// skip if ran recently and not forced.
 		if ( false !== $last_run ) {
@@ -85,7 +86,7 @@ class Screen_Initializer implements Registrable {
 		}
 
 		// Set transient for 24 hours to prevent running too frequently.
-		set_transient( 'screen_options_last_column_scan', time(), DAY_IN_SECONDS );
+		Cache::set_transient( 'screen_options_last_column_scan', time(), DAY_IN_SECONDS );
 
 		// Run the full initialization.
 		$this->initialize_screens_for_columns();

@@ -9,6 +9,7 @@ namespace ScreenOptions\Modules\Meta;
 
 use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
 use ScreenOptions\Modules\Meta\Meta_Fields;
+use ScreenOptions\Modules\Core\Cache;
 use WP_Query;
 
 /**
@@ -329,7 +330,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			}
 
 			// Set admin notice.
-			set_transient(
+			Cache::set_transient(
 				'screen_options_role_error_' . $post_id,
 				__( 'Screen option cannot be saved! At least one role must be selected before saving it. Settings saved as draft.', 'screen-options' ),
 				45
@@ -383,7 +384,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			return;
 		}
 
-		$error_message = get_transient( 'screen_options_role_error_' . $post->ID );
+		$error_message = Cache::get_transient( 'screen_options_role_error_' . $post->ID );
 		if ( ! $error_message ) {
 			return;
 		}
@@ -392,7 +393,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			'<div class="notice notice-error is-dismissible"><p><strong>%s</strong></p></div>',
 			esc_html( $error_message )
 		);
-		delete_transient( 'screen_options_role_error_' . $post->ID );
+		Cache::delete_transient( 'screen_options_role_error_' . $post->ID );
 	}
 
 	/**
