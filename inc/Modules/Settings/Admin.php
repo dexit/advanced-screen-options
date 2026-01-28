@@ -33,7 +33,6 @@ class Admin implements Registrable {
 	 */
 	public function register_hooks(): void {
 		add_filter( 'plugin_action_links_' . SCREENOPTIONS_PLUGIN_BASENAME, [ $this, 'add_action_links' ], 2 );
-		add_filter( 'admin_body_class', [ $this, 'add_body_classes' ] );
 	}
 
 	/**
@@ -58,30 +57,5 @@ class Admin implements Registrable {
 		);
 
 		return $links;
-	}
-
-	/**
-	 * Add body classes for the admin area.
-	 *
-	 * @param string $classes Existing body classes.
-	 */
-
-	/**
-	 * Add body classes for the admin area.
-	 *
-	 * @param string $classes Existing body classes.
-	 */
-	public function add_body_classes( $classes ): string {
-		$current_screen = get_current_screen();
-
-		if ( ! $current_screen ) {
-			return $classes;
-		}
-
-		if ( strpos( $current_screen->id, self::SCREEN_ID ) !== false ) {
-			$classes .= ' screen-options-posts-page';
-		}
-
-		return $classes;
 	}
 }
