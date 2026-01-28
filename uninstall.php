@@ -9,6 +9,9 @@ declare( strict_types=1 );
 
 namespace ScreenOptions;
 
+use ScreenOptions\Modules\Core\Cache;
+use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
+
 // If uninstall not called from WordPress, exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
@@ -18,4 +21,73 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
  * The (site-specific) uninstall function.
  */
 function uninstall(): void {
+	// Delete all screen option posts and associated meta.
+	delete_all_screen_option_post_types();
+
+	// Clear all plugin transients.
+	delete_all_transients();
+
+	// Delete plugin options.
+	delete_plugin_options();
+}
+
+/**
+ * Delete all screen option posts and their metadata.
+ */
+function delete_all_screen_option_post_types(): void {
+	$screen_option_posts = get_posts(
+		[
+			'post_type'        => Default_Screen_Options::get_slug(),
+			'post_status'      => 'any',
+			'numberposts'      => -1,
+			'fields'           => 'ids',
+			'suppress_filters' => false,
+		]
+	);
+
+	foreach ( $screen_option_posts as $post_id ) {
+		// Delete post meta first.
+		delete_post_meta( $post_id, 'screen_options_roles' );
+		delete_post_meta( $post_id, 'screen_options_post_type' );
+		delete_post_meta( $post_id, 'screen_options_columns' );
+		delete_post_meta( $post_id, 'screen_options_lock' );
+
+		// Delete the post permanently.
+		wp_delete_post( $post_id, true );
+	}
+}
+
+/**
+ * Delete all plugin transients.
+ */
+function delete_all_transients(): void {
+	// Use the Cache class method to clear all transients.
+	Cache::clear_all_transients();
+}
+
+/**
+ * Delete all plugin options.
+ */
+function delete_plugin_options(): void {
+	// Delete available columns option.
+	delete_option( 'screen_options_available_columns' );
+
+	// Delete any other plugin-specific options.
+	// Add more as needed.
+}
+
+// Run the uninstall routine.
+if ( is_multisite() ) {
+	// Get all sites in the network.
+	global $wpdb;
+
+	$blog_ids = $wpdb->get_col( "SELECT blog_id FROM {$wpdb->blogs}" );
+
+	foreach ( $blog_ids as $blog_id ) {
+		switch_to_blog( $blog_id );
+		uninstall();
+		restore_current_blog();
+	}
+} else {
+	uninstall();
 }
