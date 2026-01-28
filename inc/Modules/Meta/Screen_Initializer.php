@@ -52,6 +52,11 @@ class Screen_Initializer implements Registrable {
 		if ( ! isset( $_GET['screen_options_refresh'] ) || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
+
+		// Clear saved available columns to force re-capture.
+		Meta_Fields::delete_available_columns();
+
+		// Clear the transient to force re-initialization.
 		$this->clear_transient_initialize_screens();
 	}
 
@@ -209,7 +214,9 @@ class Screen_Initializer implements Registrable {
 	 */
 	private function capture_columns( WP_Screen $screen ): void {
 
-		remove_all_filters( 'default_hidden_columns', 9999 );
+		// Temporarily remove all filters to get raw columns.
+		remove_all_filters( 'default_hidden_columns' );
+		remove_all_filters( 'hidden_columns' );
 
 		// Get columns using WordPress core function.
 		$columns = get_column_headers( $screen );
