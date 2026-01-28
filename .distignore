@@ -59,7 +59,6 @@
 /vendor/yoast
 /vendor/bin
 
-# Only keep aws SDK as it's the only production dependency
 # All other vendor dependencies are dev-only
 
 # Git files

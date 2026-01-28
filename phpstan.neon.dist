@@ -23,8 +23,6 @@ parameters:
 				- screen-options.php
 				- uninstall.php
 				- inc/
-		scanDirectories:
-				- vendor/phpstan
 		excludePaths:
 			analyse:
 				- tests/

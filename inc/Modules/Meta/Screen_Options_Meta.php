@@ -535,33 +535,6 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	}
 
 	/**
-	 * Check if a specific role can edit a specific post type.
-	 *
-	 * @param string $role_slug The slug of the role (e.g., 'editor', 'author').
-	 * @param string $post_type The slug of the post type (e.g., 'post', 'product').
-	 * @return bool
-	 */
-	public function check_role_access_to_post_type( $role_slug, $post_type ) {
-		// Get the Role Object.
-		$role = get_role( $role_slug );
-
-		// Get the Post Type Object.
-		$post_type_object = get_post_type_object( $post_type );
-
-		// Safety checks to ensure role and post type exist.
-		if ( ! $role || ! $post_type_object ) {
-			return false;
-		}
-
-		// Get the specific capability required to edit this post type.
-		// This handles both standard posts ('edit_posts') and CPTs ('edit_products').
-		$required_cap = $post_type_object->cap->edit_posts;
-
-		// Check if the role has this capability.
-		return $role->has_cap( $required_cap );
-	}
-
-	/**
 	 * Get all configured role-post type combinations.
 	 *
 	 * @return array<string, array<string>> Array with role slugs as keys and arrays of configured post types as values.

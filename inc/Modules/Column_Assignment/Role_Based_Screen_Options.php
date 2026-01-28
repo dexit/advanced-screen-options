@@ -257,14 +257,8 @@ class Role_Based_Screen_Options implements Registrable {
 
 		// Add data for edit screen of screen options post type.
 		$screen = get_current_screen();
-		if ( $screen && ( Default_Screen_Options::get_slug() === $screen->id || Default_Screen_Options::get_slug() === $screen->post_type ) ) {
-			Assets::set_localized_data(
-				[
-					'ajax_url'   => admin_url( 'admin-ajax.php' ),
-					'role_nonce' => wp_create_nonce( 'screen_options_role_check' ),
-					'post_type'  => Default_Screen_Options::get_slug(),
-				]
-			);
+		if ( ! $screen || ( Default_Screen_Options::get_slug() !== $screen->id && Default_Screen_Options::get_slug() !== $screen->post_type ) ) {
+			return;
 		}
 
 		// Add lock settings to localized script data.
@@ -283,6 +277,7 @@ class Role_Based_Screen_Options implements Registrable {
 			]
 		);
 
+		// Localize the script with updated data.
 		wp_localize_script(
 			Assets::ADMIN_SCRIPTS_HANDLE,
 			'ScreenOptionsSettings',

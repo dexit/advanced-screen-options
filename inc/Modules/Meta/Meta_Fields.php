@@ -63,13 +63,14 @@ class Meta_Fields {
 	 * @param int   $post_id The post ID.
 	 * @param array $roles   The array of roles to set.
 	 *
-	 * @return bool True if the update was successful, false otherwise.
+	 * @return bool True if the meta value was added or changed; false if the value was unchanged or if the update failed.
 	 */
 	public static function update_roles( int $post_id, array $roles ): bool {
 		if ( ! $post_id ) {
 			return false;
 		}
 
+		// update_post_meta() returns false both on failure and when the value is unchanged; we expose this as false.
 		return (bool) update_post_meta( $post_id, self::ROLES_POSTMETA_KEY, $roles );
 	}
 
