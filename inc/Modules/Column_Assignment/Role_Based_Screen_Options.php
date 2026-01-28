@@ -255,12 +255,6 @@ class Role_Based_Screen_Options implements Registrable {
 
 		wp_enqueue_script( Assets::ADMIN_SCRIPTS_HANDLE );
 
-		// Add data for edit screen of screen options post type.
-		$screen = get_current_screen();
-		if ( ! $screen || ( Default_Screen_Options::get_slug() !== $screen->id && Default_Screen_Options::get_slug() !== $screen->post_type ) ) {
-			return;
-		}
-
 		// Add lock settings to localized script data.
 		Assets::set_localized_data(
 			[
