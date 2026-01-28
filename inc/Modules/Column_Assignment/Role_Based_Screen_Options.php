@@ -10,7 +10,9 @@ namespace ScreenOptions\Modules\Column_Assignment;
 use ScreenOptions\Contracts\Interfaces\Registrable;
 use ScreenOptions\Modules\Core\Assets;
 use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
+use ScreenOptions\Modules\Meta\Meta_Fields;
 use WP_Query;
+use Yoast\WP\SEO\Surfaces\Values\Meta;
 
 /**
  * Class for Role based Screen option assignment.
@@ -57,11 +59,7 @@ class Role_Based_Screen_Options implements Registrable {
 			return $hidden_columns;
 		}
 
-		$selected_columns = \get_post_meta(
-			$this->screen_options_posts_id,
-			'screen_options_columns',
-			true
-		);
+		$selected_columns = Meta_Fields::get_columns( $this->screen_options_posts_id );
 
 		// If no selected columns found, return original hidden columns.
 		if ( empty( $selected_columns ) || ! is_array( $selected_columns ) ) {
@@ -181,7 +179,7 @@ class Role_Based_Screen_Options implements Registrable {
 					continue;
 				}
 
-				$assigned_post_type = get_post_meta( $post_id, 'screen_options_post_type', true );
+				$assigned_post_type = Meta_Fields::get_post_type( $post_id );
 				if ( ! empty( $assigned_post_type ) && $screen->post_type === $assigned_post_type ) {
 					$this->screen_options_posts_id = $post_id;
 					return $this->screen_options_posts_id;
@@ -231,18 +229,14 @@ class Role_Based_Screen_Options implements Registrable {
 		}
 
 		// Get the post type assigned to this screen options post.
-		$screen_post_type = get_post_meta( $screen_options_post_id, 'screen_options_post_type', true );
+		$screen_post_type = Meta_Fields::get_post_type( $screen_options_post_id );
 
 		// If screen post type is set and does not match current screen's post type, return false.
 		if ( ! empty( $screen_post_type ) && $screen_post_type !== $screen->post_type ) {
 			return false;
 		}
 
-		$is_locked = \get_post_meta(
-			$screen_options_post_id,
-			'screen_options_lock',
-			true
-		);
+		$is_locked = Meta_Fields::is_locked( $screen_options_post_id );
 
 		return ! empty( $is_locked );
 	}

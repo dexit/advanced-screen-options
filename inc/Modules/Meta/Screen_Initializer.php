@@ -8,7 +8,7 @@
 namespace ScreenOptions\Modules\Meta;
 
 use ScreenOptions\Contracts\Interfaces\Registrable;
-
+use Yoast\WP\SEO\Surfaces\Values\Meta;
 
 /**
  * Class Screen_Initializer
@@ -221,7 +221,7 @@ class Screen_Initializer implements Registrable {
 		}
 
 		// Get currently saved columns.
-		$saved_columns = get_option( 'screen_options_available_columns', [] );
+		$saved_columns = Meta_Fields::get_available_columns();
 
 		if ( ! is_array( $saved_columns ) ) {
 			$saved_columns = [];
@@ -257,6 +257,6 @@ class Screen_Initializer implements Registrable {
 		}
 
 		$saved_columns[ $screen->id ] = $column_data;
-		update_option( 'screen_options_available_columns', $saved_columns, true );
+		Meta_Fields::update_available_columns( $saved_columns );
 	}
 }
