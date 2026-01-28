@@ -174,8 +174,8 @@ class Meta_Fields {
 	/**
 	 * Update screen options lock settings post meta.
 	 *
-	 * @param int                $post_id       The post ID.
-	 * @param array|bool|mixed   $lock_settings The lock settings to set (can be bool or array).
+	 * @param int              $post_id       The post ID.
+	 * @param array|bool|mixed $lock_settings The lock settings to set (can be bool or array).
 	 *
 	 * @return bool True if the update was successful, false otherwise.
 	 */

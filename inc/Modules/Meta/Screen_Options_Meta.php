@@ -7,9 +7,8 @@
 
 namespace ScreenOptions\Modules\Meta;
 
-use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
-use ScreenOptions\Modules\Meta\Meta_Fields;
 use ScreenOptions\Modules\Core\Cache;
+use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
 use WP_Query;
 
 /**
@@ -61,7 +60,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		$saved_roles = [];
 		if ( $post && $post->ID ) {
 			$post_meta = Meta_Fields::get_roles( $post->ID );
-			if ( ! empty( $post_meta ) && is_array( $post_meta ) ) {
+			if ( ! empty( $post_meta ) ) {
 				$saved_roles = $post_meta;
 			}
 		}
@@ -69,7 +68,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		$selected_post_type = '';
 		if ( $post && $post->ID ) {
 			$post_meta = Meta_Fields::get_post_type( $post->ID );
-			if ( ! empty( $post_meta ) && is_string( $post_meta ) ) {
+			if ( ! empty( $post_meta ) ) {
 				$selected_post_type = $post_meta;
 			}
 		}
@@ -127,7 +126,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				$saved_columns = [];
 			if ( $post && $post->ID ) {
 				$post_meta = Meta_Fields::get_columns( $post->ID );
-				if ( ! empty( $post_meta ) && is_array( $post_meta ) ) {
+				if ( ! empty( $post_meta ) ) {
 					$saved_columns = $post_meta;
 				}
 			}
@@ -371,7 +370,6 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				'post_type'     => $selected_post_type,
 			]
 		);
-
 	}
 
 	/**
@@ -412,7 +410,11 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			]
 		);
 
-		if ( empty( $posts->posts ) || ! is_array( $posts->posts ) ) {
+		if ( empty( $posts->posts ) ) {
+			return [];
+		}
+
+		if ( ! is_array( $posts->posts ) ) {
 			return [];
 		}
 
@@ -421,7 +423,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				continue;
 			}
 			$post_roles = Meta_Fields::get_roles( $post_id );
-			if ( empty( $post_roles ) || ! is_array( $post_roles ) ) {
+			if ( empty( $post_roles ) ) {
 				continue;
 			}
 
@@ -463,7 +465,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		switch ( $column ) {
 			case 'screen_options_roles':
 				$roles = Meta_Fields::get_roles( $post_id );
-				if ( empty( $roles ) || ! is_array( $roles ) ) {
+				if ( empty( $roles ) ) {
 					echo esc_html__( 'No roles assigned', 'screen-options' );
 					return;
 				}
@@ -492,7 +494,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 
 			case 'screen_options_columns':
 				$columns = Meta_Fields::get_columns( $post_id );
-				if ( empty( $columns ) || ! is_array( $columns ) ) {
+				if ( empty( $columns ) ) {
 					echo esc_html__( 'No columns configured', 'screen-options' );
 					return;
 				}
@@ -575,7 +577,11 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			]
 		);
 
-		if ( empty( $posts->posts ) || ! is_array( $posts->posts ) ) {
+		if ( empty( $posts->posts ) ) {
+			return [];
+		}
+
+		if ( ! is_array( $posts->posts ) ) {
 			return [];
 		}
 
@@ -587,7 +593,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			$post_roles = Meta_Fields::get_roles( $post_id );
 			$post_type  = Meta_Fields::get_post_type( $post_id );
 
-			if ( empty( $post_roles ) || ! is_array( $post_roles ) || empty( $post_type ) ) {
+			if ( empty( $post_roles ) || empty( $post_type ) ) {
 				continue;
 			}
 

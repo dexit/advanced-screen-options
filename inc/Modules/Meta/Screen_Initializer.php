@@ -204,7 +204,7 @@ class Screen_Initializer implements Registrable {
 	/**
 	 * Capture and store columns for a screen.
 	 *
-	 * @param WP_Screen $screen The screen object.
+	 * @param \WP_Screen $screen The screen object.
 	 * @return void
 	 */
 	private function capture_columns( WP_Screen $screen ): void {
@@ -224,7 +224,7 @@ class Screen_Initializer implements Registrable {
 		// Get currently saved columns.
 		$saved_columns = Meta_Fields::get_available_columns();
 
-		if ( ! is_array( $saved_columns ) ) {
+		if ( empty( $saved_columns ) ) {
 			$saved_columns = [];
 		}
 

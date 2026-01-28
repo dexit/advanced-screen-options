@@ -136,7 +136,7 @@ class Cache {
 		$count = 0;
 
 		// Delete regular transients.
-		$transients = $wpdb->get_results(
+		$transients = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 			$wpdb->prepare(
 				"SELECT option_name FROM {$wpdb->options} WHERE option_name LIKE %s",
 				$wpdb->esc_like( '_transient_' . self::TRANSIENT_PREFIX ) . '%'
@@ -145,26 +145,11 @@ class Cache {
 
 		foreach ( $transients as $transient ) {
 			$key = str_replace( '_transient_', '', $transient->option_name );
-			if ( delete_transient( $key ) ) {
-				$count++;
+			if ( ! delete_transient( $key ) ) {
+				continue;
 			}
-		}
 
-		// Delete site transients if multisite.
-		if ( is_multisite() ) {
-			$site_transients = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT option_name FROM {$wpdb->sitemeta} WHERE meta_key LIKE %s",
-					$wpdb->esc_like( '_site_transient_' . self::TRANSIENT_PREFIX ) . '%'
-				)
-			);
-
-			foreach ( $site_transients as $transient ) {
-				$key = str_replace( '_site_transient_', '', $transient->meta_key );
-				if ( delete_site_transient( $key ) ) {
-					$count++;
-				}
-			}
+			++$count;
 		}
 
 		return $count;

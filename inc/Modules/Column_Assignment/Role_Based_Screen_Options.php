@@ -9,8 +9,8 @@ namespace ScreenOptions\Modules\Column_Assignment;
 
 use ScreenOptions\Contracts\Interfaces\Registrable;
 use ScreenOptions\Modules\Core\Assets;
-use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
 use ScreenOptions\Modules\Meta\Meta_Fields;
+use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
 use WP_Query;
 
 /**
@@ -61,7 +61,7 @@ class Role_Based_Screen_Options implements Registrable {
 		$selected_columns = Meta_Fields::get_columns( $this->screen_options_posts_id );
 
 		// If no selected columns found, return original hidden columns.
-		if ( empty( $selected_columns ) || ! is_array( $selected_columns ) ) {
+		if ( empty( $selected_columns ) ) {
 			return $hidden_columns;
 		}
 

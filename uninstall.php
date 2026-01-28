@@ -35,7 +35,7 @@ function uninstall(): void {
  * Delete all screen option posts and their metadata.
  */
 function delete_all_screen_option_post_types(): void {
-	$screen_option_posts = get_posts(
+	$screen_option_posts = get_posts( // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts
 		[
 			'post_type'        => Default_Screen_Options::get_slug(),
 			'post_status'      => 'any',
@@ -76,18 +76,4 @@ function delete_plugin_options(): void {
 	// Add more as needed.
 }
 
-// Run the uninstall routine.
-if ( is_multisite() ) {
-	// Get all sites in the network.
-	global $wpdb;
-
-	$blog_ids = $wpdb->get_col( "SELECT blog_id FROM {$wpdb->blogs}" );
-
-	foreach ( $blog_ids as $blog_id ) {
-		switch_to_blog( $blog_id );
-		uninstall();
-		restore_current_blog();
-	}
-} else {
-	uninstall();
-}
+uninstall();
