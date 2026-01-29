@@ -17,6 +17,11 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
+// To prevent fatal errors when plugin is deleted because SCREENOPTIONS_DIR is decalred in main plugin file.
+if ( ! defined( 'SCREENOPTIONS_DIR' ) ) {
+	define( 'SCREENOPTIONS_DIR', plugin_dir_path( __FILE__ ) );
+}
+
 /**
  * The (site-specific) uninstall function.
  */
