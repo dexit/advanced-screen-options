@@ -1,150 +1,133 @@
-=== ScreenOptions ===
-Contributors: Utsav Patel, rtCamp
+=== Screen Options ===
+Contributors: Milind More, rtCamp
 Donate link: https://rtcamp.com/
-Tags: plugin manager, CI/CD, automation, enterprise
+Tags: screen options, admin columns, column visibility, user experience, admin interface
 Requires at least: 6.8
 Tested up to: 6.9
-Stable tag: 1.1.0-beta.1
+Stable tag: 1.0.0-beta
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Centralized plugin management for WordPress sites via CI/CD. Automate updates across development, staging, and production environments.
+Manage WordPress admin screen options and column visibility. Set site-wide defaults and optionally lock them for consistency.
 
 == Description ==
 
-ScreenOptions is a powerful plugin management solution designed for enterprises managing multiple WordPress sites through CI/CD workflows like GitHub, GitLab, or Bitbucket. It streamlines plugin updates, installations, and management across multiple environments by automatically creating pull requests for all changes.
+Screen Options is a WordPress plugin that allows administrators to configure default screen options and column visibility across WordPress admin screens. Set site-wide defaults for screen options and optionally lock them to ensure consistency across all users and roles.
 
-**Why ScreenOptions?**
+**Why Screen Options?**
 
-Managing plugin updates across multiple websites in enterprise environments is time-consuming and repetitive. When updates need to flow through multiple environments (develop → staging → production), developers must create separate pull requests for each environment—a tedious workflow.
+WordPress's screen options are user-specific, meaning every user must configure their own preferences. For organizations managing WordPress sites, this can lead to inconsistent user experiences, training overhead, and support issues when users accidentally hide important columns.
 
-ScreenOptions solves this by providing a centralized governing to manage all sites while automatically creating pull requests for all environments, maintaining proper Git history without commit conflicts.
+Screen Options solves this by providing centralized configuration of screen options, allowing you to set defaults once for all users or configure different settings for different user roles.
 
 **Key Benefits:**
 
-* **50% Time Savings:** Reduce plugin update process time significantly
-* **Cost Reduction:** Lower operational costs through workflow optimization  
-* **Streamlined Workflow:** Centralized management while maintaining site autonomy
-* **Security:** REST API with unique authentication keys and secure S3 integration
+* **Improved User Experience:** Ensure all users see the most relevant information
+* **Time Savings:** Configure once instead of for every user
+* **Better Training:** New users start with optimized settings
+* **Consistency:** Maintain uniform admin interface across teams
 
 **Core Features:**
 
-* **Dual Architecture Support:** Works with WordPress multisite and standalone installations
-* **Secure API Integration:** REST API with unique authentication keys for safe operations
-* **Plugin Browser:** Full-screen admin interface with search and filtering functionality
-* **Status Monitoring:** Visual indicators for plugin states (active, update available, deactivated)
-* **Version Control:** Install specific versions from the latest 5 available releases
-* **Private Plugin Support:** Upload and manage proprietary plugins with S3 integration
-* **Bulk Operations:** Update all plugins across multiple sites simultaneously
-* **Automated PR Creation:** Generate pull requests for all changes across environments
+* **Default Screen Options:** Set site-wide defaults for screen options
+* **Column Management:** Control which columns are visible in admin list tables
+* **Lock Settings:** Prevent users from modifying screen options
+* **Post Type Support:** Configure settings per post type
+* **Role-Based Options:** Different settings for different user roles
+* **Easy Interface:** Simple, intuitive admin interface for configuration
 
-**Plugin Management Actions:**
 
-* Activate/Deactivate plugins on selected sites
-* Update plugins to specific versions (latest 5 versions available)
-* Install new plugins from WordPress.org repository
-* Upload and manage private plugins (expires after 1 hour for security)
-* Bulk update all available plugins
-* Remove plugins from specific sites
-* Real-time plugin status tracking
+**Limitations**
+* Columns that are added by third-party plugins may be registered conditionally and may not appear in the Screen Options settings if those plugins are not active or their conditions are not met. (eg: Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
+* Columns that are not registered using standard WordPress APIs may not appear in the Screen Options settings.
+* Some custom admin screens may not be fully compatible with the plugin.
+* The plugin may not work as expected with heavily customized WordPress installations.
+* Certain themes or plugins that modify admin screens may conflict with Screen Options.
+
 
 **Perfect for:**
 
-* Enterprise WordPress deployments
-* Development teams using CI/CD workflows
-* Agencies managing multiple client sites
-* Organizations with strict deployment processes
-* Sites hosted on platforms like WordPress VIP
+* Organizations with multiple WordPress users
+* Agencies setting up sites for clients
+* Teams that need consistent admin interfaces
+* Anyone who wants to improve the WordPress admin experience
 
 == Installation ==
 
-1. Upload the ScreenOptions plugin files to the `/wp-content/plugins/screen-options` directory, or install the plugin through the WordPress plugins screen directly
+1. Upload the Screen Options plugin files to the `/wp-content/plugins/screen-options` directory, or install the plugin through the WordPress plugins screen directly
 2. Activate the plugin through the 'Plugins' screen in WordPress
-3. Set up one site as the "Governing Site" for centralized management
-4. Configure other sites as "Brand Sites" 
-5. Add required GitHub Actions workflows to your repositories:
-   * `screen-options-pr-creation.yml` (for public plugins)
-   * `screen-options-pr-creation-private.yml` (for private plugins)
-6. Configure GitHub PAT token and S3 credentials in the Governing Site
-7. Register all Brand Sites with their respective API keys
+3. Navigate to "Default Screens" in your WordPress admin menu
+4. Click "Add New" to create a new screen options configuration
+5. Select the post type or screen you want to configure
+6. Choose which columns should be visible by default
+7. Optionally enable "lock" to prevent users from changing these settings
+8. Click "Publish" to save your configuration
+
+For detailed installation and configuration instructions, see the [Installation Guide](https://github.com/rtCamp/screen-options/blob/main/docs/INSTALLATION.md).
 
 == Frequently Asked Questions ==
 
-= How are plugins managed? =
+= How do I set default screen options? =
 
-Plugins are managed using a combination of GitHub Actions and WordPress REST APIs with comprehensive security checks. All changes create pull requests in your repositories for review before deployment.
+Navigate to "Default Screens" in your admin menu, create a new entry, select the post type or screen, choose your desired columns and options, then publish.
 
-= Can I install plugins directly from GitHub? =
+= Can I lock screen options so users can't change them? =
 
-Yes, plugins installed directly via GitHub will be tracked on the governing site, even if not added through ScreenOptions.
+Yes, when configuring a screen option, you can enable the "lock" option to prevent users from modifying the settings.
 
-= Are there limits on plugin management? =
+= Does this work with custom post types? =
 
-There are no hard limits on the number of plugins you can manage from the governing site.
+Yes, the plugin supports all registered post types in WordPress, including custom post types.
 
-= Does this work with private plugins? =
+= Can I configure different settings for different roles? =
 
-Yes, you can upload private plugins which are securely stored in S3. For security, uploaded private plugins expire after 1 hour.
+Yes, the plugin supports role-based screen options, allowing you to configure different settings for different user roles.
 
-= Can I remove plugins from specific sites? =
+= Will this affect existing user preferences? =
 
-Yes, you can remove plugins from specific sites directly through the governing interface.
+When you set defaults, new users will get those defaults. Existing users will retain their preferences unless you lock the settings.
 
-= What CI/CD platforms are supported? =
+= How do I remove a configuration? =
 
-ScreenOptions works with any CI/CD platform that supports WordPress sites, including GitHub, GitLab, and Bitbucket.
-
-= Is this compatible with WordPress multisite? =
-
-Yes, ScreenOptions supports both WordPress multisite networks and standalone WordPress installations.
-
-= How does version management work? =
-
-For public plugins, you can choose from the latest 5 available versions from WordPress.org. Private plugins use the uploaded version.
+Navigate to "Default Screens", find the configuration you want to remove, and delete it like you would delete any post.
 
 == Screenshots ==
 
-1. ScreenOptions Governing - Centralized plugin management interface
-2. Plugin Browser - Search and filter plugins across all sites
-3. Version Selection - Choose from latest 5 versions for updates
-4. Site Configuration - Governing and Brand site setup
-5. Bulk Operations - Update multiple plugins simultaneously
-6. Private Plugin Upload - Secure private plugin management
+1. Default Screens - Configure screen options for post types
+2. Column Selection - Choose which columns are visible by default
+3. Lock Settings - Prevent users from changing screen options
+4. Role-Based Configuration - Different settings for different user roles
 
 == Changelog ==
 
-= 1.1.0-beta.1 =
-Feat: Refactor for WPCS and best practices
-
 = 1.0.0-beta =
 * Initial release
-* Centralized plugin management governing
-* Support for public and private plugins
-* GitHub Actions integration for automated PR creation
-* S3 integration for private plugin storage
-* Bulk plugin operations
-* Version management (latest 5 versions)
-* REST API with secure authentication
-* WordPress multisite and standalone support
+* Default screen options configuration
+* Column visibility management
+* Lock settings functionality
+* Role-based screen options
+* Post type support
+* Custom post type compatibility
+* Initial release
+* Default screen options configuration
+* Column visibility management
+* Lock settings functionality
+* Role-based screen options
+* Post type support
+* Custom post type compatibility
 
 == Upgrade Notice ==
 
 = 1.0.0-beta =
-Initial release of ScreenOptions. Perfect for enterprises managing multiple WordPress sites through CI/CD workflows.
-
-== Requirements ==
-
-* Sites managed through CI/CD pipelines (GitHub/GitLab/Bitbucket)
-* GitHub PAT token with repository write access
-* S3 credentials for private plugin management
+Initial release of Screen Options. Configure default admin screen options for your WordPress site.
 
 == Support ==
 
-For support, feature requests, and bug reports, please visit our [GitHub repository](https://github.com/rtCamp/ScreenOptions).
+For support, feature requests, and bug reports, please visit our [GitHub repository](https://github.com/rtCamp/screen-options).
 
 == Contributing ==
 
-ScreenOptions is open source and welcomes contributions. Visit our [GitHub repository](https://github.com/rtCamp/ScreenOptions) to contribute code, report issues, or suggest features.
+Screen Options is open source and welcomes contributions. Visit our [GitHub repository](https://github.com/rtCamp/screen-options) to contribute code, report issues, or suggest features.
 
-Development guidelines and contributing information can be found in our repository documentation.
+Development guidelines and contributing information can be found in our [repository documentation](https://github.com/rtCamp/screen-options/tree/main/docs).

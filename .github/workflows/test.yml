@@ -53,9 +53,6 @@ jobs:
       - name: Run Stylelint
         run: npm run lint:css
 
-      - name: Run TS Typecheck
-        run: npm run lint:js:types
-
       - name: Run build to ensure no errors
         run: npm run build:prod
 

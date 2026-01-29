@@ -67,7 +67,7 @@
 		"lint:php:stan": "composer run-script phpstan",
 		"lint:php": "composer run-script lint",
 		"lint": "npm-run-all --parallel lint:*",
-		"plugin-zip": "wp-scripts plugin-zip",
+		"plugin-zip": "npm run build:prod && wp-scripts plugin-zip",
 		"start:js": "wp-scripts start --config ./webpack.config.js",
 		"start": "npm-run-all --parallel start:*",
 		"test:php": "wp-env run tests-cli --env-cwd=wp-content/plugins/$(basename \"$(pwd)\")/ composer run-script test",

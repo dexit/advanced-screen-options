@@ -1,69 +1,118 @@
 # Screen Options - Installation and Setup Guide
 
-This guide provides detailed instructions for installing and configuring ScreenOptions for your WordPress enterprise environment.
+This guide provides detailed instructions for installing and configuring the Screen Options plugin for your WordPress site.
 
 ## Installation Overview
+
 The installation process involves the following key steps:
+
+1. Download and install the plugin
+2. Activate the plugin
+3. Configure default screen options
 
 ## Step 1: Download and Install Plugin
 
+### Option A: Install from WordPress.org (When Available)
+
+1. Navigate to **Plugins → Add New** in your WordPress admin
+2. Search for "Screen Options"
+3. Click **Install Now** and then **Activate**
+
+### Option B: Manual Installation
+
 1. Download the latest Screen Options plugin from [GitHub Releases](https://github.com/rtCamp/screen-options/releases)
-2. Upload the plugin files to `/wp-content/plugins/screen-options/` on both governing and brand sites
-3. If installing from source code, run the following commands in the plugin directory:
-   ```bash
-   composer install && npm install && npm run build:prod
-   ```
+2. Upload the plugin files to `/wp-content/plugins/screen-options/` directory
+3. Navigate to **Plugins** in your WordPress admin and activate "Screen Options"
 
-## Step 2: Setup Default Screen Options for Site
+### Option C: Install from Source Code
 
-1. **Activate Plugin:** Go to WordPress Admin → Plugins and activate Screen Options
-2. **Setup Credentials:** Navigate to Screen Options → Settings and configure
-    - Choose post type or screen options to manage
-    - Choose Screen options that you want enabled by default
-    - You can also lock the screen options so that users cannot change them
-3. **Save Settings:** Click "Save Changes" to apply the configuration
+If installing from source code, run the following commands in the plugin directory:
 
-## Step 3: Configure GitHub Actions Workflows
+```bash
+composer install --no-dev --optimize-autoloader
+npm install
+npm run build:prod
+```
 
-**Add the required workflow files to each brand site repository for automated plugin management.**
+## Step 2: Activate the Plugin
 
-1. **Create GitHub Actions Directory:** In each brand site repository, create `.github/workflows/` directory if it doesn't exist
+1. Navigate to **Plugins** in your WordPress admin
+2. Find "Screen Options" in the plugin list
+3. Click **Activate**
 
-2. **Configure Repository Secrets:** In your GitHub repository settings, add the following secret:
-   - **`SCREENOPTIONS_RTCAMP_TOKEN`** - Your GitHub Personal Access Token
+Upon activation, the plugin will:
+- Initialize screen options detection for all registered post types
+- Create the necessary database tables
+- Register the "Default Screens" custom post type
 
-3. **Grant Permissions:** Ensure the GitHub token has the following permissions:
-   - `repo` - Full repository access
-   - `workflow` - Update GitHub Actions workflows
-   - `pull_requests:write` - Create and update pull requests
+## Step 3: Configure Default Screen Options
 
-## Configuration Verification
+### Creating Your First Configuration
 
-After completing the installation:
+1. Navigate to **Default Screens** in your WordPress admin menu
+2. Click **Add New** to create a new screen options configuration
+3. **Title:** Give your configuration a descriptive name (e.g., "Posts Default Columns")
+4. **Select Post Type/Screen:** Choose the screen you want to configure (e.g., Posts, Pages, Custom Post Type)
+5. **Configure Columns:** Check the columns you want visible by default
+6. **Lock Settings (Optional):** Enable if you want to prevent users from changing these settings
+7. Click **Publish** to save your configuration
 
-1. **Test Connection:** Verify that brand sites appear in the governing site's dashboard
-2. **Check API Communication:** Ensure the governing site can communicate with all brand sites
-3. **Validate GitHub Integration:** Test that GitHub Actions workflows can be triggered
-4. **S3 Configuration:** (If using private plugins) Verify S3 upload functionality
+### Configuring Role-Based Screen Options
 
-## Troubleshooting Installation
+1. Navigate to **Default Screens → Add New**
+2. Select the target **user role** (e.g., Editor, Author, Contributor)
+3. Choose the post type or screen
+4. Configure the desired screen options
+5. Publish to apply the settings
 
-### Common Installation Issues
+## Configuration Examples
 
-#### Plugin Not Showing in Governing
-- Verify governing site configuration
-- Check network connectivity between sites
-- Confirm REST API permissions
+### Example 1: Configure Default Columns for Posts
 
-#### GitHub Actions Not Working
-- Ensure GitHub workflows are properly configured
-- Verify GitHub PAT token permissions
-- Check repository access rights
+1. Go to **Default Screens → Add New**
+2. Title: "Posts - Default Columns"
+3. Select: Post Type → Posts
+4. Enable columns: Title, Author, Categories, Tags, Date
+5. Lock settings: Yes (to prevent users from changing)
+6. Publish
 
-#### S3 Upload Errors
-- Check S3 credentials and bucket permissions
-- Verify AWS region configuration
-- Ensure bucket allows file uploads
+### Example 2: Configure Editor Role Columns
+
+1. Go to **Default Screens → Add New**
+2. Title: "Editor - Posts Columns"
+3. Select: User Role → Editor
+4. Select: Post Type → Posts
+5. Enable columns: Title, Author, Categories, Comments, Date
+6. Publish
+
+## Verification
+
+After completing the installation and configuration:
+
+1. **Test as Admin:** Log in as an administrator and verify screen options appear correctly
+2. **Test as Other Roles:** Log in with different user roles to verify role-based settings
+3. **Check Locked Settings:** If locked, verify users cannot modify the screen options
+4. **Test Different Post Types:** Verify settings work across all configured post types
+
+## Troubleshooting
+
+### Plugin Not Activating
+
+- Ensure your WordPress version is 6.8 or higher
+- Verify PHP version is 8.1 or higher
+- Check for plugin conflicts by deactivating other plugins
+
+### Screen Options Not Applying
+
+- Clear WordPress caches (object cache, page cache)
+- Ensure the configuration is published (not in draft)
+- Verify the post type/screen selection matches where you're testing
+
+### Columns Not Showing
+
+- Ensure the columns are registered by your theme or other plugins
+- Check that column hooks are properly implemented
+- Verify no other plugins are overriding screen options
 
 ### Getting Help
 

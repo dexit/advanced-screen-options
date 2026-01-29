@@ -24,10 +24,23 @@ final class Main {
 	 * @var class-string<\ScreenOptions\Contracts\Interfaces\Registrable>[]
 	 */
 	private const REGISTRABLE_CLASSES = [
+
+		// Column Assignment.
+		Modules\Column_Assignment\Role_Based_Screen_Options::class,
+
+		// Core.
 		Modules\Core\Assets::class,
 
+		// Meta Boxes.
+		Modules\Meta\Screen_Initializer::class,
+		Modules\Meta\Screen_Options_Meta::class,
+
+		// Post Types.
+		Modules\Post_Types\Default_Screen_Options::class,
+
+		// Settings.
 		Modules\Settings\Admin::class,
-		Modules\Settings\Settings::class,
+
 	];
 
 	/**
@@ -46,50 +59,8 @@ final class Main {
 	 * Setup the plugin.
 	 */
 	private function setup(): void {
-		// Ensure pretty permalinks are enabled.
-		if ( ! $this->has_pretty_permalinks() ) {
-			return;
-		}
-
 		// Load the plugin classes.
 		$this->load();
-
-		// Do other stuff here like dep-checking, telemetry, etc.
-	}
-
-	/**
-	 * Returns whether pretty permalinks are enabled.
-	 *
-	 * Will also render an admin notice if not enabled.
-	 */
-	private function has_pretty_permalinks(): bool {
-		if ( ! empty( get_option( 'permalink_structure' ) ) ) {
-			return true;
-		}
-
-		foreach ( [
-			'admin_notices',
-			'network_admin_notices',
-		] as $hook ) {
-			add_action(
-				$hook,
-				static function () {
-					wp_admin_notice(
-						sprintf(
-						/* translators: 1: Plugin name */
-							__( 'ScreenOptions: The plugin requires pretty permalinks to be enabled. Please go to <a href="%s">Permalink Settings</a> and enable an option other than <code>Plain</code>.', 'screen-options' ),
-							admin_url( 'options-permalink.php' ),
-						),
-						[
-							'type'        => 'error',
-							'dismissible' => false,
-						]
-					);
-				}
-			);
-		}
-
-		return false;
 	}
 
 	/**

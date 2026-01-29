@@ -67,7 +67,6 @@ const styles = {
 const scripts = {
 	...sharedConfig,
 	entry: {
-		main: path.resolve( process.cwd(), 'assets', 'src', 'js', 'main.js' ),
 		admin: path.resolve( process.cwd(), 'assets', 'src', 'js', 'admin.js' ),
 	},
 	module: {

@@ -45,8 +45,7 @@
 		}
 	},
 	"require": {
-		"php": "^8.1",
-		"aws/aws-sdk-php": "^3.343"
+		"php": "^8.1"
 	},
 	"require-dev": {
 		"automattic/vipwpcs": "^3.0",

@@ -8,7 +8,6 @@
 namespace ScreenOptions\Modules\Core;
 
 use ScreenOptions\Contracts\Interfaces\Registrable;
-use ScreenOptions\Modules\Settings\Settings;
 
 /**
  * Class Assets
@@ -28,12 +27,12 @@ class Assets implements Registrable {
 	/**
 	 * Asset handles
 	 */
-	public const ADMIN_STYLES_HANDLE          = self::PREFIX . 'admin';
-	public const EDITOR_STYLES_HANDLE         = self::PREFIX . 'editor';
-	public const SETTINGS_SCRIPT_HANDLE       = self::PREFIX . 'settings';
-	public const ONBOARDING_SCRIPT_HANDLE     = self::PREFIX . 'onboarding';
-	public const PLUGIN_MANAGER_SCRIPT_HANDLE = self::PREFIX . 'plugin-manager';
-	public const PULL_REQUESTS_SCRIPT_HANDLE  = self::PREFIX . 'pull-requests';
+	public const ADMIN_STYLES_HANDLE = self::PREFIX . 'admin';
+
+	/**
+	 * Admin script handle.
+	 */
+	public const ADMIN_SCRIPTS_HANDLE = self::PREFIX . 'admin';
 
 	/**
 	 * Localized data for scripts.
@@ -63,11 +62,19 @@ class Assets implements Registrable {
 	 */
 	public static function get_localized_data(): array {
 		if ( empty( self::$localized_data ) ) {
-			self::$localized_data = [
-			];
+			self::$localized_data = [];
 		}
 
 		return self::$localized_data;
+	}
+
+	/**
+	 * Set Localized data.
+	 *
+	 * @param array<string,mixed> $data Data to merge into localized data.
+	 */
+	public static function set_localized_data( array $data ): void {
+		self::$localized_data = array_merge( self::get_localized_data(), $data );
 	}
 
 	/**
@@ -95,8 +102,9 @@ class Assets implements Registrable {
 	 */
 	public function register_assets(): void {
 
-		$this->register_script( self::SETTINGS_SCRIPT_HANDLE, 'settings' );
-		$this->register_style( self::SETTINGS_SCRIPT_HANDLE, 'settings' );
+		$this->register_style( self::ADMIN_STYLES_HANDLE, 'admin' );
+		$this->register_script( self::ADMIN_SCRIPTS_HANDLE, 'admin' );
+
 		wp_enqueue_style( self::ADMIN_STYLES_HANDLE );
 	}
 
@@ -109,7 +117,7 @@ class Assets implements Registrable {
 	 */
 	public function defer_scripts( string $tag, string $handle ): string {
 		$defer_handles = [
-			self::SETTINGS_SCRIPT_HANDLE,
+			self::ADMIN_SCRIPTS_HANDLE,
 		];
 
 		// Bail if we don't need to defer.
