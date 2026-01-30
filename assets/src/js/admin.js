@@ -188,13 +188,55 @@
 		} else {
 			row.removeClass( 'selected' );
 		}
+
+		// If this is the "All Users" checkbox, handle role checkboxes
+		if ( $( this ).attr( 'id' ) === 'role-all' ) {
+			handleAllUsersToggle();
+		}
+
 		validate();
 		updatePostTypeDropdown();
 	} );
+
+	/**
+	 * Handle the "All Users" checkbox toggle
+	 * When checked, uncheck and disable all individual role checkboxes
+	 * When unchecked, enable all role checkboxes
+	 */
+	function handleAllUsersToggle() {
+		const allUsersChecked = $( '#role-all' ).is( ':checked' );
+
+		// Get all role checkboxes except the "All Users" checkbox
+		const $roleCheckboxes = $( '.role-check' ).not( '#role-all' );
+
+		if ( allUsersChecked ) {
+			// Uncheck and disable all role checkboxes
+			$roleCheckboxes.each( function() {
+				const $checkbox = $( this );
+				const $row = $checkbox.closest( '.role-row' );
+
+				$checkbox.prop( 'checked', false ).prop( 'disabled', true );
+				$row.removeClass( 'selected' ).css( 'opacity', '0.5' );
+			} );
+		} else {
+			// Enable all role checkboxes
+			$roleCheckboxes.each( function() {
+				const $checkbox = $( this );
+				const $row = $checkbox.closest( '.role-row' );
+
+				$checkbox.prop( 'disabled', false );
+				$row.css( 'opacity', '1' );
+			} );
+		}
+	}
 
 	$( document ).ready( () => {
 		checkScreenOptionsLock();
 		validate();
 		updatePostTypeDropdown();
+		// Handle "All Users" state on page load
+		if ( $( '#role-all' ).length ) {
+			handleAllUsersToggle();
+		}
 	} );
 }( jQuery ) );
