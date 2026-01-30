@@ -150,7 +150,9 @@ Initial release of Screen Options. Configure default admin screen options for yo
 
 == Support ==
 
-For support, feature requests, and bug reports, please visit our [GitHub repository](https://github.com/rtCamp/screen-options).
+For Support: https://wordpress.org/support/plugin/screen-options/
+
+For feature requests, and bug reports, please visit our [GitHub repository](https://github.com/rtCamp/screen-options).
 
 == Contributing ==
 

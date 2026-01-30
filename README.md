@@ -189,8 +189,8 @@ No, Screen Options only affects the WordPress admin area and has no impact on fr
 
 ## Support & Community
 
+- **Support Forum:** [WordPress.org Support](https://wordpress.org/support/plugin/screen-options/)
 - **Issues & Bug Reports:** [GitHub Issues](https://github.com/rtCamp/screen-options/issues)  
-- **Feature Requests:** [GitHub Discussions](https://github.com/rtCamp/screen-options/discussions)  
 - **Documentation:** [Project Wiki](https://github.com/rtCamp/screen-options/wiki)
 
 ## License
