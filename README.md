@@ -1,5 +1,3 @@
-![Banner](./assets/src/images/banner.png)
-
 # Screen Options \- Manage WordPress Admin Screen Options and Column Visibility
 
 **Contributors:** [rtCamp](https://profiles.wordpress.org/rtcamp), [Milind More](https://github.com/milindmore22)
@@ -59,7 +57,7 @@ Screen Options solves this by:
 - **Easy Interface:** Simple, intuitive admin interface for configuration
 
 ### Limitations
-- Columns that are added by third-party plugins may be reigstered conditionally and may not appear in the Screen Options settings if those plugins are not active or their conditions are not met. (eg: Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
+- Columns that are added by third-party plugins may be registered conditionally and may not appear in the Screen Options settings if those plugins are not active or their conditions are not met. (eg: Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
 - Columns that are not registered using standard WordPress APIs may not appear in the Screen Options settings.
 - Some custom admin screens may not be fully compatible with the plugin.
 - The plugin may not work as expected with heavily customized WordPress installations.
@@ -69,7 +67,11 @@ Screen Options solves this by:
 ## System Requirements
 
 - **WordPress:** 6.8 or higher
+- **Requires at least:** 6.0
+- **Tested up to:** 6.9
+- **Stable tag:** 1.0.0
 - **PHP:** 8.1 or higher
+- **Requires PHP:** 8.1
 
 ## Installation & Setup
 
@@ -111,7 +113,7 @@ Configure different screen options for different user roles:
 
 Screen Options is actively developed and maintained by [rtCamp](https://rtcamp.com/).
 
-- **Repository:** [github.com/rtCamp/screen-options](https://github.com/rtCamp/screen-options)  
+- **Repository:** [https://github.com/rtCamp/screen-options](https://github.com/rtCamp/screen-options)  
 - **Contributing Guide:** [docs/CONTRIBUTING.md](./docs/CONTRIBUTING.md)  
 - **Development Guide:** [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md)
 
