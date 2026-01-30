@@ -109,6 +109,16 @@ Configure different screen options for different user roles:
 3. Configure the desired screen options
 4. Publish to apply the settings
 
+## Preference Hierarchy
+
+The plugin follows a clear preference hierarchy when applying screen settings:
+
+1. **User-specific settings** (highest priority)
+2. **Role-based defaults**
+3. **Global site-wide defaults** (fallback)
+
+This ensures that individual user preferences always take precedence, while administrators can still enforce consistent defaults across the site.
+
 ## Development & Contributing
 
 Screen Options is actively developed and maintained by [rtCamp](https://rtcamp.com/).

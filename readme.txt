@@ -92,6 +92,16 @@ When you set defaults, new users will get those defaults. Existing users will re
 
 Navigate to "Default Screens", find the configuration you want to remove, and delete it like you would delete any post.
 
+= Preference Hierarchy =
+
+The plugin follows a clear preference hierarchy when applying screen settings:
+
+1. User-specific settings (highest priority)
+2. Role-based defaults
+3. Global site-wide defaults (fallback)
+
+This ensures that individual user preferences always take precedence, while administrators can still enforce consistent defaults across the site.
+
 == Screenshots ==
 
 1. Default Screens - Configure screen options for post types
