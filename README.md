@@ -1,3 +1,5 @@
+![Banner](./wp-assets/banner-1544x500.png)
+
 # Screen Options \- Manage WordPress Admin Screen Options and Column Visibility
 
 **Contributors:** [rtCamp](https://profiles.wordpress.org/rtcamp), [Milind More](https://github.com/milindmore22)
@@ -56,6 +58,16 @@ Screen Options solves this by:
 - **Role-Based Options:** Different settings for different user roles
 - **Easy Interface:** Simple, intuitive admin interface for configuration
 
+### Preference Hierarchy
+
+The plugin follows a clear preference hierarchy when applying screen settings:
+
+1. **User-specific settings** (highest priority)
+2. **Role-based defaults**
+3. **Global site-wide defaults** (fallback)
+
+This ensures that individual user preferences always take precedence, while administrators can still enforce consistent defaults across the site.
+
 ### Limitations
 - Columns that are added by third-party plugins may be registered conditionally and may not appear in the Screen Options settings if those plugins are not active or their conditions are not met. (eg: Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
 - Columns that are not registered using standard WordPress APIs may not appear in the Screen Options settings.
@@ -109,16 +121,6 @@ Configure different screen options for different user roles:
 3. Configure the desired screen options
 4. Publish to apply the settings
 
-## Preference Hierarchy
-
-The plugin follows a clear preference hierarchy when applying screen settings:
-
-1. **User-specific settings** (highest priority)
-2. **Role-based defaults**
-3. **Global site-wide defaults** (fallback)
-
-This ensures that individual user preferences always take precedence, while administrators can still enforce consistent defaults across the site.
-
 ## Development & Contributing
 
 Screen Options is actively developed and maintained by [rtCamp](https://rtcamp.com/).
@@ -166,6 +168,20 @@ When you deactivate the plugin, users will revert to their individual screen opt
 ### Does this affect front-end performance?
 
 No, Screen Options only affects the WordPress admin area and has no impact on front-end performance. All functionality is loaded exclusively in the admin dashboard.
+
+## Screenshots
+
+![Screenshot-1](./wp-assets/screenshot-1.png)
+Screen options admin menu.
+
+![Screenshot-2](./wp-assets/screenshot-2.png)
+Choose user role and post type, then select which columns are visible by default.
+
+![Screenshot-3](./wp-assets/screenshot-3.png)
+Locked columns prevent users from changing screen options column visibility.
+
+![Screenshot-4](./wp-assets/screenshot-4.png)
+Unlocked columns allow users to customize their column visibility.
 
 ## Troubleshooting
 

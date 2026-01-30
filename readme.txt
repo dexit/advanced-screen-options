@@ -120,10 +120,10 @@ No, Screen Options only affects the WordPress admin area and has no impact on fr
 
 == Screenshots ==
 
-1. Default Screens - Configure screen options for post types
-2. Column Selection - Choose which columns are visible by default
-3. Lock Settings - Prevent users from changing screen options
-4. Role-Based Configuration - Different settings for different user roles
+1. Screen options admin menu.
+2. Choose user role and post type, then select which columns are visible by default
+3. Locked columns prevent users from changing screen options column visibility
+4. Unlocked columns allow users to customize their column visibility
 
 == Changelog ==
 
