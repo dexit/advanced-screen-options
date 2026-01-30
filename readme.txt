@@ -1,5 +1,5 @@
 === Screen Options ===
-Contributors: Milind More, rtCamp
+Contributors: milindmore22, rtCamp
 Donate link: https://rtcamp.com/
 Tags: screen options, admin columns, column visibility, user experience, admin interface
 Requires at least: 6.8
@@ -37,8 +37,18 @@ Screen Options solves this by providing centralized configuration of screen opti
 * **Role-Based Options:** Different settings for different user roles
 * **Easy Interface:** Simple, intuitive admin interface for configuration
 
+**Preference Hierarchy**
+
+The plugin follows a clear preference hierarchy when applying screen settings:
+
+1. **User-specific settings (highest priority)**
+2. **Role-based defaults**
+3. **Global site-wide defaults (fallback)**
+
+This ensures that individual user preferences always take precedence, while administrators can still enforce consistent defaults across the site.
 
 **Limitations**
+
 * Columns that are added by third-party plugins may be registered conditionally and may not appear in the Screen Options settings if those plugins are not active or their conditions are not met. (eg: Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
 * Columns that are not registered using standard WordPress APIs may not appear in the Screen Options settings.
 * Some custom admin screens may not be fully compatible with the plugin.
@@ -92,16 +102,6 @@ When you set defaults, new users will get those defaults. Existing users will re
 
 Navigate to "Default Screens", find the configuration you want to remove, and delete it like you would delete any post.
 
-= Preference Hierarchy =
-
-The plugin follows a clear preference hierarchy when applying screen settings:
-
-1. User-specific settings (highest priority)
-2. Role-based defaults
-3. Global site-wide defaults (fallback)
-
-This ensures that individual user preferences always take precedence, while administrators can still enforce consistent defaults across the site.
-
 = Does this work with multisite? =
 
 Yes, Screen Options is fully compatible with WordPress multisite installations. You can configure screen options for each site in your network independently.
@@ -150,9 +150,7 @@ Initial release of Screen Options. Configure default admin screen options for yo
 
 == Support ==
 
-For Support: https://wordpress.org/support/plugin/screen-options/
-
-For feature requests, and bug reports, please visit our [GitHub repository](https://github.com/rtCamp/screen-options).
+For Support: Forums on [WordPress.org](https://wordpress.org/support/plugin/screen-options)
 
 == Contributing ==
 
