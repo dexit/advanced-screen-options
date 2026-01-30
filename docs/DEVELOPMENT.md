@@ -35,18 +35,10 @@ Code contributions, bug reports, and feature requests are welcome! The following
 │
 ├── assets
 │   └── src
-│       ├── admin
 │       ├── css
-│       │   ├── admin.scss
-│       │   ├── editor.scss
-│       │   └── main.scss
-│       ├── images
-│       │   ├── banner.png
-│       │   └── logo.svg
+│       │   └── admin.scss
 │       └── js
-│           ├── admin.js
-│           ├── editor.js
-│           └── main.js
+│           └── admin.js
 │   # Project documentation.
 ├── docs/
 │   ├── CODE_OF_CONDUCT.md
@@ -69,9 +61,11 @@ Code contributions, bug reports, and feature requests are welcome! The following
 │       │   └── Role_Based_Screen_Options.php
 │       ├── Core
 │       │   ├── Assets.php
+│       │   ├── Cache.php
 │       │   └── Rest.php
 │       ├── Meta
 │       │   ├── Abstract_Meta_Box.php
+│       │   ├── Meta_Fields.php
 │       │   ├── Screen_Initializer.php
 │       │   └── Screen_Options_Meta.php
 │       ├── Post_Types
