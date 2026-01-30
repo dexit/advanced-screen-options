@@ -151,6 +151,22 @@ Yes, the plugin supports role-based screen options, allowing you to configure di
 
 When you set defaults, new users will get those defaults. Existing users will retain their preferences unless you lock the settings.
 
+### Does this work with multisite?
+
+Yes, Screen Options is fully compatible with WordPress multisite installations. You can configure screen options for each site in your network independently.
+
+### Is there an import/export feature for configurations?
+
+Currently, import/export functionality is not built-in. However, configurations are stored as custom post types, so you can use standard WordPress export/import tools or migrate them with database migration plugins.
+
+### What happens when I deactivate the plugin?
+
+When you deactivate the plugin, users will revert to their individual screen option preferences or WordPress defaults. Your configurations remain in the database and will be reapplied if you reactivate the plugin.
+
+### Does this affect front-end performance?
+
+No, Screen Options only affects the WordPress admin area and has no impact on front-end performance. All functionality is loaded exclusively in the admin dashboard.
+
 ## Troubleshooting
 
 ### Screen options not applying
