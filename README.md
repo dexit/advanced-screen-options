@@ -1,4 +1,4 @@
-![Banner](./assets/src/images/banner.png)
+![Banner](./wp-assets/banner-1544x500.png)
 
 # Screen Options \- Manage WordPress Admin Screen Options and Column Visibility
 
@@ -58,8 +58,18 @@ Screen Options solves this by:
 - **Role-Based Options:** Different settings for different user roles
 - **Easy Interface:** Simple, intuitive admin interface for configuration
 
+### Preference Hierarchy
+
+The plugin follows a clear preference hierarchy when applying screen settings:
+
+1. **User-specific settings** (highest priority)
+2. **Role-based defaults**
+3. **Global site-wide defaults** (fallback)
+
+This ensures that individual user preferences always take precedence, while administrators can still enforce consistent defaults across the site.
+
 ### Limitations
-- Columns that are added by third-party plugins may be reigstered conditionally and may not appear in the Screen Options settings if those plugins are not active or their conditions are not met. (eg: Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
+- Columns that are added by third-party plugins may be registered conditionally and may not appear in the Screen Options settings if those plugins are not active or their conditions are not met. (eg: Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
 - Columns that are not registered using standard WordPress APIs may not appear in the Screen Options settings.
 - Some custom admin screens may not be fully compatible with the plugin.
 - The plugin may not work as expected with heavily customized WordPress installations.
@@ -69,7 +79,11 @@ Screen Options solves this by:
 ## System Requirements
 
 - **WordPress:** 6.8 or higher
+- **Requires at least:** 6.0
+- **Tested up to:** 6.9
+- **Stable tag:** 1.0.0
 - **PHP:** 8.1 or higher
+- **Requires PHP:** 8.1
 
 ## Installation & Setup
 
@@ -111,7 +125,7 @@ Configure different screen options for different user roles:
 
 Screen Options is actively developed and maintained by [rtCamp](https://rtcamp.com/).
 
-- **Repository:** [github.com/rtCamp/screen-options](https://github.com/rtCamp/screen-options)  
+- **Repository:** [https://github.com/rtCamp/screen-options](https://github.com/rtCamp/screen-options)  
 - **Contributing Guide:** [docs/CONTRIBUTING.md](./docs/CONTRIBUTING.md)  
 - **Development Guide:** [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md)
 
@@ -139,6 +153,36 @@ Yes, the plugin supports role-based screen options, allowing you to configure di
 
 When you set defaults, new users will get those defaults. Existing users will retain their preferences unless you lock the settings.
 
+### Does this work with multisite?
+
+Yes, Screen Options is fully compatible with WordPress multisite installations. You can configure screen options for each site in your network independently.
+
+### Is there an import/export feature for configurations?
+
+Currently, import/export functionality is not built-in. However, configurations are stored as custom post types, so you can use standard WordPress export/import tools or migrate them with database migration plugins.
+
+### What happens when I deactivate the plugin?
+
+When you deactivate the plugin, users will revert to their individual screen option preferences or WordPress defaults. Your configurations remain in the database and will be reapplied if you reactivate the plugin.
+
+### Does this affect front-end performance?
+
+No, Screen Options only affects the WordPress admin area and has no impact on front-end performance. All functionality is loaded exclusively in the admin dashboard.
+
+## Screenshots
+
+![Screenshot-1](./wp-assets/screenshot-1.png)
+Screen options admin menu.
+
+![Screenshot-2](./wp-assets/screenshot-2.png)
+Choose user role and post type, then select which columns are visible by default.
+
+![Screenshot-3](./wp-assets/screenshot-3.png)
+Locked columns prevent users from changing screen options column visibility.
+
+![Screenshot-4](./wp-assets/screenshot-4.png)
+Unlocked columns allow users to customize their column visibility.
+
 ## Troubleshooting
 
 ### Screen options not applying
@@ -161,9 +205,8 @@ When you set defaults, new users will get those defaults. Existing users will re
 
 ## Support & Community
 
+- **Support Forum:** [WordPress.org Support](https://wordpress.org/support/plugin/screen-options/)
 - **Issues & Bug Reports:** [GitHub Issues](https://github.com/rtCamp/screen-options/issues)  
-- **Feature Requests:** [GitHub Discussions](https://github.com/rtCamp/screen-options/discussions)  
-- **Documentation:** [Project Wiki](https://github.com/rtCamp/screen-options/wiki)
 
 ## License
 

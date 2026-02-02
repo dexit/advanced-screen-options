@@ -1,5 +1,5 @@
 === Screen Options ===
-Contributors: Milind More, rtCamp
+Contributors: milindmore22, rtCamp
 Donate link: https://rtcamp.com/
 Tags: screen options, admin columns, column visibility, user experience, admin interface
 Requires at least: 6.8
@@ -37,8 +37,18 @@ Screen Options solves this by providing centralized configuration of screen opti
 * **Role-Based Options:** Different settings for different user roles
 * **Easy Interface:** Simple, intuitive admin interface for configuration
 
+**Preference Hierarchy**
+
+The plugin follows a clear preference hierarchy when applying screen settings:
+
+1. **User-specific settings (highest priority)**
+2. **Role-based defaults**
+3. **Global site-wide defaults (fallback)**
+
+This ensures that individual user preferences always take precedence, while administrators can still enforce consistent defaults across the site.
 
 **Limitations**
+
 * Columns that are added by third-party plugins may be registered conditionally and may not appear in the Screen Options settings if those plugins are not active or their conditions are not met. (eg: Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
 * Columns that are not registered using standard WordPress APIs may not appear in the Screen Options settings.
 * Some custom admin screens may not be fully compatible with the plugin.
@@ -92,12 +102,28 @@ When you set defaults, new users will get those defaults. Existing users will re
 
 Navigate to "Default Screens", find the configuration you want to remove, and delete it like you would delete any post.
 
+= Does this work with multisite? =
+
+Yes, Screen Options is fully compatible with WordPress multisite installations. You can configure screen options for each site in your network independently.
+
+= Is there an import/export feature for configurations? =
+
+Currently, import/export functionality is not built-in. However, configurations are stored as custom post types, so you can use standard WordPress export/import tools or migrate them with database migration plugins.
+
+= What happens when I deactivate the plugin? =
+
+When you deactivate the plugin, users will revert to their individual screen option preferences or WordPress defaults. Your configurations remain in the database and will be reapplied if you reactivate the plugin.
+
+= Does this affect front-end performance? =
+
+No, Screen Options only affects the WordPress admin area and has no impact on front-end performance. All functionality is loaded exclusively in the admin dashboard.
+
 == Screenshots ==
 
-1. Default Screens - Configure screen options for post types
-2. Column Selection - Choose which columns are visible by default
-3. Lock Settings - Prevent users from changing screen options
-4. Role-Based Configuration - Different settings for different user roles
+1. Screen options admin menu.
+2. Choose user role and post type, then select which columns are visible by default
+3. Locked columns prevent users from changing screen options column visibility
+4. Unlocked columns allow users to customize their column visibility
 
 == Changelog ==
 
@@ -124,7 +150,7 @@ Initial release of Screen Options. Configure default admin screen options for yo
 
 == Support ==
 
-For support, feature requests, and bug reports, please visit our [GitHub repository](https://github.com/rtCamp/screen-options).
+For Support: Forums on [WordPress.org](https://wordpress.org/support/plugin/screen-options)
 
 == Contributing ==
 
