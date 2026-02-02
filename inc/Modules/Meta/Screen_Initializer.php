@@ -106,11 +106,14 @@ class Screen_Initializer implements Registrable {
 	 * @return void
 	 */
 	public function initialize_screens_for_columns(): void {
-		global $typenow, $current_screen;
+		global $typenow, $current_screen, $pagenow, $hook_suffix, $post_type;
 
 		// Store current values to restore later.
-		$original_typenow = $typenow;
-		$original_screen  = $current_screen;
+		$original_typenow     = $typenow;
+		$original_screen      = $current_screen;
+		$original_pagenow     = $pagenow;
+		$original_hook_suffix = $hook_suffix;
+		$original_post_type   = $post_type;
 
 		// Get all public post types.
 		$post_types = get_post_types(
@@ -132,17 +135,20 @@ class Screen_Initializer implements Registrable {
 		}
 
 		// Initialize each screen and capture columns.
-		foreach ( $post_types as $post_type ) {
-			if ( null === $post_type ) {
+		foreach ( $post_types as $p_type ) {
+			if ( null === $p_type ) {
 				continue;
 			}
 
-			$this->initialize_edit_screen( $post_type->name );
+			$this->initialize_edit_screen( $p_type->name );
 		}
 
 		// Restore original values.
-		$typenow        = $original_typenow; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$typenow        = $original_typenow; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
 		$current_screen = $original_screen; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
+		$pagenow        = $original_pagenow; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
+		$hook_suffix    = $original_hook_suffix; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
+		$post_type      = $original_post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
 	}
 
 	/**
@@ -152,35 +158,66 @@ class Screen_Initializer implements Registrable {
 	 * @return void
 	 */
 	private function initialize_edit_screen( string $post_type ): void {
-		global $typenow;
+		global $typenow, $pagenow, $hook_suffix, $wp_query, $post;
 
-		// Set the global post type.
-		$typenow = $post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		// Store original global post to restore later.
+		$original_post = $post;
+
+		// Set the global post type and context to simulate edit.php.
+		$typenow              = $post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$GLOBALS['post_type'] = $post_type; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+		$pagenow              = 'edit.php'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
+		$hook_suffix          = 'edit.php'; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
+
+		// Create a fake post object with the correct post_type to make get_post_type() return the correct value.
+		// This is essential for plugins like Co-Authors Plus that call get_post_type() without passing a post ID.
+		$post = (object) [  // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+			'ID'        => 0,
+			'post_type' => $post_type,
+		];
+
+		// Set query vars to ensure get_post_type() returns the correct post type.
+		// This is crucial for plugins like Co-Authors Plus that call get_post_type() to check enabled post types.
+		if ( ! empty( $wp_query ) ) {
+			$wp_query->set( 'post_type', $post_type );
+		}
+
+		// Also set $_GET['post_type'] as a fallback for plugins that check this directly.
+		$_GET['post_type'] = $post_type; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 		// Create a screen object for this post type's edit screen.
 		$screen = WP_Screen::get( 'edit-' . $post_type );
 
 		if ( ! $screen ) {
+			// Restore original post.
+			$post = $original_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 			return;
 		}
 
 		// Temporarily set as current screen to trigger column filters.
 		$screen->set_current_screen();
 
+		// Fire the load-{$pagenow} hook to trigger third-party plugin hooks.
+		// This is crucial for plugins like Co-Authors Plus that register columns on this hook.
+		do_action( 'load-edit.php' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound, WordPress.NamingConventions.ValidHookName.UseUnderscores
+
 		// Load the list table class to trigger column registration.
-		$this->load_list_table( $post_type );
+		$list_table = $this->load_list_table( $post_type );
 
 		// Capture and store the columns.
-		$this->capture_columns( $screen );
+		$this->capture_columns( $screen, $list_table );
+
+		// Restore the original post object.
+		$post = $original_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited, SlevomatCodingStandard.Variables.UnusedVariable.UnusedVariable
 	}
 
 	/**
 	 * Load the list table for a post type to register columns.
 	 *
 	 * @param string $post_type The post type.
-	 * @return void
+	 * @return \WP_Posts_List_Table|null
 	 */
-	private function load_list_table( string $post_type ): void {
+	private function load_list_table( string $post_type ): ?\WP_Posts_List_Table {
 		// Don't actually include the files, just trigger the column filters.
 		if ( ! function_exists( '_get_list_table' ) ) {
 			require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
@@ -198,22 +235,26 @@ class Screen_Initializer implements Registrable {
 				$list_table->get_columns();
 			}
 			ob_end_clean();
+
+			return $list_table;
 		} catch ( \Throwable $e ) {
 			// Silently fail if there's an issue.
 			if ( ob_get_level() > 0 ) {
 				ob_end_clean();
 			}
+
+			return null;
 		}
 	}
 
 	/**
 	 * Capture and store columns for a screen.
 	 *
-	 * @param \WP_Screen $screen The screen object.
+	 * @param \WP_Screen                $screen The screen object.
+	 * @param \WP_Posts_List_Table|null $list_table The list table object.
 	 * @return void
 	 */
-	private function capture_columns( WP_Screen $screen ): void {
-
+	private function capture_columns( WP_Screen $screen, ?\WP_Posts_List_Table $list_table = null ): void {
 		// Temporarily remove all filters to get raw columns.
 		remove_all_filters( 'default_hidden_columns' );
 		remove_all_filters( 'hidden_columns' );
