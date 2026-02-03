@@ -44,6 +44,11 @@
 			"ScreenOptions\\": "inc/"
 		}
 	},
+	"autoload-dev": {
+		"psr-4": {
+			"PluginCheckCS\\PluginCheck\\": "vendor/wpackagist-plugin/plugin-check/vendor/plugin-check/phpcs-sniffs/PluginCheck/"
+		}
+	},
 	"require": {
 		"php": "^8.1"
 	},
