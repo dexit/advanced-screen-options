@@ -298,6 +298,40 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			return;
 		}
 
+		// Validate that post title is not empty.
+		$post = get_post( $post_id );
+		if ( empty( $post ) || empty( trim( $post->post_title ) ) ) {
+			// Remove the hook to prevent infinite loop.
+			remove_action( 'save_post', [ $this, 'save_meta_box_data' ] );
+
+			// Prevent publishing by transitioning post to draft.
+			$result = wp_update_post(
+				[
+					'ID'          => $post_id,
+					'post_status' => 'draft',
+				],
+				true
+			);
+
+			// Check for errors.
+			if ( is_wp_error( $result ) ) {
+				// Re-add the hook before returning.
+				add_action( 'save_post', [ $this, 'save_meta_box_data' ] );
+				return;
+			}
+
+			// Set admin notice.
+			Cache::set_transient(
+				'screen_options_title_error_' . $post_id,
+				__( 'Screen option cannot be saved! Title is required. Settings saved as draft.', 'screen-options' ),
+				45
+			);
+
+			// Re-add the hook.
+			add_action( 'save_post', [ $this, 'save_meta_box_data' ] );
+			return;
+		}
+
 		$columns       = [];
 		$roles         = [];
 		$lock_settings = false;
@@ -382,14 +416,25 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			return;
 		}
 
-		$error_message = Cache::get_transient( 'screen_options_role_error_' . $post->ID );
-		if ( ! $error_message ) {
+		// Check for title error.
+		$title_error_message = Cache::get_transient( 'screen_options_title_error_' . $post->ID );
+		if ( $title_error_message ) {
+			printf(
+				'<div class="notice notice-error is-dismissible"><p><strong>%s</strong></p></div>',
+				esc_html( $title_error_message )
+			);
+			Cache::delete_transient( 'screen_options_title_error_' . $post->ID );
+		}
+
+		// Check for role error.
+		$role_error_message = Cache::get_transient( 'screen_options_role_error_' . $post->ID );
+		if ( ! $role_error_message ) {
 			return;
 		}
 
 		printf(
 			'<div class="notice notice-error is-dismissible"><p><strong>%s</strong></p></div>',
-			esc_html( $error_message )
+			esc_html( $role_error_message )
 		);
 		Cache::delete_transient( 'screen_options_role_error_' . $post->ID );
 	}
