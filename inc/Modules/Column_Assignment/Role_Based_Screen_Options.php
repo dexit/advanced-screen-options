@@ -129,7 +129,7 @@ class Role_Based_Screen_Options implements Registrable {
 		}
 
 		if ( count( $meta_query ) > 1 ) {
-			$meta_query[]['relation'] = 'OR';
+			$meta_query['relation'] = 'OR';
 		}
 
 		// Fetch screen options posts based on user role.

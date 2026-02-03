@@ -4,12 +4,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Screen Options 1.0.0-beta\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/screen-options\n"
-"Last-Translator: Milind More <milind.more@rtcamp.com>\n"
-"Language-Team: rtCamp <support@rtcamp.com>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-02T13:45:54+00:00\n"
+"POT-Creation-Date: 2026-02-03T10:32:03+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: screen-options\n"
@@ -115,35 +115,39 @@ msgstr ""
 msgid "Configuration Locked"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:334
+#: inc/Modules/Meta/Screen_Options_Meta.php:326
+msgid "Screen option cannot be saved! Title is required. Post has been set to draft and settings were not saved."
+msgstr ""
+
+#: inc/Modules/Meta/Screen_Options_Meta.php:368
 msgid "Screen option cannot be saved! At least one role must be selected before saving it. Settings saved as draft."
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:443
+#: inc/Modules/Meta/Screen_Options_Meta.php:488
 msgid "Roles"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:444
+#: inc/Modules/Meta/Screen_Options_Meta.php:489
 msgid "Post Type"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:445
+#: inc/Modules/Meta/Screen_Options_Meta.php:490
 msgid "Columns Shown"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:446
+#: inc/Modules/Meta/Screen_Options_Meta.php:491
 msgid "Lock"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:469
+#: inc/Modules/Meta/Screen_Options_Meta.php:514
 msgid "No roles assigned"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:489
+#: inc/Modules/Meta/Screen_Options_Meta.php:534
 msgid "No post type selected"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:498
+#: inc/Modules/Meta/Screen_Options_Meta.php:543
 msgid "No columns configured"
 msgstr ""
 
