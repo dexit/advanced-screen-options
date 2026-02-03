@@ -323,7 +323,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			// Set admin notice.
 			Cache::set_transient(
 				'screen_options_title_error_' . $post_id,
-				__( 'Screen option cannot be saved! Title is required. Settings saved as draft.', 'screen-options' ),
+				__( 'Screen option cannot be saved! Title is required. Post has been set to draft and settings were not saved.', 'screen-options' ),
 				45
 			);
 
