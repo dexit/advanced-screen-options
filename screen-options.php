@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Screen Options
  * Description: Screen Options - Manage your admin screen options and column visibility with ease.
- * Author: Milind More, rtCamp
+ * Author: rtCamp
  * Author URI: https://rtcamp.com
  * Plugin URI: https://github.com/rtCamp/screen-options/
  * Update URI: https://github.com/rtCamp/screen-options/
@@ -10,7 +10,7 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: screen-options
  * Domain Path: /languages
- * Version: 1.0.0-beta
+ * Version: 1.0.0
  * Requires PHP: 8.1
  * Requires at least: 6.8
  * Tested up to: 6.9
@@ -30,7 +30,7 @@ function constants(): void {
 	/**
 	 * Version of the plugin.
 	 */
-	define( 'SCREENOPTIONS_VERSION', '1.0.0-beta' );
+	define( 'SCREENOPTIONS_VERSION', '1.0.0' );
 
 	/**
 	 * Root path to the plugin directory.
