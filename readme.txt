@@ -1,10 +1,9 @@
 === Screen Options ===
-Contributors: milindmore22, rtCamp
-Donate link: https://rtcamp.com/
+Contributors: rtCamp, aviralmittal89, aishwarryapande, danish17, vishal4669, up1512001, milindmore22
 Tags: screen options, admin columns, column visibility, user experience, admin interface
 Requires at least: 6.8
 Tested up to: 6.9
-Stable tag: 1.0.0-beta
+Stable tag: 1.0.0
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -127,7 +126,7 @@ No, Screen Options only affects the WordPress admin area and has no impact on fr
 
 == Changelog ==
 
-= 1.0.0-beta =
+= 1.0.0 =
 * Initial release
 * Default screen options configuration
 * Column visibility management
@@ -145,7 +144,7 @@ No, Screen Options only affects the WordPress admin area and has no impact on fr
 
 == Upgrade Notice ==
 
-= 1.0.0-beta =
+= 1.0.0 =
 Initial release of Screen Options. Configure default admin screen options for your WordPress site.
 
 == Support ==
