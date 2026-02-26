@@ -2,7 +2,7 @@
 
 # Advanced Screen Options \- Manage WordPress Admin Screen Options and Column Visibility
 
-**Contributors:** [rtCamp](https://profiles.wordpress.org/rtcamp/), [aviralmittal89](https://profiles.wordpress.org/aviralmittal89/), [aishwarryapande](https://profiles.wordpress.org/aishwarryapande/), [iamdanih17](https://github.com/iamdanih17), [vishal4669](https://profiles.wordpress.org/vishal4669/), [up1512001](https://profiles.wordpress.org/up1512001/), [milindmore22](https://profiles.wordpress.org/milindmore22/)
+**Contributors:** [rtCamp](https://profiles.wordpress.org/rtcamp/), [aviralmittal89](https://profiles.wordpress.org/aviralmittal89/), [aishwarryapande](https://profiles.wordpress.org/aishwarryapande/), [iamdanih17](https://profiles.wordpress.org/iamdanih17/), [vishal4669](https://profiles.wordpress.org/vishal4669/), [up1512001](https://profiles.wordpress.org/up1512001/), [milindmore22](https://profiles.wordpress.org/milindmore22/)
 
 **Tags:** WordPress, Advanced Screen Options, Admin Columns, Column Visibility, User Experience, Admin Interface
 
@@ -205,8 +205,8 @@ Unlocked columns allow users to customize their screen options column visibility
 
 ## Support & Community
 
-- **Support Forum:** [WordPress.org Support](https://wordpress.org/support/plugin/screen-options/)
-- **Issues & Bug Reports:** [GitHub Issues](https://github.com/rtCamp/screen-options/issues)  
+- **Support Forum:** [WordPress.org Support](https://wordpress.org/support/plugin/advanced-screen-options/)
+- **Issues & Bug Reports:** [GitHub Issues](https://github.com/rtCamp/advanced-screen-options/issues)  
 
 ## License
 

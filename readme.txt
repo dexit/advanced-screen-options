@@ -142,10 +142,10 @@ Initial release of Screen Options. Configure default admin screen options for yo
 
 == Support ==
 
-For Support: Forums on [WordPress.org](https://wordpress.org/support/plugin/screen-options)
+For Support: Forums on [WordPress.org](https://wordpress.org/support/plugin/advanced-screen-options)
 
 == Contributing ==
 
-Screen Options is open source and welcomes contributions. Visit our [GitHub repository](https://github.com/rtCamp/screen-options) to contribute code, report issues, or suggest features.
+Advanced Screen Options is open source and welcomes contributions. Visit our [GitHub repository](https://github.com/rtCamp/advanced-screen-options) to contribute code, report issues, or suggest features.
 
-Development guidelines and contributing information can be found in our [repository documentation](https://github.com/rtCamp/screen-options/tree/main/docs).
+Development guidelines and contributing information can be found in our [repository documentation](https://github.com/rtCamp/advanced-screen-options/tree/main/docs).

@@ -17,7 +17,7 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-// To prevent fatal errors when plugin is deleted because ADVANCED_SCREEN_OPTIONS_DIR is decalred in main plugin file.
+// To prevent fatal errors when plugin is deleted because ADVANCED_SCREEN_OPTIONS_DIR is declared in main plugin file.
 if ( ! defined( 'ADVANCED_SCREEN_OPTIONS_DIR' ) ) {
 	define( 'ADVANCED_SCREEN_OPTIONS_DIR', plugin_dir_path( __FILE__ ) );
 }
