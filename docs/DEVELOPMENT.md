@@ -70,7 +70,7 @@ Code contributions, bug reports, and feature requests are welcome! The following
 │       │   └── Screen_Options_Meta.php
 │       ├── Post_Types
 │       │   ├── Abstract_Post_Type.php
-│       │   └── Default_Screen_Options.php
+│       │   └── Advanced_Screen_Options.php
 │       └── Settings
 │           └── Admin.php
 │

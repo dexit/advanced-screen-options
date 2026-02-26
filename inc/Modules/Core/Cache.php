@@ -2,10 +2,10 @@
 /**
  * Cache wrapper class for transients and object cache.
  *
- * @package ScreenOptions\Modules\Core
+ * @package AdvancedScreenOptions\Modules\Core
  */
 
-namespace ScreenOptions\Modules\Core;
+namespace AdvancedScreenOptions\Modules\Core;
 
 /**
  * Class Cache

@@ -1,20 +1,20 @@
 ![Banner](./wp-assets/banner-1544x500.png)
 
-# Screen Options \- Manage WordPress Admin Screen Options and Column Visibility
+# Advanced Screen Options \- Manage WordPress Admin Screen Options and Column Visibility
 
-**Contributors:** [rtCamp](https://profiles.wordpress.org/rtcamp/), [aviralmittal89](https://profiles.wordpress.org/aviralmittal89/), [aishwarryapande](https://profiles.wordpress.org/aishwarryapande/), [danish17](https://github.com/danish17), [vishal4669](https://profiles.wordpress.org/vishal4669/), [up1512001](https://profiles.wordpress.org/up1512001/), [milindmore22](https://profiles.wordpress.org/milindmore22/)
+**Contributors:** [rtCamp](https://profiles.wordpress.org/rtcamp/), [aviralmittal89](https://profiles.wordpress.org/aviralmittal89/), [aishwarryapande](https://profiles.wordpress.org/aishwarryapande/), [iamdanih17](https://github.com/iamdanih17), [vishal4669](https://profiles.wordpress.org/vishal4669/), [up1512001](https://profiles.wordpress.org/up1512001/), [milindmore22](https://profiles.wordpress.org/milindmore22/)
 
-**Tags:** WordPress, Screen Options, Admin Columns, Column Visibility, User Experience, Admin Interface
+**Tags:** WordPress, Advanced Screen Options, Admin Columns, Column Visibility, User Experience, Admin Interface
 
 This plugin is licensed under the GPL v2 or later.
 
 ## Overview
 
-Screen Options is a WordPress plugin that allows administrators to configure default screen options and column visibility across WordPress admin screens. Set site-wide defaults for screen options and optionally lock them to ensure consistency across all users and roles.
+Advanced Screen Options is a WordPress plugin that allows administrators to configure default screen options and column visibility across WordPress admin screens. Set site-wide defaults for screen options and optionally lock them to ensure consistency across all users and roles.
 
 ## Description
 
-**Screen Options** simplifies the management of WordPress admin interface settings by allowing you to:
+**Advanced Screen Options** simplifies the management of WordPress admin interface settings by allowing you to:
 
 * **Set default screen options** for post types and admin screens
 * **Configure column visibility** for list tables (posts, pages, custom post types)
@@ -24,7 +24,7 @@ Screen Options is a WordPress plugin that allows administrators to configure def
 
 This makes it easier to maintain a consistent admin experience across your WordPress site and ensures users see only the columns and options they need.
 
-## Why Screen Options?
+## Why Advanced Screen Options?
 
 WordPress's screen options are user-specific, meaning every user must configure their own preferences. For organizations managing WordPress sites, this can lead to:
 
@@ -33,7 +33,7 @@ WordPress's screen options are user-specific, meaning every user must configure 
 - **Support issues** when users accidentally hide important columns
 - **Reduced productivity** from poorly configured admin screens
 
-Screen Options solves this by:
+Advanced Screen Options solves this by:
 
 - **Centralizing Configuration:** Set defaults once for all users
 - **Enforcing Standards:** Lock settings to ensure consistency
@@ -69,11 +69,11 @@ The plugin follows a clear preference hierarchy when applying screen settings:
 This ensures that individual user preferences always take precedence, while administrators can still enforce consistent defaults across the site.
 
 ### Limitations
-- Columns that are added by third-party plugins may be registered conditionally and may not appear in the Screen Options settings if those plugins are not active or their conditions are not met. (eg: Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
-- Columns that are not registered using standard WordPress APIs may not appear in the Screen Options settings.
+- Columns that are added by third-party plugins may be registered conditionally and may not appear in the Advanced Screen Options settings if those plugins are not active or their conditions are not met. (e.g., Yoast SEO columns appear only when meta boxes are enabled in the Yoast settings)
+- Columns that are not registered using standard WordPress APIs may not appear in the Advanced Screen Options settings.
 - Some custom admin screens may not be fully compatible with the plugin.
 - The plugin may not work as expected with heavily customized WordPress installations.
-- Certain themes or plugins that modify admin screens may conflict with Screen Options.
+- Certain themes or plugins that modify admin screens may conflict with Advanced Screen Options.
 
 
 ## System Requirements
@@ -93,14 +93,14 @@ For detailed installation instructions and configuration guides, please see our 
 
 ### Accessing the Settings
 
-Navigate to **Default Screens** in your WordPress admin menu to access the screen options management interface.
+Navigate to **Advanced Screen Options** in your WordPress admin menu to access the Advanced Screen Options management interface.
 
-### Configuring Default Screen Options
+### Configuring Advanced Screen Options
 
 #### Setting Up Default Columns
 
-1. Navigate to **Default Screens** in the WordPress admin
-2. Click **"Add New"** to create a new screen options configuration
+1. Navigate to **Advanced Screen Options** in the WordPress admin
+2. Click **"Add New"** to create a new Advanced Screen Options configuration
 3. Select the **post type** or screen you want to configure
 4. Choose which **columns** should be visible by default
 5. Optionally **lock** the settings to prevent users from changing them
@@ -116,16 +116,16 @@ Navigate to **Default Screens** in your WordPress admin menu to access the scree
 
 Configure different screen options for different user roles:
 
-1. Create a new screen options configuration
+1. Create a new Advanced Screen Options configuration
 2. Select the target **user role**
 3. Configure the desired screen options
 4. Publish to apply the settings
 
 ## Development & Contributing
 
-Screen Options is actively developed and maintained by [rtCamp](https://rtcamp.com/).
+Advanced Screen Options is actively developed and maintained by [rtCamp](https://rtcamp.com/).
 
-- **Repository:** [https://github.com/rtCamp/screen-options](https://github.com/rtCamp/screen-options)  
+- **Repository:** [https://github.com/rtCamp/advanced-screen-options](https://github.com/rtCamp/advanced-screen-options)  
 - **Contributing Guide:** [docs/CONTRIBUTING.md](./docs/CONTRIBUTING.md)  
 - **Development Guide:** [docs/DEVELOPMENT.md](./docs/DEVELOPMENT.md)
 
@@ -135,7 +135,7 @@ We welcome contributions! Please read our contributing guidelines before submitt
 
 ### How do I set default screen options?
 
-Create a new "Default Screen" entry, select the post type or screen, choose your desired columns and options, then publish.
+Create a new "Advanced Screen Options" entry, select the post type or screen, choose your desired columns and options, then publish.
 
 ### Can I lock screen options so users can't change them?
 
@@ -147,7 +147,7 @@ Yes, the plugin supports all registered post types in WordPress, including custo
 
 ### Can I configure different settings for different roles?
 
-Yes, the plugin supports role-based screen options, allowing you to configure different settings for different user roles.
+Yes, the plugin supports role-based Advanced Screen Options, allowing you to configure different settings for different user roles.
 
 ### Will this affect existing user preferences?
 
@@ -155,7 +155,7 @@ When you set defaults, new users will get those defaults. Existing users will re
 
 ### Does this work with multisite?
 
-Yes, Screen Options is fully compatible with WordPress multisite installations. You can configure screen options for each site in your network independently.
+Yes, Advanced Screen Options is fully compatible with WordPress multisite installations. You can configure screen options for each site in your network independently.
 
 ### Is there an import/export feature for configurations?
 
@@ -167,12 +167,12 @@ When you deactivate the plugin, users will revert to their individual screen opt
 
 ### Does this affect front-end performance?
 
-No, Screen Options only affects the WordPress admin area and has no impact on front-end performance. All functionality is loaded exclusively in the admin dashboard.
+No, Advanced Screen Options only affects the WordPress admin area and has no impact on front-end performance. All functionality is loaded exclusively in the admin dashboard.
 
 ## Screenshots
 
 ![Screenshot-1](./wp-assets/screenshot-1.png)
-Screen options admin menu.
+Advanced Screen Options admin menu.
 
 ![Screenshot-2](./wp-assets/screenshot-2.png)
 Choose user role and post type, then select which columns are visible by default.
@@ -181,7 +181,7 @@ Choose user role and post type, then select which columns are visible by default
 Locked columns prevent users from changing screen options column visibility.
 
 ![Screenshot-4](./wp-assets/screenshot-4.png)
-Unlocked columns allow users to customize their column visibility.
+Unlocked columns allow users to customize their screen options column visibility.
 
 ## Troubleshooting
 

@@ -1,13 +1,13 @@
 <?php
 /**
- * Enqueue assets for ScreenOptions.
+ * Enqueue assets for AdvancedScreenOptions.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
-namespace ScreenOptions\Modules\Core;
+namespace AdvancedScreenOptions\Modules\Core;
 
-use ScreenOptions\Contracts\Interfaces\Registrable;
+use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**
  * Class Assets
@@ -81,8 +81,8 @@ class Assets implements Registrable {
 	 * Constructor.
 	 */
 	public function __construct() {
-		$this->plugin_dir = (string) SCREENOPTIONS_DIR;
-		$this->plugin_url = (string) SCREENOPTIONS_URL;
+		$this->plugin_dir = (string) ADVANCED_SCREEN_OPTIONS_DIR;
+		$this->plugin_url = (string) ADVANCED_SCREEN_OPTIONS_URL;
 	}
 
 	/**

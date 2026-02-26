@@ -2,24 +2,24 @@
 /**
  * This will be executed when the plugin is uninstalled.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
 declare( strict_types=1 );
 
-namespace ScreenOptions;
+namespace AdvancedScreenOptions;
 
-use ScreenOptions\Modules\Core\Cache;
-use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
+use AdvancedScreenOptions\Modules\Core\Cache;
+use AdvancedScreenOptions\Modules\Post_Types\Advanced_Screen_Options;
 
 // If uninstall not called from WordPress, exit.
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-// To prevent fatal errors when plugin is deleted because SCREENOPTIONS_DIR is decalred in main plugin file.
-if ( ! defined( 'SCREENOPTIONS_DIR' ) ) {
-	define( 'SCREENOPTIONS_DIR', plugin_dir_path( __FILE__ ) );
+// To prevent fatal errors when plugin is deleted because ADVANCED_SCREEN_OPTIONS_DIR is decalred in main plugin file.
+if ( ! defined( 'ADVANCED_SCREEN_OPTIONS_DIR' ) ) {
+	define( 'ADVANCED_SCREEN_OPTIONS_DIR', plugin_dir_path( __FILE__ ) );
 }
 
 /**
@@ -42,7 +42,7 @@ function uninstall(): void {
 function delete_all_screen_option_post_types(): void {
 	$screen_option_posts = get_posts( // phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts
 		[
-			'post_type'        => Default_Screen_Options::get_slug(),
+			'post_type'        => Advanced_Screen_Options::get_slug(),
 			'post_status'      => 'any',
 			'numberposts'      => -1,
 			'fields'           => 'ids',

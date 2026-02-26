@@ -1,14 +1,14 @@
 <?php
 /**
  * Settings class.
- * This class handles the settings page for the ScreenOptions plugin,
+ * This class handles the settings page for the AdvancedScreenOptions plugin,
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
-namespace ScreenOptions\Modules\Settings;
+namespace AdvancedScreenOptions\Modules\Settings;
 
-use ScreenOptions\Contracts\Interfaces\Registrable;
+use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**
  * Class Settings
@@ -21,7 +21,7 @@ class Admin implements Registrable {
 	 *
 	 * @var string
 	 */
-	public const MENU_SLUG = 'default-screens';
+	public const MENU_SLUG = 'adv-screen-options';
 
 	/**
 	 * The screen ID for the settings page.
@@ -32,7 +32,7 @@ class Admin implements Registrable {
 	 * {@inheritDoc}
 	 */
 	public function register_hooks(): void {
-		add_filter( 'plugin_action_links_' . SCREENOPTIONS_PLUGIN_BASENAME, [ $this, 'add_action_links' ], 2 );
+		add_filter( 'plugin_action_links_' . ADVANCED_SCREEN_OPTIONS_PLUGIN_BASENAME, [ $this, 'add_action_links' ], 2 );
 	}
 
 	/**

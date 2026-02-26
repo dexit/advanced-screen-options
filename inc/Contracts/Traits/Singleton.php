@@ -2,12 +2,12 @@
 /**
  * Singleton trait.
  *
- * @package ScreenOptions\Contracts\Traits
+ * @package AdvancedScreenOptions\Contracts\Traits
  */
 
 declare( strict_types = 1 );
 
-namespace ScreenOptions\Contracts\Traits;
+namespace AdvancedScreenOptions\Contracts\Traits;
 
 /**
  * Singleton trait.

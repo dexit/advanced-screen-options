@@ -2,15 +2,15 @@
 /**
  * Role based screen options assignments.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
-namespace ScreenOptions\Modules\Column_Assignment;
+namespace AdvancedScreenOptions\Modules\Column_Assignment;
 
-use ScreenOptions\Contracts\Interfaces\Registrable;
-use ScreenOptions\Modules\Core\Assets;
-use ScreenOptions\Modules\Meta\Meta_Fields;
-use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
+use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
+use AdvancedScreenOptions\Modules\Core\Assets;
+use AdvancedScreenOptions\Modules\Meta\Meta_Fields;
+use AdvancedScreenOptions\Modules\Post_Types\Advanced_Screen_Options;
 use WP_Query;
 
 /**
@@ -135,7 +135,7 @@ class Role_Based_Screen_Options implements Registrable {
 		// Fetch screen options posts based on user role.
 		$screen_options_posts = new WP_Query(
 			[
-				'post_type'      => Default_Screen_Options::get_slug(),
+				'post_type'      => Advanced_Screen_Options::get_slug(),
 				'posts_per_page' => -1,
 				'meta_query'     => $meta_query, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 				'fields'         => 'ids',
@@ -148,7 +148,7 @@ class Role_Based_Screen_Options implements Registrable {
 			// If no posts found for the role, check for 'all_users'.
 			$screen_options_posts = new WP_Query(
 				[
-					'post_type'      => Default_Screen_Options::get_slug(),
+					'post_type'      => Advanced_Screen_Options::get_slug(),
 					'posts_per_page' => -1,
 					'meta_query'     => [ // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 						[

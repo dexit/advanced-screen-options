@@ -4,12 +4,12 @@
  *
  * Registrable classes are those that register hooks (actions/filters) with WordPress.
  *
- * @package ScreenOptions\Contracts\Interfaces
+ * @package AdvancedScreenOptions\Contracts\Interfaces
  */
 
 declare( strict_types = 1 );
 
-namespace ScreenOptions\Contracts\Interfaces;
+namespace AdvancedScreenOptions\Contracts\Interfaces;
 
 /**
  * Interface - Registrable

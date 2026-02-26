@@ -2,12 +2,12 @@
 /**
  * Abstract class to register post meta box.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
-namespace ScreenOptions\Modules\Meta;
+namespace AdvancedScreenOptions\Modules\Meta;
 
-use ScreenOptions\Contracts\Interfaces\Registrable;
+use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**
  * Base class to register post meta boxes.

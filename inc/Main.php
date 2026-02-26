@@ -2,14 +2,14 @@
 /**
  * The main plugin file.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
 declare( strict_types = 1 );
 
-namespace ScreenOptions;
+namespace AdvancedScreenOptions;
 
-use ScreenOptions\Contracts\Traits\Singleton;
+use AdvancedScreenOptions\Contracts\Traits\Singleton;
 
 /**
  * Class - Main
@@ -21,7 +21,7 @@ final class Main {
 	 * Registrable classes are entrypoints that "hook" into WordPress.
 	 * They should implement the Registrable interface.
 	 *
-	 * @var class-string<\ScreenOptions\Contracts\Interfaces\Registrable>[]
+	 * @var class-string<\AdvancedScreenOptions\Contracts\Interfaces\Registrable>[]
 	 */
 	private const REGISTRABLE_CLASSES = [
 
@@ -36,7 +36,7 @@ final class Main {
 		Modules\Meta\Screen_Options_Meta::class,
 
 		// Post Types.
-		Modules\Post_Types\Default_Screen_Options::class,
+		Modules\Post_Types\Advanced_Screen_Options::class,
 
 		// Settings.
 		Modules\Settings\Admin::class,
