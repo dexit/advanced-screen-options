@@ -80,7 +80,7 @@
 		"webpack-dev-server@<=5.2.0": ">=5.2.1",
 		"fast-xml-parser": ">=5.3.4",
 		"minimatch": ">=10.2.1",
-		"serialize-javascript" : ">=7.0.3",
+		"serialize-javascript": ">=7.0.3",
 		"@wp-playground/blueprints": {
 			"ajv": ">=8.18.0"
 		},
