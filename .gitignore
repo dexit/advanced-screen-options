@@ -35,7 +35,7 @@ phpstan.neon
 
 # Build
 build/
-screen-options.zip
+advanced-screen-options.zip
 
 # TSConfig cache
 tsconfig.tsbuildinfo

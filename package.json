@@ -1,9 +1,9 @@
 {
-	"name": "screen-options",
+	"name": "adscreen-options",
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/rtCamp/ScreenOptions.git"
+		"url": "https://github.com/rtCamp/advanced-screen-options.git"
 	},
 	"engines": {
 		"node": ">=22.0.0",

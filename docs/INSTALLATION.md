@@ -20,9 +20,9 @@ The installation process involves the following key steps:
 
 ### Option B: Manual Installation
 
-1. Download the latest Screen Options plugin from [GitHub Releases](https://github.com/rtCamp/screen-options/releases)
-2. Upload the plugin files to `/wp-content/plugins/screen-options/` directory
-3. Navigate to **Plugins** in your WordPress admin and activate "Screen Options"
+1. Download the latest Advanced Screen Options plugin from [GitHub Releases](https://github.com/rtCamp/advanced-screen-options/releases)
+2. Upload the plugin files to `/wp-content/plugins/advanced-screen-options/` directory
+3. Navigate to **Plugins** in your WordPress admin and activate "Advanced Screen Options"
 
 ### Option C: Install from Source Code
 
@@ -37,7 +37,7 @@ npm run build:prod
 ## Step 2: Activate the Plugin
 
 1. Navigate to **Plugins** in your WordPress admin
-2. Find "Screen Options" in the plugin list
+2. Find "Advanced Screen Options" in the plugin list
 3. Click **Activate**
 
 Upon activation, the plugin will:
@@ -118,9 +118,9 @@ After completing the installation and configuration:
 
 If you encounter issues during installation:
 
-- **Issues & Bug Reports:** [GitHub Issues](https://github.com/rtCamp/screen-options/issues)
-- **Feature Requests:** [GitHub Discussions](https://github.com/rtCamp/screen-options/discussions)
-- **Documentation:** [Project Wiki](https://github.com/rtCamp/screen-options/wiki)
+- **Issues & Bug Reports:** [GitHub Issues](https://github.com/rtCamp/advanced-screen-options/issues)
+- **Feature Requests:** [GitHub Discussions](https://github.com/rtCamp/advanced-screen-options/discussions)
+- **Documentation:** [Project Wiki](https://github.com/rtCamp/advanced-screen-options/wiki)
 
 ## Next Steps
 
@@ -131,4 +131,4 @@ Once installation is complete, refer to the [main README](../README.md) for:
 
 ---
 
-**Need additional help?** Visit our [GitHub repository](https://github.com/rtCamp/screen-options) for the latest updates and community support.
+**Need additional help?** Visit our [GitHub repository](https://github.com/rtCamp/advanced-screen-options) for the latest updates and community support.

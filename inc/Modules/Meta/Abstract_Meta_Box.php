@@ -2,12 +2,12 @@
 /**
  * Abstract class to register post meta box.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
-namespace ScreenOptions\Modules\Meta;
+namespace AdvancedScreenOptions\Modules\Meta;
 
-use ScreenOptions\Contracts\Interfaces\Registrable;
+use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**
  * Base class to register post meta boxes.
@@ -27,8 +27,8 @@ abstract class Abstract_Meta_Box implements Registrable {
 	public function register_hooks(): void {
 		add_action( 'add_meta_boxes', [ $this, 'register_meta_box' ] );
 		add_action( 'save_post', [ $this, 'save_meta_box_data' ] );
-		add_filter( 'manage_edit-default-screens_columns', [ $this, 'add_custom_post_columns' ] );
-		add_action( 'manage_default-screens_posts_custom_column', [ $this, 'custom_post_column_content' ], 10, 2 );
+		add_filter( 'manage_edit-adv-screen-options_columns', [ $this, 'add_custom_post_columns' ] );
+		add_action( 'manage_adv-screen-options_posts_custom_column', [ $this, 'custom_post_column_content' ], 10, 2 );
 	}
 
 	/**

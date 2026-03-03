@@ -2,13 +2,13 @@
 /**
  * Register Screen Options meta box.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
-namespace ScreenOptions\Modules\Meta;
+namespace AdvancedScreenOptions\Modules\Meta;
 
-use ScreenOptions\Modules\Core\Cache;
-use ScreenOptions\Modules\Post_Types\Default_Screen_Options;
+use AdvancedScreenOptions\Modules\Core\Cache;
+use AdvancedScreenOptions\Modules\Post_Types\Advanced_Screen_Options;
 use WP_Query;
 
 /**
@@ -31,7 +31,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			self::get_id(),
 			__( 'Column Visibility Settings', 'screen-options' ),
 			[ $this, 'render_meta_box' ],
-			Default_Screen_Options::get_slug(),
+			Advanced_Screen_Options::get_slug(),
 			'normal',
 			'default'
 		);
@@ -132,7 +132,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			}
 
 				// Remove screen options post type from the list.
-				unset( $post_types[ Default_Screen_Options::get_slug() ] );
+				unset( $post_types[ Advanced_Screen_Options::get_slug() ] );
 			?>
 			<!-- RIGHT COLUMN: Settings -->
 			<div id="settings-area" class="disabled">
@@ -289,7 +289,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		}
 
 		// Check post type.
-		if ( get_post_type( $post_id ) !== Default_Screen_Options::get_slug() ) {
+		if ( get_post_type( $post_id ) !== Advanced_Screen_Options::get_slug() ) {
 			return;
 		}
 
@@ -412,7 +412,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	public function display_validation_notices(): void {
 		global $post;
 
-		if ( ! $post || get_post_type( $post ) !== Default_Screen_Options::get_slug() ) {
+		if ( ! $post || get_post_type( $post ) !== Advanced_Screen_Options::get_slug() ) {
 			return;
 		}
 
@@ -448,7 +448,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		$all_roles = [];
 		$posts     = new WP_Query(
 			[
-				'post_type'      => Default_Screen_Options::get_slug(),
+				'post_type'      => Advanced_Screen_Options::get_slug(),
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
 				'post_status'    => 'publish',
@@ -503,7 +503,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	public function custom_post_column_content( string $column, int $post_id ): void {
 
 		// Check post type.
-		if ( get_post_type( $post_id ) !== Default_Screen_Options::get_slug() ) {
+		if ( get_post_type( $post_id ) !== Advanced_Screen_Options::get_slug() ) {
 			return;
 		}
 
@@ -588,7 +588,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 		$configurations = [];
 		$posts          = new WP_Query(
 			[
-				'post_type'      => Default_Screen_Options::get_slug(),
+				'post_type'      => Advanced_Screen_Options::get_slug(),
 				'posts_per_page' => -1,
 				'fields'         => 'ids',
 				'post_status'    => 'publish',

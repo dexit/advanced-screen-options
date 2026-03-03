@@ -2,12 +2,12 @@
 /**
  * Abstract class to register post type.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
-namespace ScreenOptions\Modules\Post_Types;
+namespace AdvancedScreenOptions\Modules\Post_Types;
 
-use ScreenOptions\Contracts\Interfaces\Registrable;
+use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**
  * Base class to register post types.

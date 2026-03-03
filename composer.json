@@ -1,5 +1,5 @@
 {
-	"name": "rtcamp/screen-options",
+	"name": "rtcamp/advanced-screen-options",
 	"type": "wordpress-plugin",
 	"authors": [
 		{
@@ -41,7 +41,7 @@
 	],
 	"autoload": {
 		"psr-4": {
-			"ScreenOptions\\": "inc/"
+			"AdvancedScreenOptions\\": "inc/"
 		}
 	},
 	"require": {

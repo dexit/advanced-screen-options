@@ -2,14 +2,14 @@
 /**
  * Handles REST API behavior.
  *
- * @package ScreenOptions\Modules\Rest
+ * @package AdvancedScreenOptions\Modules\Rest
  */
 
 declare( strict_types = 1 );
 
-namespace ScreenOptions\Modules\Core;
+namespace AdvancedScreenOptions\Modules\Core;
 
-use ScreenOptions\Contracts\Interfaces\Registrable;
+use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**
  * Class REST
@@ -32,14 +32,14 @@ final class Rest implements Registrable {
 	 */
 	public function allowed_cors_headers( $headers ): array {
 		// Skip if the headers are already present.
-		if ( in_array( 'X-ScreenOptions-Token', $headers, true ) ) {
+		if ( in_array( 'X-AdvancedScreenOptions-Token', $headers, true ) ) {
 			return $headers;
 		}
 
 		return array_merge(
 			$headers,
 			[
-				'X-ScreenOptions-Token',
+				'X-AdvancedScreenOptions-Token',
 			]
 		);
 	}

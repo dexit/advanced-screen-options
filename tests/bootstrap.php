@@ -2,7 +2,7 @@
 /**
  * Bootstrap the PHPUnit tests.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  *
  * phpcs:disable WordPressVIPMinimum.Files.IncludingFile.UsingVariable
  */

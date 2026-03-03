@@ -2,10 +2,10 @@
 /**
  * Wrapper functions for post meta and options operations.
  *
- * @package ScreenOptions\Modules\Meta
+ * @package AdvancedScreenOptions\Modules\Meta
  */
 
-namespace ScreenOptions\Modules\Meta;
+namespace AdvancedScreenOptions\Modules\Meta;
 
 /**
  * Class Meta_Fields

@@ -2,13 +2,13 @@
 /**
  * Initialize admin screens in background to capture default columns.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
-namespace ScreenOptions\Modules\Meta;
+namespace AdvancedScreenOptions\Modules\Meta;
 
-use ScreenOptions\Contracts\Interfaces\Registrable;
-use ScreenOptions\Modules\Core\Cache;
+use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
+use AdvancedScreenOptions\Modules\Core\Cache;
 use WP_Screen;
 
 /**

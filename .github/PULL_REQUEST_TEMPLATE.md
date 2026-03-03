@@ -43,8 +43,8 @@ If you can't do everything, that's okay too.
 [Development Guidelines](../docs/DEVELOPMENT.md)
 -->
 
--   [ ] I have read the [Contribution Guidelines](https://github.com/rtCamp/ScreenOptions/blob/main/docs/CONTRIBUTING.md).
--   [ ] I have read the [Development Guidelines](https://github.com/rtCamp/ScreenOptions/blob/main/docs/DEVELOPMENT.md).
+-   [ ] I have read the [Contribution Guidelines](https://github.com/rtCamp/advanced-screen-options/blob/main/docs/CONTRIBUTING.md).
+-   [ ] I have read the [Development Guidelines](https://github.com/rtCamp/advanced-screen-options/blob/main/docs/DEVELOPMENT.md).
 -   [ ] My code is tested to the best of my abilities.
 -   [ ] My code passes all lints (ESLint etc.).
 -   [ ] My code has detailed inline documentation.

@@ -4,12 +4,12 @@
  *
  * Wraps the Composer autoloader to provide graceful failure if it is missing.
  *
- * @package ScreenOptions
+ * @package AdvancedScreenOptions
  */
 
 declare( strict_types = 1 );
 
-namespace ScreenOptions;
+namespace AdvancedScreenOptions;
 
 /**
  * Class - Autoloader
@@ -27,7 +27,7 @@ final class Autoloader {
 	 */
 	public static function autoload(): bool {
 		// If we're not *supposed* to autoload anything, then return true.
-		if ( defined( 'SCREENOPTIONS_AUTOLOAD' ) && false === SCREENOPTIONS_AUTOLOAD ) {
+		if ( defined( 'ADVANCED_SCREEN_OPTIONS_AUTOLOAD' ) && false === ADVANCED_SCREEN_OPTIONS_AUTOLOAD ) {
 			return true;
 		}
 
@@ -35,7 +35,7 @@ final class Autoloader {
 			return self::$is_loaded;
 		}
 
-		$autoloader      = SCREENOPTIONS_DIR . 'vendor/autoload.php';
+		$autoloader      = ADVANCED_SCREEN_OPTIONS_DIR . 'vendor/autoload.php';
 		self::$is_loaded = self::require_autoloader( $autoloader );
 
 		return self::$is_loaded;
@@ -68,7 +68,7 @@ final class Autoloader {
 			add_action(
 				$hook,
 				static function (): void {
-					$error_message = __( 'Screen Options: The Composer autoloader was not found. If you installed the plugin from the GitHub source code, make sure to run `composer install`.', 'screen-options' );
+					$error_message = __( 'Advanced Screen Options: The Composer autoloader was not found. If you installed the plugin from the GitHub source code, make sure to run `composer install`.', 'screen-options' );
 
 					if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
 						error_log( esc_html( $error_message ) ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- This is a development notice.
