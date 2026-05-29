@@ -34,7 +34,7 @@ require_once $_test_root . '/includes/functions.php';
 tests_add_filter(
 	'muplugins_loaded',
 	static function (): void {
-		require_once dirname( __DIR__ ) . '/screen-options.php';
+		require_once dirname( __DIR__ ) . '/advanced-screen-options.php';
 	}
 );
 

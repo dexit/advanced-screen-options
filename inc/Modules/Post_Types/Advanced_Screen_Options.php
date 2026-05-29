@@ -25,20 +25,20 @@ class Advanced_Screen_Options extends Abstract_Post_Type {
 	public function register_post_type(): void {
 
 		$labels = [
-			'name'               => _x( 'Advanced Screen Options', 'post type general name', 'screen-options' ),
-			'singular_name'      => _x( 'Advanced Screen Options', 'post type singular name', 'screen-options' ),
-			'menu_name'          => _x( 'Advanced Screen Options', 'admin menu', 'screen-options' ),
-			'name_admin_bar'     => _x( 'Advanced Screen Options', 'add new on admin bar', 'screen-options' ),
-			'add_new'            => _x( 'Add New', 'Advanced Screen Options', 'screen-options' ),
-			'add_new_item'       => __( 'Add New Advanced Screen Options', 'screen-options' ),
-			'new_item'           => __( 'New Advanced Screen Options', 'screen-options' ),
-			'edit_item'          => __( 'Edit Advanced Screen Options', 'screen-options' ),
-			'view_item'          => __( 'View Advanced Screen Options', 'screen-options' ),
-			'all_items'          => __( 'Advanced Screen Options', 'screen-options' ),
-			'search_items'       => __( 'Search Advanced Screen Options', 'screen-options' ),
-			'parent_item_colon'  => __( 'Parent Advanced Screen Options:', 'screen-options' ),
-			'not_found'          => __( 'No Advanced Screen Options found.', 'screen-options' ),
-			'not_found_in_trash' => __( 'No Advanced Screen Options found in trash.', 'screen-options' ),
+			'name'               => _x( 'Advanced Screen Options', 'post type general name', 'advanced-	screen-options' ),
+			'singular_name'      => _x( 'Advanced Screen Options', 'post type singular name', 'advanced-screen-options' ),
+			'menu_name'          => _x( 'Advanced Screen Options', 'admin menu', 'advanced-screen-options' ),
+			'name_admin_bar'     => _x( 'Advanced Screen Options', 'add new on admin bar', 'advanced-screen-options' ),
+			'add_new'            => _x( 'Add New', 'Advanced Screen Options', 'advanced-screen-options' ),
+			'add_new_item'       => __( 'Add New Advanced Screen Options', 'advanced-screen-options' ),
+			'new_item'           => __( 'New Advanced Screen Options', 'advanced-screen-options' ),
+			'edit_item'          => __( 'Edit Advanced Screen Options', 'advanced-screen-options' ),
+			'view_item'          => __( 'View Advanced Screen Options', 'advanced-screen-options' ),
+			'all_items'          => __( 'Advanced Screen Options', 'advanced-screen-options' ),
+			'search_items'       => __( 'Search Advanced Screen Options', 'advanced-screen-options' ),
+			'parent_item_colon'  => __( 'Parent Advanced Screen Options:', 'advanced-screen-options' ),
+			'not_found'          => __( 'No Advanced Screen Options found.', 'advanced-screen-options' ),
+			'not_found_in_trash' => __( 'No Advanced Screen Options found in trash.', 'advanced-screen-options' ),
 		];
 
 		$args = wp_parse_args(

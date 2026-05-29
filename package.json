@@ -16,7 +16,7 @@
 		"vendor/",
 		"languages/",
 		"readme.txt",
-		"screen-options.php",
+		"advanced-screen-options.php",
 		"uninstall.php"
 	],
 	"dependencies": {

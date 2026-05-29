@@ -48,7 +48,7 @@ trait Singleton {
 			__FUNCTION__,
 			sprintf(
 				// translators: %s: Class name.
-				esc_html__( 'The %s class should not be cloned.', 'screen-options' ),
+				esc_html__( 'The %s class should not be cloned.', 'advanced-screen-options' ),
 				esc_html( static::class ),
 			),
 			'0.0.1'
@@ -63,7 +63,7 @@ trait Singleton {
 			__FUNCTION__,
 			sprintf(
 				// translators: %s: Class name.
-				esc_html__( 'De-serializing instances of %s is not allowed.', 'screen-options' ),
+				esc_html__( 'De-serializing instances of %s is not allowed.', 'advanced-screen-options' ),
 				esc_html( static::class ),
 			),
 			'0.0.1'
