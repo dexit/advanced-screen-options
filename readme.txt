@@ -3,7 +3,7 @@ Contributors: rtCamp, aviralmittal89, aishwarryapande, iamdanih17, vishal4669, u
 Tags: screen options, admin columns, column visibility, user experience, admin interface
 Requires at least: 6.8
 Tested up to: 7.0
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 Requires PHP: 8.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -135,13 +135,13 @@ No, Advanced Screen Options only affects the WordPress admin area and has no imp
 * Post type support
 * Custom post type compatibility
 
-== 1.0.1 =
+== 1.1.0 =
 * Bug fixes and performance improvements
 * Bump WordPress version compatibility to 7.0
 
 == Upgrade Notice ==
 
-= 1.0.1 =
+= 1.1.0 =
 Bug fixes and performance improvements.
 
 == Support ==
