@@ -7,6 +7,10 @@
 
 namespace AdvancedScreenOptions\Modules\Core;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Cache
  *

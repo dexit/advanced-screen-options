@@ -7,6 +7,10 @@
 
 namespace AdvancedScreenOptions\Modules\Column_Assignment;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 use AdvancedScreenOptions\Modules\Core\Assets;
 use AdvancedScreenOptions\Modules\Meta\Meta_Fields;

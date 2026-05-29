@@ -8,6 +8,10 @@
 
 namespace AdvancedScreenOptions\Modules\Settings;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**

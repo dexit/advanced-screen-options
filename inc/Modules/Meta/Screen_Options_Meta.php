@@ -7,6 +7,10 @@
 
 namespace AdvancedScreenOptions\Modules\Meta;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use AdvancedScreenOptions\Modules\Core\Cache;
 use AdvancedScreenOptions\Modules\Post_Types\Advanced_Screen_Options;
 use WP_Query;

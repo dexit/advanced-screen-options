@@ -11,6 +11,10 @@ declare( strict_types = 1 );
 
 namespace AdvancedScreenOptions\Contracts\Interfaces;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Interface - Registrable
  */

@@ -7,6 +7,10 @@
 
 namespace AdvancedScreenOptions\Modules\Post_Types;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Advanced_Screen_Options
  */

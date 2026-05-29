@@ -11,6 +11,10 @@ declare( strict_types = 1 );
 
 namespace AdvancedScreenOptions;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class - Autoloader
  */

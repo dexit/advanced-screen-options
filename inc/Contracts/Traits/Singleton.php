@@ -9,6 +9,10 @@ declare( strict_types = 1 );
 
 namespace AdvancedScreenOptions\Contracts\Traits;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Singleton trait.
  */
