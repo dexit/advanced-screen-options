@@ -80,8 +80,8 @@ This ensures that individual user preferences always take precedence, while admi
 
 - **WordPress:** 6.8 or higher
 - **Requires at least:** 6.0
-- **Tested up to:** 6.9
-- **Stable tag:** 1.0.0
+- **Tested up to:** 7.0
+- **Stable tag:** 1.0.1
 - **PHP:** 8.1 or higher
 - **Requires PHP:** 8.1
 
