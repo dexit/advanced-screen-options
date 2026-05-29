@@ -25,7 +25,7 @@ class Advanced_Screen_Options extends Abstract_Post_Type {
 	public function register_post_type(): void {
 
 		$labels = [
-			'name'               => _x( 'Advanced Screen Options', 'post type general name', 'advanced-	screen-options' ),
+			'name'               => _x( 'Advanced Screen Options', 'post type general name', 'advanced-screen-options' ),
 			'singular_name'      => _x( 'Advanced Screen Options', 'post type singular name', 'advanced-screen-options' ),
 			'menu_name'          => _x( 'Advanced Screen Options', 'admin menu', 'advanced-screen-options' ),
 			'name_admin_bar'     => _x( 'Advanced Screen Options', 'add new on admin bar', 'advanced-screen-options' ),
