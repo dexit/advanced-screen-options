@@ -9,6 +9,10 @@ declare( strict_types = 1 );
 
 namespace AdvancedScreenOptions\Modules\Core;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**

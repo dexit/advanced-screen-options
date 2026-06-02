@@ -7,6 +7,10 @@
 
 namespace AdvancedScreenOptions\Modules\Meta;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 /**
  * Class Meta_Fields
  *

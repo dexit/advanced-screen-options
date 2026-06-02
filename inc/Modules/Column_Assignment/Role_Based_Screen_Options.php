@@ -7,6 +7,10 @@
 
 namespace AdvancedScreenOptions\Modules\Column_Assignment;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 use AdvancedScreenOptions\Modules\Core\Assets;
 use AdvancedScreenOptions\Modules\Meta\Meta_Fields;
@@ -262,11 +266,11 @@ class Role_Based_Screen_Options implements Registrable {
 				'lockMessage' => \sprintf(
 					'<strong>%1$s</strong> %2$s %3$s',
 					/* translators: 1: Screen Options */
-					__( 'Locked:', 'screen-options' ),
-					__( 'columns are locked by the administrator. To modify your screen options, ', 'screen-options' ),
+					__( 'Locked:', 'advanced-screen-options' ),
+					__( 'columns are locked by the administrator. To modify your screen options, ', 'advanced-screen-options' ),
 					\current_user_can( 'manage_options' ) ?
-						__( 'go to settings -> default screen options.', 'screen-options' ) :
-						__( 'please contact your site administrator.', 'screen-options' )
+						__( 'go to settings -> default screen options.', 'advanced-screen-options' ) :
+						__( 'please contact your site administrator.', 'advanced-screen-options' )
 				),
 			]
 		);

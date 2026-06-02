@@ -21,7 +21,7 @@
 	<coverage processUncoveredFiles="false">
 		<include>
 			<directory suffix=".php">inc</directory>
-			<file>screen-options.php</file>
+			<file>advanced-screen-options.php</file>
 			<file>uninstall.php</file>
 		</include>
 		<report>

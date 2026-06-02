@@ -82,7 +82,7 @@ Code contributions, bug reports, and feature requests are welcome! The following
 │   └── bootstrap.php # PHPUnit bootstrapper
 │
 ├── languages
-│   └── screen-options.pot
+│   └── advanced-screen-options.pot
 │
 │   # Build directories
 ├── build/        # assets built by webpack
@@ -91,7 +91,7 @@ Code contributions, bug reports, and feature requests are welcome! The following
 │
 ├── wp-assets/    # WordPress plugin assets (banners, screenshots)
 │
-├── screen-options.php # Root plugin entrypoint.
+├── advanced-screen-options.php # Root plugin entrypoint.
 ├── uninstall.php # The plugin uninstaller.
 │
 │   # Important config files.
@@ -132,7 +132,7 @@ You can use Docker and the `wp-env` tool to set up a local development environme
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/rtCamp/screen-options.git
+   git clone https://github.com/rtCamp/advanced-screen-options.git
    ```
 
 2. Change into the project folder and install the development dependencies:

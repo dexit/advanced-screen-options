@@ -16,8 +16,9 @@
 		"vendor/",
 		"languages/",
 		"readme.txt",
-		"screen-options.php",
-		"uninstall.php"
+		"advanced-screen-options.php",
+		"uninstall.php",
+		"composer.json"
 	],
 	"dependencies": {
 		"@wordpress/api-fetch": "^7.40.0",

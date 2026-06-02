@@ -8,7 +8,7 @@
 
 	<!-- What to scan: include any root-level PHP files, and the /inc folder -->
 	<file>./inc/</file>
-	<file>./screen-options.php</file>
+	<file>./advanced-screen-options.php</file>
 	<file>./uninstall.php</file>
 
 	<!-- These are excluded from the above paths.-->
@@ -221,7 +221,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element value="screen-options" />
+				<element value="advanced-screen-options" />
 			</property>
 		</properties>
 	</rule>
@@ -230,7 +230,7 @@
 	<rule ref="WordPress.WP.Capabilities">
 		<properties>
 			<property name="custom_capabilities" type="array">
-				<element value="screen-options_manage_settings"/>
+				<element value="advanced-screen-options_manage_settings"/>
 			</property>
 		</properties>
 	</rule>

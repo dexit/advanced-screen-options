@@ -7,6 +7,10 @@
 
 namespace AdvancedScreenOptions\Modules\Meta;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use AdvancedScreenOptions\Modules\Core\Cache;
 use AdvancedScreenOptions\Modules\Post_Types\Advanced_Screen_Options;
 use WP_Query;
@@ -29,7 +33,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	public function register_meta_box(): void {
 		add_meta_box(
 			self::get_id(),
-			__( 'Column Visibility Settings', 'screen-options' ),
+			__( 'Column Visibility Settings', 'advanced-screen-options' ),
 			[ $this, 'render_meta_box' ],
 			Advanced_Screen_Options::get_slug(),
 			'normal',
@@ -85,14 +89,14 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			<div class="left-col">
 				<div class="postbox">
 					<div class="postbox-header">
-						<h2><?php esc_html_e( 'Select Roles', 'screen-options' ); ?></h2>
-						<span id="role-error" class="error-msg"><?php esc_html_e( 'Selection Required', 'screen-options' ); ?></span>
+						<h2><?php esc_html_e( 'Select Roles', 'advanced-screen-options' ); ?></h2>
+						<span id="role-error" class="error-msg"><?php esc_html_e( 'Selection Required', 'advanced-screen-options' ); ?></span>
 					</div>
 					<div class="inside inside-flush">
 						<div class="role-list">
 							<div class="role-row">
 								<input type="checkbox" value="all_users" name="screen_options_assigned_roles[]" id="role-all" class="role-check" data-target="all" <?php checked( in_array( 'all_users', $saved_roles, true ), true ); ?>>
-								<label for="role-all"><?php esc_html_e( 'All Users', 'screen-options' ); ?></label>
+								<label for="role-all"><?php esc_html_e( 'All Users', 'advanced-screen-options' ); ?></label>
 								<div class="role-separator"></div>
 							</div>
 							<?php foreach ( $roles as $role_key => $role ) : ?>
@@ -141,9 +145,9 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 				<div class="selector-toolbar">
 					<!-- Post Type Selector -->
 					<div class="toolbar-group">
-						<label for="post-type-select" class="label-strong"><?php esc_html_e( 'Post Type:', 'screen-options' ); ?></label>
+						<label for="post-type-select" class="label-strong"><?php esc_html_e( 'Post Type:', 'advanced-screen-options' ); ?></label>
 						<select id="post-type-select" class="wp-select" name="screen_options_post_type">
-							<option value=""><?php esc_html_e( 'Select Post Type', 'screen-options' ); ?></option>
+							<option value=""><?php esc_html_e( 'Select Post Type', 'advanced-screen-options' ); ?></option>
 							<?php
 							foreach ( $columns as $post_type_key => $column ) {
 								$post_type_key = str_replace( 'edit-', '', $post_type_key );
@@ -174,7 +178,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 							}
 							?>
 						</select>
-						<span class="help-tip" data-tooltip="<?php esc_attr_e( 'Some post types may be disabled based on already existing configurations for selected roles.', 'screen-options' ); ?>">?</span>
+						<span class="help-tip" data-tooltip="<?php esc_attr_e( 'Some post types may be disabled based on already existing configurations for selected roles.', 'advanced-screen-options' ); ?>">?</span>
 					</div>
 
 					<div class="toolbar-divider"></div>
@@ -190,13 +194,13 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 					<div class="toolbar-group">
 						<label for="global-lock-check" class="label-strong-flex">
 							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-							<?php esc_html_e( 'Lock Screen Options', 'screen-options' ); ?>
+							<?php esc_html_e( 'Lock Screen Options', 'advanced-screen-options' ); ?>
 						</label>
 						<label class="wp-switch lock-switch">
 							<input type="checkbox" id="global-lock-check" <?php checked( $is_locked, true, true ); ?> name="screen_options_lock_settings" value="1">
 							<span class="slider"></span>
 						</label>
-						<span class="help-tip" data-tooltip="<?php esc_attr_e( 'If enabled, users cannot change any column visibility settings in their Screen Options tab.', 'screen-options' ); ?>">?</span>
+						<span class="help-tip" data-tooltip="<?php esc_attr_e( 'If enabled, users cannot change any column visibility settings in their Screen Options tab.', 'advanced-screen-options' ); ?>">?</span>
 					</div>
 				</div>
 
@@ -215,9 +219,9 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 							<h2>
 								<?php
 								// translators: %s: Post Type Singular Name.
-								printf( esc_html__( '%s Columns', 'screen-options' ), esc_html( ucfirst( $post_type_key ) ) );
+								printf( esc_html__( '%s Columns', 'advanced-screen-options' ), esc_html( ucfirst( $post_type_key ) ) );
 								?>
-								<span class="locked-badge" <?php echo esc_attr( true === $is_locked ? ' style=display:inline;' : '' ); ?>><?php esc_html_e( 'Configuration Locked', 'screen-options' ); ?></span>
+								<span class="locked-badge" <?php echo esc_attr( true === $is_locked ? ' style=display:inline;' : '' ); ?>><?php esc_html_e( 'Configuration Locked', 'advanced-screen-options' ); ?></span>
 							</h2>
 						</div>
 
@@ -323,7 +327,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			// Set admin notice.
 			Cache::set_transient(
 				'screen_options_title_error_' . $post_id,
-				__( 'Screen option cannot be saved! Title is required. Post has been set to draft and settings were not saved.', 'screen-options' ),
+				__( 'Screen option cannot be saved! Title is required. Post has been set to draft and settings were not saved.', 'advanced-screen-options' ),
 				45
 			);
 
@@ -365,7 +369,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			// Set admin notice.
 			Cache::set_transient(
 				'screen_options_role_error_' . $post_id,
-				__( 'Screen option cannot be saved! At least one role must be selected before saving it. Settings saved as draft.', 'screen-options' ),
+				__( 'Screen option cannot be saved! At least one role must be selected before saving it. Settings saved as draft.', 'advanced-screen-options' ),
 				45
 			);
 			return;
@@ -485,10 +489,10 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 	 * @return array<string, string> Modified columns.
 	 */
 	public function add_custom_post_columns( array $columns ): array {
-		$columns['screen_options_roles']     = __( 'Roles', 'screen-options' );
-		$columns['screen_options_post_type'] = __( 'Post Type', 'screen-options' );
-		$columns['screen_options_columns']   = __( 'Columns Shown', 'screen-options' );
-		$columns['screen_options_lock']      = __( 'Lock', 'screen-options' );
+		$columns['screen_options_roles']     = __( 'Roles', 'advanced-screen-options' );
+		$columns['screen_options_post_type'] = __( 'Post Type', 'advanced-screen-options' );
+		$columns['screen_options_columns']   = __( 'Columns Shown', 'advanced-screen-options' );
+		$columns['screen_options_lock']      = __( 'Lock', 'advanced-screen-options' );
 		return $columns;
 	}
 
@@ -511,7 +515,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			case 'screen_options_roles':
 				$roles = Meta_Fields::get_roles( $post_id );
 				if ( empty( $roles ) ) {
-					echo esc_html__( 'No roles assigned', 'screen-options' );
+					echo esc_html__( 'No roles assigned', 'advanced-screen-options' );
 					return;
 				}
 
@@ -531,7 +535,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			case 'screen_options_post_type':
 				$post_type = Meta_Fields::get_post_type( $post_id );
 				if ( empty( $post_type ) ) {
-					echo esc_html__( 'No post type selected', 'screen-options' );
+					echo esc_html__( 'No post type selected', 'advanced-screen-options' );
 					return;
 				}
 				echo esc_html( ucfirst( $post_type ) );
@@ -540,7 +544,7 @@ class Screen_Options_Meta extends Abstract_Meta_Box {
 			case 'screen_options_columns':
 				$columns = Meta_Fields::get_columns( $post_id );
 				if ( empty( $columns ) ) {
-					echo esc_html__( 'No columns configured', 'screen-options' );
+					echo esc_html__( 'No columns configured', 'advanced-screen-options' );
 					return;
 				}
 				$column_list = [];
