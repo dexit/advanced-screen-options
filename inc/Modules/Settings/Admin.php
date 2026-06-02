@@ -8,6 +8,10 @@
 
 namespace AdvancedScreenOptions\Modules\Settings;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**
@@ -45,7 +49,7 @@ class Admin implements Registrable {
 	public function add_action_links( $links ): array {
 		// Defense against other plugins.
 		if ( ! is_array( $links ) ) {
-			_doing_it_wrong( __METHOD__, esc_html__( 'Expected an array.', 'screen-options' ), '1.0.0' );
+			_doing_it_wrong( __METHOD__, esc_html__( 'Expected an array.', 'advanced-screen-options' ), '1.0.0' );
 
 			$links = [];
 		}
@@ -53,7 +57,7 @@ class Admin implements Registrable {
 		$links[] = sprintf(
 			'<a href="%s">%s</a>',
 			admin_url( 'edit.php?post_type=' . self::MENU_SLUG ),
-			__( 'Settings', 'screen-options' )
+			__( 'Settings', 'advanced-screen-options' )
 		);
 
 		return $links;

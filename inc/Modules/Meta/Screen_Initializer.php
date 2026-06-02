@@ -7,6 +7,10 @@
 
 namespace AdvancedScreenOptions\Modules\Meta;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 use AdvancedScreenOptions\Modules\Core\Cache;
 use WP_Screen;
@@ -199,7 +203,7 @@ class Screen_Initializer implements Registrable {
 
 		// Fire the load-{$pagenow} hook to trigger third-party plugin hooks.
 		// This is crucial for plugins like Co-Authors Plus that register columns on this hook.
-		do_action( 'load-edit.php' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound, WordPress.NamingConventions.ValidHookName.UseUnderscores
+		do_action( 'load-edit.php' ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.DynamicHooknameFound, WordPress.NamingConventions.ValidHookName.UseUnderscores, WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 
 		// Load the list table class to trigger column registration.
 		$list_table = $this->load_list_table( $post_type );

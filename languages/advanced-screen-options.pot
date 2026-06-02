@@ -2,217 +2,217 @@
 # This file is distributed under the GPL2+.
 msgid ""
 msgstr ""
-"Project-Id-Version: Advanced Screen Options 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/screen-options\n"
+"Project-Id-Version: Advanced Screen Options 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/advanced-screen-options\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-02-26T11:07:40+00:00\n"
+"POT-Creation-Date: 2026-05-29T15:00:27+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: screen-options\n"
+"X-Domain: advanced-screen-options\n"
 
 #. Plugin Name of the plugin
-#: screen-options.php
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:37
+#: advanced-screen-options.php
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:41
 msgid "Advanced Screen Options"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: screen-options.php
+#: advanced-screen-options.php
 msgid "https://github.com/rtCamp/advanced-screen-options/"
 msgstr ""
 
 #. Description of the plugin
-#: screen-options.php
+#: advanced-screen-options.php
 msgid "Advanced Screen Options - Manage your admin screen options and column visibility with ease."
 msgstr ""
 
 #. Author of the plugin
-#: screen-options.php
+#: advanced-screen-options.php
 msgid "rtCamp"
 msgstr ""
 
 #. Author URI of the plugin
-#: screen-options.php
+#: advanced-screen-options.php
 msgid "https://rtcamp.com"
 msgstr ""
 
-#: inc/Autoloader.php:71
+#: inc/Autoloader.php:75
 msgid "Advanced Screen Options: The Composer autoloader was not found. If you installed the plugin from the GitHub source code, make sure to run `composer install`."
 msgstr ""
 
 #. translators: %s: Class name.
-#: inc/Contracts/Traits/Singleton.php:51
+#: inc/Contracts/Traits/Singleton.php:55
 msgid "The %s class should not be cloned."
 msgstr ""
 
 #. translators: %s: Class name.
-#: inc/Contracts/Traits/Singleton.php:66
+#: inc/Contracts/Traits/Singleton.php:70
 msgid "De-serializing instances of %s is not allowed."
 msgstr ""
 
 #. translators: 1: Screen Options
-#: inc/Modules/Column_Assignment/Role_Based_Screen_Options.php:265
+#: inc/Modules/Column_Assignment/Role_Based_Screen_Options.php:269
 msgid "Locked:"
 msgstr ""
 
-#: inc/Modules/Column_Assignment/Role_Based_Screen_Options.php:266
+#: inc/Modules/Column_Assignment/Role_Based_Screen_Options.php:270
 msgid "columns are locked by the administrator. To modify your screen options, "
 msgstr ""
 
-#: inc/Modules/Column_Assignment/Role_Based_Screen_Options.php:268
+#: inc/Modules/Column_Assignment/Role_Based_Screen_Options.php:272
 msgid "go to settings -> default screen options."
 msgstr ""
 
-#: inc/Modules/Column_Assignment/Role_Based_Screen_Options.php:269
+#: inc/Modules/Column_Assignment/Role_Based_Screen_Options.php:273
 msgid "please contact your site administrator."
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:32
+#: inc/Modules/Meta/Screen_Options_Meta.php:36
 msgid "Column Visibility Settings"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:88
+#: inc/Modules/Meta/Screen_Options_Meta.php:92
 msgid "Select Roles"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:89
+#: inc/Modules/Meta/Screen_Options_Meta.php:93
 msgid "Selection Required"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:95
+#: inc/Modules/Meta/Screen_Options_Meta.php:99
 msgid "All Users"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:144
+#: inc/Modules/Meta/Screen_Options_Meta.php:148
 msgid "Post Type:"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:146
+#: inc/Modules/Meta/Screen_Options_Meta.php:150
 msgid "Select Post Type"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:177
+#: inc/Modules/Meta/Screen_Options_Meta.php:181
 msgid "Some post types may be disabled based on already existing configurations for selected roles."
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:193
+#: inc/Modules/Meta/Screen_Options_Meta.php:197
 msgid "Lock Screen Options"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:199
+#: inc/Modules/Meta/Screen_Options_Meta.php:203
 msgid "If enabled, users cannot change any column visibility settings in their Screen Options tab."
 msgstr ""
 
 #. translators: %s: Post Type Singular Name.
-#: inc/Modules/Meta/Screen_Options_Meta.php:218
+#: inc/Modules/Meta/Screen_Options_Meta.php:222
 msgid "%s Columns"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:220
+#: inc/Modules/Meta/Screen_Options_Meta.php:224
 msgid "Configuration Locked"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:326
+#: inc/Modules/Meta/Screen_Options_Meta.php:330
 msgid "Screen option cannot be saved! Title is required. Post has been set to draft and settings were not saved."
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:368
+#: inc/Modules/Meta/Screen_Options_Meta.php:372
 msgid "Screen option cannot be saved! At least one role must be selected before saving it. Settings saved as draft."
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:488
+#: inc/Modules/Meta/Screen_Options_Meta.php:492
 msgid "Roles"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:489
+#: inc/Modules/Meta/Screen_Options_Meta.php:493
 msgid "Post Type"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:490
+#: inc/Modules/Meta/Screen_Options_Meta.php:494
 msgid "Columns Shown"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:491
+#: inc/Modules/Meta/Screen_Options_Meta.php:495
 msgid "Lock"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:514
+#: inc/Modules/Meta/Screen_Options_Meta.php:518
 msgid "No roles assigned"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:534
+#: inc/Modules/Meta/Screen_Options_Meta.php:538
 msgid "No post type selected"
 msgstr ""
 
-#: inc/Modules/Meta/Screen_Options_Meta.php:543
+#: inc/Modules/Meta/Screen_Options_Meta.php:547
 msgid "No columns configured"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:28
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:32
 msgctxt "post type general name"
 msgid "Advanced Screen Options"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:29
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:33
 msgctxt "post type singular name"
 msgid "Advanced Screen Options"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:30
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:34
 msgctxt "admin menu"
 msgid "Advanced Screen Options"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:31
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:35
 msgctxt "add new on admin bar"
 msgid "Advanced Screen Options"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:32
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:36
 msgctxt "Advanced Screen Options"
 msgid "Add New"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:33
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:37
 msgid "Add New Advanced Screen Options"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:34
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:38
 msgid "New Advanced Screen Options"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:35
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:39
 msgid "Edit Advanced Screen Options"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:36
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:40
 msgid "View Advanced Screen Options"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:38
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:42
 msgid "Search Advanced Screen Options"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:39
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:43
 msgid "Parent Advanced Screen Options:"
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:40
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:44
 msgid "No Advanced Screen Options found."
 msgstr ""
 
-#: inc/Modules/Post_Types/Advanced_Screen_Options.php:41
+#: inc/Modules/Post_Types/Advanced_Screen_Options.php:45
 msgid "No Advanced Screen Options found in trash."
 msgstr ""
 
-#: inc/Modules/Settings/Admin.php:48
+#: inc/Modules/Settings/Admin.php:52
 msgid "Expected an array."
 msgstr ""
 
-#: inc/Modules/Settings/Admin.php:56
+#: inc/Modules/Settings/Admin.php:60
 msgid "Settings"
 msgstr ""

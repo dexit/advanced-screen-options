@@ -7,12 +7,12 @@
  * Plugin URI: https://github.com/rtCamp/advanced-screen-options/
  * License: GPL2+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain: screen-options
+ * Text Domain: advanced-screen-options
  * Domain Path: /languages
- * Version: 1.0.0
+ * Version: 1.1.0
  * Requires PHP: 8.1
  * Requires at least: 6.8
- * Tested up to: 6.9
+ * Tested up to: 7.0
  *
  * @package AdvancedScreenOptions
  */
@@ -29,7 +29,7 @@ function constants(): void {
 	/**
 	 * Version of the plugin.
 	 */
-	define( 'ADVANCED_SCREEN_OPTIONS_VERSION', '1.0.0' );
+	define( 'ADVANCED_SCREEN_OPTIONS_VERSION', '1.1.0' );
 
 	/**
 	 * Root path to the plugin directory.
@@ -74,5 +74,5 @@ function load_plugin(): void {
 	\AdvancedScreenOptions\Main::instance();
 
 	//phpcs:ignore PluginCheck.CodeAnalysis.DiscouragedFunctions.load_plugin_textdomainFound -- @todo remove before submitting to .org.
-	load_plugin_textdomain( 'screen-options', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+	load_plugin_textdomain( 'advanced-screen-options', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 }

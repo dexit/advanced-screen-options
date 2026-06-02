@@ -7,6 +7,10 @@
 
 namespace AdvancedScreenOptions\Modules\Core;
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 use AdvancedScreenOptions\Contracts\Interfaces\Registrable;
 
 /**
@@ -22,7 +26,7 @@ class Assets implements Registrable {
 	/**
 	 * Prefix for all asset handles.
 	 */
-	private const PREFIX = 'screen-options-';
+	private const PREFIX = 'advanced-screen-options-';
 
 	/**
 	 * Asset handles

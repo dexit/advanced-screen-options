@@ -22,6 +22,10 @@ if ( ! defined( 'ADVANCED_SCREEN_OPTIONS_DIR' ) ) {
 	define( 'ADVANCED_SCREEN_OPTIONS_DIR', plugin_dir_path( __FILE__ ) );
 }
 
+// Bootstrap the autoloader so classes are available during uninstall.
+require_once ADVANCED_SCREEN_OPTIONS_DIR . 'inc/Autoloader.php';
+\AdvancedScreenOptions\Autoloader::autoload();
+
 /**
  * The (site-specific) uninstall function.
  */
